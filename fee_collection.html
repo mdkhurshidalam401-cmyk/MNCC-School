@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Collection - School ERP</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Supabase Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        aside::-webkit-scrollbar { width: 4px; }
+        aside::-webkit-scrollbar-track { background: transparent; }
+        aside::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+        main::-webkit-scrollbar { width: 6px; }
+        main::-webkit-scrollbar-track { background: #f0f4f8; }
+        main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .modal-active { display: flex !important; animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        input:focus, select:focus { outline: none; border-color: #00c3a2; box-shadow: 0 0 0 3px rgba(0, 195, 162, 0.1); }
+    </style>
+</head>
+<body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
+
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20">
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#003126] z-10">
+            <div class="bg-[#00c3a2] text-[#003126] w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+                <i class="fa-solid fa-school text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-sm font-bold leading-tight tracking-wide text-white">data click education</h1>
+                <p class="text-[10px] text-[#8aa8a3] mt-0.5">Management System</p>
+            </div>
+        </div>
+
+        <div class="p-4 flex items-center border-b border-white/10">
+            <div class="w-9 h-9 rounded-full bg-[#e0fcf4] text-[#003126] flex items-center justify-center font-bold mr-3 text-sm">S</div>
+            <div>
+                <h2 class="text-[13px] font-semibold text-white">Super Administrator</h2>
+                <p class="text-[11px] text-yellow-400 mt-0.5"><i class="fa-solid fa-star text-[10px]"></i> Super Admin</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-3 py-6 text-[14px] font-medium">
+            <div class="mb-3 text-[11px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">MAIN</div>
+            <a href="index.html" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-6 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-lg"></i> Dashboard</a>
+
+            <div class="mb-3 text-[11px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STUDENTS</div>
+            <a href="#" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-clipboard w-6 text-lg"></i> Admission Enquiry</a>
+            <a href="students.html" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-users w-6 text-lg"></i> All Students</a>
+            <a href="admission.html" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-6 text-gray-200 transition-colors"><i class="fa-solid fa-user-plus w-6 text-lg"></i> New Admission</a>
+
+            <div class="mb-3 text-[11px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FEES</div>
+            <a href="#" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-lg"></i> Fee Structure</a>
+            <!-- Fee Collection Active hai -->
+            <a href="fee_collection.html" class="flex items-center px-4 py-2.5 bg-[#00c3a2] text-white rounded-md mb-1 shadow-sm"><i class="fa-solid fa-money-bill w-6 text-lg"></i> Fee Collection</a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
+            <div>
+                <h2 class="text-2xl font-bold text-[#102a43]">Fee Collection</h2>
+                <p class="text-xs text-gray-500 mt-1">Search student and record fee payments.</p>
+            </div>
+            <div class="text-sm font-medium text-gray-600 flex items-center gap-2 bg-gray-50 px-4 py-1.5 rounded-full border border-gray-200">
+                <i class="fa-solid fa-receipt text-[#00c3a2]"></i> Today's Date: <span id="currentDate"></span>
+            </div>
+        </header>
+
+        <div class="p-8 pt-6 max-w-5xl">
+            
+            <!-- STEP 1: Search Student Box -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                <h3 class="text-[15px] font-bold text-gray-800 mb-4 flex items-center border-b border-gray-100 pb-2"><i class="fa-solid fa-magnifying-glass mr-2 text-blue-500"></i> Step 1: Find Student</h3>
+                <div class="flex gap-4 items-end">
+                    <div class="flex-1 max-w-sm">
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Enter Admission No. <span class="text-red-500">*</span></label>
+                        <input type="text" id="searchAdmNo" placeholder="e.g. ADM-26-1001" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+                    </div>
+                    <button id="searchBtn" type="button" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2.5 rounded-md text-sm font-bold transition-all shadow-sm">
+                        Search
+                    </button>
+                </div>
+                <p id="searchError" class="text-xs text-red-500 mt-2 hidden">Student not found. Please check the Admission Number.</p>
+            </div>
+
+            <!-- STEP 2: Collect Fee Form (Hidden/Disabled by default) -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden relative">
+                
+                <!-- Overlay to block form until search is done -->
+                <div id="formOverlay" class="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-10 flex items-center justify-center">
+                    <p class="text-sm font-semibold text-gray-500 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-200"><i class="fa-solid fa-lock mr-2"></i> Search a student first to unlock</p>
+                </div>
+
+                <form id="feeForm">
+                    <!-- Student Details (Auto-filled) -->
+                    <div class="p-6 border-b border-gray-100 bg-gray-50/50">
+                        <h3 class="text-[15px] font-bold text-gray-800 mb-4 flex items-center"><i class="fa-solid fa-user-graduate mr-2 text-[#00c3a2]"></i> Student Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Student Name</label>
+                                <input type="text" id="stuName" class="w-full border border-gray-300 rounded-md p-2.5 text-sm bg-gray-100 font-medium text-gray-700" readonly>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Class</label>
+                                <input type="text" id="stuClass" class="w-full border border-gray-300 rounded-md p-2.5 text-sm bg-gray-100 font-medium text-gray-700" readonly>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Father's Name</label>
+                                <input type="text" id="stuFather" class="w-full border border-gray-300 rounded-md p-2.5 text-sm bg-gray-100 font-medium text-gray-700" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Details -->
+                    <div class="p-6">
+                        <h3 class="text-[15px] font-bold text-gray-800 mb-4 flex items-center"><i class="fa-solid fa-indian-rupee-sign mr-2 text-[#00c3a2]"></i> Payment Details</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Paying Amount (₹) <span class="text-red-500">*</span></label>
+                                <input type="number" id="feeAmount" required min="1" placeholder="0.00" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all font-bold text-green-600">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Payment Mode <span class="text-red-500">*</span></label>
+                                <select id="paymentMode" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                                    <option value="Cash">Cash</option>
+                                    <option value="UPI">UPI / QR Code</option>
+                                    <option value="Bank Transfer">Bank Transfer (NEFT/RTGS)</option>
+                                    <option value="Cheque">Cheque</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Remarks / Month</label>
+                                <input type="text" id="remarks" placeholder="e.g. April & May Fee" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="p-6 pt-0 flex justify-end">
+                        <button type="submit" id="collectBtn" class="bg-[#00c3a2] hover:bg-[#00a68d] text-white px-10 py-3 rounded-lg text-sm font-bold transition-all shadow-md hover:shadow-lg flex items-center gap-2">
+                            <i class="fa-solid fa-receipt"></i> Collect Fee
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- SUCCESS MODAL -->
+    <div id="successModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center backdrop-blur-sm">
+        <div class="bg-white rounded-xl shadow-2xl p-8 max-w-sm w-full text-center">
+            <div class="w-16 h-16 bg-[#e0fcf4] rounded-full flex items-center justify-center mx-auto mb-4 border-[4px] border-white shadow-sm">
+                <i class="fa-solid fa-check text-3xl text-[#00c3a2]"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Payment Saved!</h2>
+            <p class="text-gray-500 text-sm mb-6">Fee has been successfully recorded in the database.</p>
+            <button id="closeModalBtn" class="bg-[#00c3a2] text-white hover:bg-[#00a68d] w-full py-2.5 rounded-lg text-sm font-semibold transition-colors shadow-md">Collect Another Fee</button>
+        </div>
+    </div>
+
+    <script>
+        // Set Today's Date in Header
+        const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-IN', dateOptions);
+
+        // Supabase Connection
+        const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const searchBtn = document.getElementById('searchBtn');
+        const formOverlay = document.getElementById('formOverlay');
+        let currentStudentData = null; // Store fetched student
+
+        // SEARCH STUDENT LOGIC
+        searchBtn.addEventListener('click', async () => {
+            const admNo = document.getElementById('searchAdmNo').value.trim();
+            const errorMsg = document.getElementById('searchError');
+            
+            if(!admNo) {
+                alert("Please enter Admission Number first!");
+                return;
+            }
+
+            searchBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            searchBtn.disabled = true;
+            errorMsg.classList.add('hidden');
+
+            // Fetch from students table
+            const { data, error } = await db.from('students').select('*').eq('adm_no', admNo).single();
+
+            if (error || !data) {
+                errorMsg.classList.remove('hidden');
+                formOverlay.classList.remove('hidden'); // keep locked
+                document.getElementById('feeForm').reset();
+            } else {
+                // Unlock Form and Fill Details
+                formOverlay.classList.add('hidden');
+                document.getElementById('stuName').value = data.student_name;
+                document.getElementById('stuClass').value = data.class_name;
+                document.getElementById('stuFather').value = data.father_name;
+                currentStudentData = data;
+            }
+
+            searchBtn.innerHTML = 'Search';
+            searchBtn.disabled = false;
+        });
+
+        // COLLECT FEE LOGIC
+        const feeForm = document.getElementById('feeForm');
+        const collectBtn = document.getElementById('collectBtn');
+        const modal = document.getElementById('successModal');
+
+        feeForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            collectBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+            collectBtn.disabled = true;
+
+            const amount = document.getElementById('feeAmount').value;
+            const mode = document.getElementById('paymentMode').value;
+            const remarks = document.getElementById('remarks').value;
+
+            // Database me fee submit karna
+            const { data, error } = await db.from('fees_collection').insert([
+                { 
+                    adm_no: currentStudentData.adm_no, 
+                    student_name: currentStudentData.student_name,
+                    class_name: currentStudentData.class_name,
+                    amount_paid: amount,
+                    payment_mode: mode,
+                    remarks: remarks,
+                    payment_date: new Date().toISOString()
+                }
+            ]);
+
+            if (error) {
+                alert("Database Error: Is error ka matlab hai aapne Supabase me 'fees_collection' naam ki table nahi banayi hai. Kripya pehle table banayein.\n\nError details: " + error.message);
+                collectBtn.innerHTML = '<i class="fa-solid fa-receipt"></i> Collect Fee';
+                collectBtn.disabled = false;
+                return;
+            }
+
+            // Success
+            collectBtn.innerHTML = '<i class="fa-solid fa-receipt"></i> Collect Fee';
+            collectBtn.disabled = false;
+            modal.classList.add('modal-active');
+        });
+
+        // Close Modal and Reset Page
+        document.getElementById('closeModalBtn').addEventListener('click', () => {
+            modal.classList.remove('modal-active');
+            feeForm.reset();
+            document.getElementById('searchAdmNo').value = '';
+            formOverlay.classList.remove('hidden'); // lock form again
+        });
+    </script>
+</body>
+</html>

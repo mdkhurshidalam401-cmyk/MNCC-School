@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Structure - School ERP</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        aside::-webkit-scrollbar { width: 4px; }
+        aside::-webkit-scrollbar-track { background: transparent; }
+        aside::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+        main::-webkit-scrollbar { width: 6px; }
+        main::-webkit-scrollbar-track { background: #f0f4f8; }
+        main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        tr { transition: background-color 0.2s ease; }
+        tr:hover { background-color: #f8fafc; }
+    </style>
+</head>
+<body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
+
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20">
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#003126] z-10">
+            <div class="bg-[#00c3a2] text-[#003126] w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+                <i class="fa-solid fa-school text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-sm font-bold leading-tight tracking-wide text-white">data click education</h1>
+                <p class="text-[10px] text-[#8aa8a3] mt-0.5">Management System</p>
+            </div>
+        </div>
+
+        <div class="p-4 flex items-center border-b border-white/10">
+            <div class="w-9 h-9 rounded-full bg-[#e0fcf4] text-[#003126] flex items-center justify-center font-bold mr-3 text-sm">S</div>
+            <div>
+                <h2 class="text-[13px] font-semibold text-white">Super Administrator</h2>
+                <p class="text-[11px] text-yellow-400 mt-0.5"><i class="fa-solid fa-star text-[10px]"></i> Super Admin</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-3 py-6 text-[14px] font-medium">
+            <div class="mb-3 text-[11px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">MAIN</div>
+            <a href="index.html" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-6 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-lg"></i> Dashboard</a>
+
+            <div class="mb-3 text-[11px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STUDENTS</div>
+            <a href="#" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-clipboard w-6 text-lg"></i> Admission Enquiry</a>
+            <a href="students.html" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-users w-6 text-lg"></i> All Students</a>
+            <a href="admission.html" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-6 text-gray-200 transition-colors"><i class="fa-solid fa-user-plus w-6 text-lg"></i> New Admission</a>
+
+            <div class="mb-3 text-[11px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FEES</div>
+            <!-- Fee Structure Active hai -->
+            <a href="fee_structure.html" class="flex items-center px-4 py-2.5 bg-[#00c3a2] text-white rounded-md mb-1 shadow-sm"><i class="fa-solid fa-list-ul w-6 text-lg"></i> Fee Structure</a>
+            <a href="fee_collection.html" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-lg"></i> Fee Collection</a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
+            <div>
+                <h2 class="text-2xl font-bold text-[#102a43]">Fee Structure</h2>
+                <p class="text-xs text-gray-500 mt-1">Manage and view class-wise fee distribution.</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-sm font-medium text-gray-600 flex items-center gap-2 bg-gray-50 px-4 py-1.5 rounded-full border border-gray-200"><i class="fa-regular fa-calendar text-[#00c3a2]"></i> Session: 2027-28</div>
+                <button class="bg-[#00c3a2] hover:bg-[#00a68d] text-white px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2 shadow-md">
+                    <i class="fa-solid fa-plus"></i> Add New Category
+                </button>
+            </div>
+        </header>
+
+        <div class="p-8">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
+                
+                <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                    <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-layer-group mr-2 text-[#00c3a2]"></i> Monthly Fee Chart</h3>
+                    <button class="border border-gray-300 text-gray-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition"><i class="fa-solid fa-print mr-2"></i> Print Sheet</button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[800px]">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-500 text-[11px] uppercase tracking-wider border-b border-gray-200">
+                                <th class="p-4 font-semibold">Class Name</th>
+                                <th class="p-4 font-semibold">Tuition Fee</th>
+                                <th class="p-4 font-semibold">Computer Fee</th>
+                                <th class="p-4 font-semibold">Transport (Avg)</th>
+                                <th class="p-4 font-semibold">Total Monthly</th>
+                                <th class="p-4 font-semibold text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm text-gray-700">
+                            <!-- Pre-Nursery to UKG -->
+                            <tr class="border-b border-gray-50">
+                                <td class="p-4 font-bold text-gray-800"><span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">Pre-Nursery - UKG</span></td>
+                                <td class="p-4 text-gray-600 font-medium">₹ 800</td>
+                                <td class="p-4 text-gray-600 font-medium">₹ 0</td>
+                                <td class="p-4 text-gray-600 font-medium">₹ 500</td>
+                                <td class="p-4 text-[#00c3a2] font-bold">₹ 1300</td>
+                                <td class="p-4 text-center">
+                                    <button class="text-blue-500 hover:text-blue-700 hover:bg-blue-50 w-8 h-8 rounded-full transition"><i class="fa-regular fa-pen-to-square"></i></button>
+                                </td>
+                            </tr>
+                            
+                            <!-- Class 1 to 5 -->
+                            <tr class="border-b border-gray-50">
+                                <td class="p-4 font-bold text-gray-800"><span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs">Class 1 - Class 5</span></td>
+                                <td class="p-4 text-gray-600 font-medium">₹ 1200</td>
+                                <td class="p-4 text-gray-600 font-medium">₹ 200</td>
+                                <td class="p-4 text-gray-600 font-medium">₹ 600</td>
+                                <td class="p-4 text-[#00c3a2] font-bold">₹ 2000</td>
+                                <td class="p-4 text-center">
+                                    <button class="text-blue-500 hover:text-blue-700 hover:bg-blue-50 w-8 h-8 rounded-full transition"><i class="fa-regular fa-pen-to-square"></i></button>
+                                </td>
+                            </tr>
+
+                            <!-- Class 6 to 8 -->
+                            <tr class="border-b border-gray-50">
+                                <td class="p-4 font-bold text-gray-800"><span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs">Class 6 - Class 8</span></td>
+                                <td class="p-4 text-gray-600 font-medium">₹ 1500</td>
+                                <td class="p-4 text-gray-600 font-medium">₹ 300</td>
+                                <td class="p-4 text-gray-600 font-medium">₹ 700</td>
+                                <td class="p-4 text-[#00c3a2] font-bold">₹ 2500</td>
+                                <td class="p-4 text-center">
+                                    <button class="text-blue-500 hover:text-blue-700 hover:bg-blue-50 w-8 h-8 rounded-full transition"><i class="fa-regular fa-pen-to-square"></i></button>
+                                </td>
+                            </tr>
+
+                            <!-- Class 9 & 10 -->
+                            <tr class="border-b border-gray-50">
+                                <td class="p-4 font-bold text-gray-800"><span class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-xs">Class 9 & Class 10</span></td>
+                                <td class="p-4 text-gray-600 font-medium">₹ 2000</td>
+                                <td class="p-4 text-gray-600 font-medium">₹ 500</td>
+                                <td class="p-4 text-gray-600 font-medium">₹ 800</td>
+                                <td class="p-4 text-[#00c3a2] font-bold">₹ 3300</td>
+                                <td class="p-4 text-center">
+                                    <button class="text-blue-500 hover:text-blue-700 hover:bg-blue-50 w-8 h-8 rounded-full transition"><i class="fa-regular fa-pen-to-square"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
