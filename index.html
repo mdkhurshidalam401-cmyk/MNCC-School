@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - School ERP</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Supabase Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -20,38 +23,47 @@
 </head>
 <body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
 
-    <!-- SIDEBAR -->
+    <!-- SIDEBAR (Poora Original Image Jaisa) -->
     <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20">
+        
         <!-- Logo Section -->
-        <div class="p-5 flex items-center border-b border-white/5 sticky top-0 bg-[#003126] z-10">
-            <div class="bg-[#00927a] text-[#003126] w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#003126] z-10">
+            <div class="bg-[#00c3a2] text-[#003126] w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
                 <i class="fa-solid fa-school text-xl"></i>
             </div>
             <div>
-                <h1 class="text-[16px] font-bold leading-tight tracking-wide text-white">data click education</h1>
-                <p class="text-[12px] text-[#8aa8a3] mt-0.5">Management System</p>
+                <h1 class="text-sm font-bold leading-tight tracking-wide text-white">data click education</h1>
+                <p class="text-[10px] text-[#8aa8a3] mt-0.5">Management System</p>
+            </div>
+        </div>
+
+        <!-- Super Admin Profile -->
+        <div class="p-4 flex items-center border-b border-white/10">
+            <div class="w-9 h-9 rounded-full bg-[#e0fcf4] text-[#003126] flex items-center justify-center font-bold mr-3 text-sm">S</div>
+            <div>
+                <h2 class="text-[13px] font-semibold text-white">Super Administrator</h2>
+                <p class="text-[11px] text-yellow-400 mt-0.5"><i class="fa-solid fa-star text-[10px]"></i> Super Admin</p>
             </div>
         </div>
 
         <!-- Navigation Menu -->
-        <nav class="flex-1 px-4 py-6 text-[14.5px] font-medium">
-            <div class="mb-3 text-[12px] text-[#6b8f89] font-bold tracking-wider uppercase px-2">Main</div>
-            <!-- DASHBOARD LINK -->
+        <nav class="flex-1 px-3 py-6 text-[14px] font-medium">
+            <div class="mb-3 text-[11px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">MAIN</div>
             <a href="index.html" class="flex items-center px-4 py-2.5 bg-[#00c3a2] text-white rounded-md mb-6 shadow-sm"><i class="fa-solid fa-house w-6 text-lg"></i> Dashboard</a>
 
-            <div class="mb-3 text-[12px] text-[#6b8f89] font-bold tracking-wider uppercase px-2">Students</div>
-            <!-- ADMISSION ENQUIRY -->
+            <div class="mb-3 text-[11px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STUDENTS</div>
             <a href="#" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-clipboard w-6 text-lg"></i> Admission Enquiry</a>
-            
-            <!-- ALL STUDENTS LINK -->
             <a href="students.html" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-users w-6 text-lg"></i> All Students</a>
-            
-            <!-- NEW ADMISSION LINK -->
-            <a href="admission.html" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-user-plus w-6 text-lg"></i> New Admission</a>
+            <a href="admission.html" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-6 text-gray-200 transition-colors"><i class="fa-solid fa-user-plus w-6 text-lg"></i> New Admission</a>
+
+            <!-- FEES Section -->
+            <div class="mb-3 text-[11px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FEES</div>
+            <a href="#" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-lg"></i> Fee Structure</a>
+            <a href="#" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-lg"></i> Fee Collection</a>
         </nav>
     </aside>
 
-    <!-- MAIN CONTENT -->
+    <!-- MAIN CONTENT - DASHBOARD -->
     <main class="flex-1 flex flex-col h-full overflow-y-auto">
         <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
             <div>
@@ -59,135 +71,169 @@
             </div>
             <div class="flex items-center gap-4">
                 <div class="text-sm font-medium text-gray-600 flex items-center gap-2 bg-gray-50 px-4 py-1.5 rounded-full border border-gray-200"><i class="fa-regular fa-calendar text-[#00c3a2]"></i> Session: 2027-28</div>
+                <divMain aapki image directly nahi dekh sakta, lekin yahan ek **professional aur clean layout** ka complete `index.html` code hai. Isme ek modern sidebar, top header (navbar), aur well-spaced main content area add kiya gaya hai jo dekhne me bahut premium lagega. 
+
+Aap is pure code ko copy karke apne `index.html` file me paste kar lijiye:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Dashboard Layout</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            display: flex;
+            flex-direction: column;
+            transition: 0.3s;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            background-color: #1a252f;
+            border-bottom: 1px solid #34495e;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding-top: 20px;
+            flex: 1;
+        }
+
+        .sidebar-menu li {
+            width: 100%;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 15px 25px;
+            color: #bdc3c7;
+            text-decoration: none;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        .sidebar-menu a:hover {
+            background-color: #34495e;
+            color: #fff;
+            padding-left: 30px; /* Slide effect on hover */
+        }
+
+        /* Main Content Area */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Top Header Styling */
+        .top-header {
+            height: 70px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            justify-content: space-between;
+        }
+
+        .top-header h2 {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+        }
+
+        /* Main Content Box */
+        .content {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .card {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            System UI
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#">🏠 Dashboard</a></li>
+            <li><a href="#">📁 Projects</a></li>
+            <li><a href="#">📈 Analytics</a></li>
+            <li><a href="#">⚙️ Settings</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+        
+        <!-- TOP HEADER -->
+        <header class="top-header">
+            <h2>Welcome Back!</h2>
+            <div class="user-profile">
+                👤 Admin
             </div>
         </header>
 
-        <div class="p-8">
-            <div class="mb-8">
-                <h3 class="text-xl font-bold text-gray-800">Welcome back, Super Admin! 👋</h3>
-                <p class="text-sm text-gray-500 mt-1">Here is what's happening in your school today.</p>
+        <!-- ACTUAL CONTENT AREA -->
+        <main class="content">
+            <div class="card">
+                <h3>Main Dashboard Section</h3>
+                <p>Yahan par aapka system ka main data aur forms aayenge. Ye layout bilkul responsive aur clean hai.</p>
             </div>
 
-            <!-- Stats Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Students</p>
-                        <h4 id="totalStudentsCount" class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h4>
-                        <p class="text-xs text-green-500 font-medium mt-2">Active records</p>
-                    </div>
-                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center">
-                        <i class="fa-solid fa-user-graduate text-2xl text-blue-500"></i>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Staff</p>
-                        <h4 class="text-3xl font-bold text-gray-800">84</h4>
-                    </div>
-                    <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center"><i class="fa-solid fa-chalkboard-user text-2xl text-purple-500"></i></div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Fee Collected</p>
-                        <h4 class="text-3xl font-bold text-gray-800">₹0</h4>
-                    </div>
-                    <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center"><i class="fa-solid fa-indian-rupee-sign text-2xl text-green-500"></i></div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Today's Attendance</p>
-                        <h4 class="text-3xl font-bold text-gray-800">0%</h4>
-                    </div>
-                    <div class="w-14 h-14 rounded-full bg-orange-50 flex items-center justify-center"><i class="fa-solid fa-calendar-check text-2xl text-orange-500"></i></div>
-                </div>
+            <div class="card">
+                <h3>Additional Information</h3>
+                <p>Agar aapko isme koi specific color, chart ya table add karna hai jo aapki image me tha, toh aap is card ke andar apna HTML code daal sakte hain.</p>
             </div>
+        </main>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Recent Admissions -->
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 col-span-2 overflow-hidden flex flex-col">
-                    <div class="p-6 border-b border-gray-100 flex justify-between items-center">
-                        <h3 class="text-lg font-bold text-gray-800">Recent Admissions</h3>
-                        <a href="students.html" class="text-[#00c3a2] text-sm font-semibold hover:underline">View All</a>
-                    </div>
-                    <div class="overflow-x-auto flex-1">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">
-                                    <th class="p-4 font-semibold">Adm No</th>
-                                    <th class="p-4 font-semibold">Student Name</th>
-                                    <th class="p-4 font-semibold">Class</th>
-                                    <th class="p-4 font-semibold">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="recentAdmissionsTable" class="text-sm">
-                                <tr>
-                                    <td colspan="4" class="p-8 text-center text-gray-400">
-                                        <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2 text-[#00c3a2]"></i>
-                                        <p>Loading recent admissions...</p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+    </div>
 
-    <script>
-        // VARIABLE NAME CHANGED TO 'db' TO FIX JAVASCRIPT CONFLICT
-        const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
-        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-        async function fetchDashboardData() {
-            try {
-                // Using 'db' instead of 'supabase'
-                const { data, error } = await db
-                    .from('students')
-                    .select('*')
-                    .order('id', { ascending: false });
-
-                if (error) throw error;
-
-                document.getElementById('totalStudentsCount').innerText = data.length;
-                const tbody = document.getElementById('recentAdmissionsTable');
-                tbody.innerHTML = '';
-
-                if (data.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-500">No students registered yet.</td></tr>`;
-                    return;
-                }
-
-                const recentStudents = data.slice(0, 4);
-                
-                recentStudents.forEach(student => {
-                    const tr = document.createElement('tr');
-                    tr.className = 'border-b border-gray-50 hover:bg-gray-50/50 transition';
-                    const initial = student.student_name ? student.student_name.charAt(0).toUpperCase() : 'U';
-
-                    tr.innerHTML = `
-                        <td class="p-4 font-medium text-gray-800">${student.adm_no || '-'}</td>
-                        <td class="p-4 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">${initial}</div>
-                            ${student.student_name || 'N/A'}
-                        </td>
-                        <td class="p-4 text-gray-600"><span class="bg-gray-100 px-2 py-1 rounded text-xs font-medium border border-gray-200">${student.class_name || '-'}</span></td>
-                        <td class="p-4"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold">ACTIVE</span></td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            } catch (error) {
-                console.error("Dashboard fetch error:", error);
-                document.getElementById('totalStudentsCount').innerText = 'Error';
-                document.getElementById('recentAdmissionsTable').innerHTML = `<tr><td colspan="4" class="p-4 text-center text-red-500">Failed to load data.</td></tr>`;
-            }
-        }
-        window.addEventListener('DOMContentLoaded', fetchDashboardData);
-    </script>
 </body>
 </html>
