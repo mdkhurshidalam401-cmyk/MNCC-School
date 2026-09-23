@@ -36,6 +36,14 @@
             </div>
         </div>
 
+        <div class="p-4 flex items-center border-b border-white/10">
+            <div class="w-8 h-8 rounded-full bg-teal-100 text-[#003126] flex items-center justify-center font-bold mr-3 text-sm">S</div>
+            <div>
+                <h2 class="text-[13px] font-semibold">Super Administrator</h2>
+                <p class="text-[10px] text-yellow-400"><i class="fa-solid fa-star"></i> Super Admin</p>
+            </div>
+        </div>
+
         <nav class="flex-1 px-2 py-4 text-[12px]">
             <div class="mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">MAIN</div>
             <a href="index.html" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300 transition-colors"><i class="fa-solid fa-house w-6"></i> Dashboard</a>
@@ -111,18 +119,18 @@
 
     <!-- JAVASCRIPT: DATA FETCHING LOGIC -->
     <script>
-        // SUPABASE CONNECTION (Sahi anon public JWT Key yahan lagayi gayi hai)
+        // ERROR FIX: Changed variable to 'db' instead of 'supabase'
         const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         const tableBody = document.getElementById('studentsTableBody');
         const countDisplay = document.getElementById('totalStudentsCount');
 
         async function loadStudents() {
             try {
-                // Database se data fetch karna
-                const { data, error } = await supabase
+                // Database se data fetch karna using 'db'
+                const { data, error } = await db
                     .from('students')
                     .select('*')
                     .order('id', { ascending: false });

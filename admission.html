@@ -120,10 +120,11 @@
     </div>
 
     <script>
-        // SUPABASE CONNECTION (Sahi anon public JWT Key ke sath)
         const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        
+        // Error fix: Use 'db' instead of 'supabase' to avoid conflict
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         const form = document.getElementById('admissionForm');
         const modal = document.getElementById('successModal');
@@ -140,8 +141,8 @@
             const admNo = document.getElementById('admNo').value;
             const mobile = document.getElementById('mobileNo').value;
 
-            // Database me data bhejna
-            const { data, error } = await supabase.from('students').insert([
+            // Updated to use db.from
+            const { data, error } = await db.from('students').insert([
                 { adm_no: admNo, student_name: name, father_name: father, class_name: studentClass, mobile_no: mobile }
             ]);
 
@@ -152,20 +153,16 @@
                 return;
             }
 
-            // Agar save ho gaya to modal dikhana
             registerBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Save Record';
             registerBtn.disabled = false;
             modal.classList.add('modal-active');
             
-            // Agla admission number set karna
             const currentNo = parseInt(admNo.split('-')[2]);
             document.getElementById('admNo').value = `ADM-26-${currentNo + 1}`;
         });
 
         document.getElementById('closeModalBtn').addEventListener('click', () => {
             modal.classList.remove('modal-active');
-            
-            // Sirf Adm No ko chhodkar baki form clear karna
             const currentAdmNo = document.getElementById('admNo').value;
             form.reset();
             document.getElementById('admNo').value = currentAdmNo;
