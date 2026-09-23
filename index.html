@@ -3,198 +3,319 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - School ERP Premium</title>
-    <!-- Tailwind CSS CDN (Using a stable version) -->
+    <title>Admin - School ERP</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Inter"', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            deepGreen: '#003126', // Richer sidebar green
-                            accentTeal: '#00c3a2', // Vibrant, clean active color
-                            formBorder: '#d9e2ec', // Clean form input border
-                            formFocus: '#00c3a2',
-                            lightBg: '#f0f4f8' // Very clean off-white background
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Font Awesome for Icons (using modern solid icons) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Add font family reference -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        /* Custom smooth scrollbar for sidebar */
-        aside::-webkit-scrollbar {
-            width: 5px;
-        }
-        aside::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.05);
-        }
-        aside::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.1);
-            border-radius: 5px;
-        }
-        aside::-webkit-scrollbar-thumb:hover {
-            background: rgba(255,255,255,0.2);
-        }
+        body { font-family: 'Inter', sans-serif; }
+        aside::-webkit-scrollbar { width: 4px; }
+        aside::-webkit-scrollbar-track { background: transparent; }
+        aside::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+        main::-webkit-scrollbar { width: 6px; }
+        main::-webkit-scrollbar-track { background: #f0f4f8; }
+        main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     </style>
 </head>
-<body class="bg-brand-lightBg text-[#334e68] flex h-screen overflow-hidden antialiased">
+<body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
 
-    <!-- SIDEBAR (More refined rich green) -->
-    <aside class="w-72 bg-brand-deepGreen text-white flex flex-col h-full overflow-y-auto hidden md:flex transition-all duration-300">
-        <!-- Logo Area with Subtle Gradient -->
-        <div class="p-6 flex items-center border-b border-white/5 bg-gradient-to-b from-brand-deepGreen to-[#004c3e]">
-            <div class="bg-white/10 text-brand-accentTeal p-2.5 rounded-lg mr-3 shadow-md"><i class="fa-solid fa-school text-xl"></i></div>
-            <div class="flex-1">
-                <h1 class="text-sm font-bold leading-tight tracking-tight">data click education</h1>
-                <p class="text-[10px] text-teal-100 font-medium">Management System v1.5</p>
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 pb-10">
+        <!-- Logo -->
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#003126] z-10">
+            <div class="bg-white/10 text-[#00c3a2] p-2 rounded mr-3"><i class="fa-solid fa-school text-lg"></i></div>
+            <div>
+                <h1 class="text-sm font-bold leading-tight">data click education</h1>
+                <p class="text-[10px] text-teal-100/70">Management System</p>
             </div>
-            <button class="text-teal-200 md:hidden"><i class="fa-solid fa-times"></i></button>
         </div>
 
         <!-- User Profile -->
-        <div class="p-5 flex items-center border-b border-white/5">
-            <div class="w-10 h-10 rounded-full bg-teal-100 text-brand-deepGreen flex items-center justify-center font-semibold mr-3 shadow-inner">S</div>
+        <div class="p-4 flex items-center border-b border-white/10">
+            <div class="w-8 h-8 rounded-full bg-teal-100 text-[#003126] flex items-center justify-center font-bold mr-3 text-sm">S</div>
             <div>
-                <h2 class="text-sm font-semibold text-white">Super Administrator</h2>
-                <p class="text-[11px] text-yellow-300"><i class="fa-solid fa-star-of-life mr-1 text-teal-300"></i> <span class="text-teal-200">Super Admin</span></p>
+                <h2 class="text-[13px] font-semibold">Super Administrator</h2>
+                <p class="text-[10px] text-yellow-400"><i class="fa-solid fa-star"></i> Super Admin</p>
             </div>
-            <i class="fa-solid fa-chevron-right text-xs text-teal-300 ml-auto"></i>
         </div>
 
-        <!-- Navigation Menu -->
-        <nav class="flex-1 px-3 py-6 text-[13px]">
-            <div class="mb-3 text-[11px] text-teal-200 px-3 font-semibold tracking-wider uppercase opacity-70">MAIN</div>
-             <a href="#" class="flex items-center px-3 py-2.5 hover:bg-[#004233] hover:text-white rounded-md mb-1.5 text-teal-50 group transition">
-                <i class="fa-solid fa-chart-line w-6 text-teal-300 group-hover:text-white transition"></i> Dashboard
-            </a>
-
-            <div class="mt-6 mb-3 text-[11px] text-teal-200 px-3 font-semibold tracking-wider uppercase opacity-70">STUDENTS</div>
-            <a href="#" class="flex items-center px-3 py-2.5 hover:bg-[#004233] hover:text-white rounded-md mb-1.5 text-teal-50 group transition">
-                <i class="fa-solid fa-clipboard-question w-6 text-teal-300 group-hover:text-white transition"></i> Admission Enquiry
-            </a>
-            <a href="#" class="flex items-center px-3 py-2.5 hover:bg-[#004233] hover:text-white rounded-md mb-1.5 text-teal-50 group transition">
-                <i class="fa-solid fa-users w-6 text-teal-300 group-hover:text-white transition"></i> All Students
-            </a>
-            <!-- Active Menu with Accent Border -->
-            <a href="#" class="flex items-center px-3 py-2.5 bg-brand-accentTeal text-white rounded-md mb-1.5 font-medium shadow-md group relative">
-                <div class="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-1 bg-white rounded-r-sm"></div>
-                <i class="fa-solid fa-user-plus w-6 ml-1.5"></i> New Admission
-            </a>
+        <!-- Navigation Menus -->
+        <nav class="flex-1 px-2 py-4 text-[12px]">
             
-            <div class="mt-6 mb-3 text-[11px] text-teal-200 px-3 font-semibold tracking-wider uppercase opacity-70">FEES</div>
-            <a href="#" class="flex items-center px-3 py-2.5 hover:bg-[#004233] hover:text-white rounded-md mb-1.5 text-teal-50 group transition">
-                <i class="fa-solid fa-list w-6 text-teal-300 group-hover:text-white transition"></i> Fee Structure
-            </a>
-            <a href="#" class="flex items-center px-3 py-2.5 hover:bg-[#004233] hover:text-white rounded-md mb-1.5 text-teal-50 group transition">
-                <i class="fa-solid fa-money-bill-wave w-6 text-teal-300 group-hover:text-white transition"></i> Fee Collection
-            </a>
+            <div class="mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">MAIN</div>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-house w-6"></i> Dashboard</a>
+
+            <div class="mt-4 mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">STUDENTS</div>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-regular fa-clipboard w-6"></i> Admission Enquiry</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-users w-6"></i> All Students</a>
+            <a href="#" class="flex items-center px-2 py-2 bg-[#00c3a2] text-white rounded mb-1 font-medium"><i class="fa-solid fa-user-plus w-6"></i> New Admission</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-box-archive w-6"></i> Passed Out Archive</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-arrow-trend-up w-6"></i> Promotion</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-file-lines w-6"></i> Session Report</a>
+
+            <div class="mt-4 mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">FEES</div>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-list-ul w-6"></i> Fee Structure</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-money-bill w-6"></i> Fee Collection</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-green-400"><i class="fa-solid fa-bolt w-6"></i> Quick Fee Collect</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-green-400"><i class="fa-brands fa-whatsapp w-6"></i> WhatsApp Reminder</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-red-400"><i class="fa-solid fa-trash w-6"></i> Fee Deletion Log</a>
+
+            <div class="mt-4 mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">ACADEMICS</div>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-regular fa-calendar-check w-6"></i> Attendance</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-chart-line w-6"></i> Attendance Report</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-file-signature w-6"></i> Exams</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-pen w-6"></i> Marks Entry</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-square-poll-vertical w-6"></i> Class Result</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-book w-6"></i> Subjects</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-link w-6"></i> Class-Subject Map</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-regular fa-calendar-days w-6"></i> Exam Schedule</a>
+
+            <div class="mt-4 mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">FINANCE</div>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-file-invoice w-6"></i> Expenses</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-chart-pie w-6"></i> Reports</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-purple-400"><i class="fa-solid fa-scale-balanced w-6"></i> Income vs Expense</a>
+
+            <div class="mt-4 mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">STAFF / PAYROLL</div>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-user-tie w-6"></i> Staff Management</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-money-check-dollar w-6"></i> Salary Management</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-chart-bar w-6"></i> Salary Report</a>
+
+            <div class="mt-4 mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">COMMUNICATION</div>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-bell w-6"></i> Notices</a>
+
+            <div class="mt-4 mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">ADMIN</div>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-gear w-6"></i> Admin Settings</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-sliders w-6"></i> Settings</a>
+
+            <div class="mt-4 mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">ACCOUNT</div>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300"><i class="fa-solid fa-key w-6"></i> Password Change</a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-red-400"><i class="fa-solid fa-right-from-bracket w-6"></i> Logout</a>
         </nav>
-        
-        <!-- Sidebar Bottom Footer -->
-        <div class="p-4 border-t border-white/5 bg-[#002a20] text-center text-xs text-teal-200">
-            © 2026 MNCC-School. All rights reserved.
-        </div>
     </aside>
 
     <!-- MAIN CONTENT -->
     <main class="flex-1 flex flex-col h-full overflow-y-auto">
         
-        <!-- Top Header (Title changed to Admin only) -->
-        <header class="bg-white px-8 py-5 border-b border-[#e4e7eb] flex justify-between items-center sticky top-0 z-10 transition-all duration-300">
-            <div class="flex items-center gap-4">
-                <button class="md:hidden text-gray-500 hover:text-brand-accentTeal"><i class="fa-solid fa-bars text-lg"></i></button>
-                <h2 class="text-2xl font-bold text-[#102a43] leading-tight">Admin</h2>
+        <!-- Header -->
+        <header class="bg-[#f0f4f8] px-6 py-4 flex justify-between items-center sticky top-0 z-10">
+            <div>
+                <h2 class="text-xl font-bold text-[#102a43]">Admin</h2>
             </div>
             <div class="flex items-center gap-4">
-                <div class="text-sm font-medium text-gray-600 border border-[#e4e7eb] px-4 py-1.5 rounded-full bg-white flex items-center shadow-inner gap-2"><i class="fa-regular fa-calendar-days text-brand-accentTeal"></i> Academic Year: <span class="font-bold">2027-28</span></div>
-                <button class="bg-[#e0fcf4] hover:bg-[#bbf0e2] text-brand-accentTeal px-5 py-2 rounded-full text-xs font-semibold border border-[#b2f2e3] transition flex items-center gap-1.5"><i class="fa-solid fa-angle-left"></i> Back to Students</button>
+                <div class="text-sm font-medium text-gray-600 flex items-center gap-2"><i class="fa-regular fa-calendar"></i> 2027-28</div>
+                <button class="bg-[#e0fcf4] text-[#00c3a2] px-4 py-1.5 rounded-full text-xs font-semibold border border-[#b2f2e3]"><i class="fa-solid fa-arrow-left mr-1"></i> Back to Students</button>
+                <div class="flex gap-1.5 ml-2">
+                    <div class="w-4 h-4 rounded-full bg-purple-600"></div>
+                    <div class="w-4 h-4 rounded-full bg-pink-500"></div>
+                    <div class="w-4 h-4 rounded-full bg-blue-600"></div>
+                    <div class="w-4 h-4 rounded-full bg-[#00c3a2]"></div>
+                </div>
             </div>
         </header>
 
-        <!-- Form Container with More Padding -->
-        <div class="p-10 transition-all duration-300 flex-1 flex flex-col">
-            <form class="bg-white rounded-2xl shadow-xl shadow-brand-lightBg/10 border border-[#f0f4f8] p-10 flex-1 flex flex-col space-y-12">
+        <!-- Form Container -->
+        <div class="p-6 pt-0">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 flex-1">
                 
-                <!-- Section 1: Basic Information -->
-                <div>
-                    <h3 class="text-lg font-bold text-brand-deepGreen mb-6 flex items-center border-b border-[#e4e7eb] pb-3"><i class="fa-solid fa-user-tag mr-2.5 text-brand-accentTeal"></i> Basic Information</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Input Group -->
-                        <div class="col-span-1">
-                            <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">ADM NO <span class="text-red-500">*</span></label>
-                            <input type="text" value="ADM-26-1022" class="w-full border border-brand-formBorder rounded-lg p-2.5 text-sm bg-[#fafcfd] focus:outline-none focus:border-brand-formFocus transition shadow-inner font-mono text-gray-600" readonly>
-                        </div>
-                        <div class="col-span-1 md:col-span-3">
-                            <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">ADMISSION FORM NO (OPTIONAL)</label>
-                            <input type="text" placeholder="e.g. FORM-26-1001" class="w-full border border-brand-formBorder rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-formFocus transition shadow-inner placeholder:text-gray-400">
-                        </div>
-                        
-                        <div class="col-span-1 lg:col-span-4">
-                            <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">FULL NAME <span class="text-red-500">*</span></label>
-                            <input type="text" placeholder="Student full name" class="w-full border border-brand-formBorder rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-formFocus transition shadow-inner placeholder:text-gray-400">
-                        </div>
+                <div class="mb-6">
+                    <h2 class="text-xl font-bold text-gray-800">New Admission</h2>
+                    <p class="text-xs text-gray-500">Register a new student</p>
+                </div>
 
-                        <div class="col-span-1 lg:col-span-2">
-                            <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">FATHER'S NAME</label>
-                            <input type="text" placeholder="Father's name" class="w-full border border-brand-formBorder rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-formFocus transition shadow-inner placeholder:text-gray-400">
-                        </div>
-                        <div class="col-span-1 lg:col-span-2">
-                            <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">MOTHER'S NAME</label>
-                            <input type="text" placeholder="Mother's name" class="w-full border border-brand-formBorder rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-formFocus transition shadow-inner placeholder:text-gray-400">
+                <form class="space-y-8">
+                    <!-- Basic Information -->
+                    <div>
+                        <h3 class="text-[15px] font-bold text-gray-800 mb-4 flex items-center border-b border-gray-100 pb-2"><i class="fa-regular fa-id-card mr-2 text-[#00c3a2]"></i> Basic Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">ADM NO <span class="text-red-500">*</span></label>
+                                <input type="text" value="ADM-26-1022" class="w-full border border-gray-300 rounded p-2 text-sm bg-gray-50 outline-none" readonly>
+                            </div>
+                            <div class="col-span-3">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">ADMISSION FORM NO (OPTIONAL - FROM ENQUIRY)</label>
+                                <input type="text" placeholder="e.g. FORM-26-1001 - type and press Tab/Enter to auto-fill" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
+                            </div>
+                            
+                            <div class="col-span-4">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">FULL NAME <span class="text-red-500">*</span></label>
+                                <input type="text" placeholder="Student full name" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
+                            </div>
+
+                            <div class="col-span-2">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">FATHER'S NAME</label>
+                                <input type="text" placeholder="Father's name" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
+                            </div>
+                            <div class="col-span-2">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">MOTHER'S NAME</label>
+                                <input type="text" placeholder="Mother's name" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
+                            </div>
+
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">DATE OF BIRTH</label>
+                                <input type="date" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2] text-gray-500">
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">GENDER</label>
+                                <select class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2] text-gray-500">
+                                    <option>Select</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">BLOOD GROUP</label>
+                                <select class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2] text-gray-500">
+                                    <option>Select</option>
+                                    <option>A+</option>
+                                    <option>B+</option>
+                                    <option>O+</option>
+                                </select>
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">AADHAAR NO</label>
+                                <input type="text" placeholder="12-digit number" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
+                            </div>
+
+                            <div class="col-span-4">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">PEN NO (OPTIONAL)</label>
+                                <input type="text" placeholder="Permanent Educ" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
+                                <p class="text-[10px] text-gray-400 mt-1"><i class="fa-solid fa-circle-info"></i> Har student ka unique PEN number - nahi hone par khali chalte hain</p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Section 2: Class & Admission -->
-                <div>
-                    <h3 class="text-lg font-bold text-brand-deepGreen mb-6 flex items-center border-b border-[#e4e7eb] pb-3"><i class="fa-solid fa-graduation-cap mr-2.5 text-brand-accentTeal"></i> Class & Admission</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">CLASS <span class="text-red-500">*</span></label>
-                            <select class="w-full border border-brand-formBorder rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-formFocus transition shadow-inner bg-white appearance-none text-gray-700">
-                                <option>Select Class</option>
-                                <option>Class 1</option>
-                                <option>Class 2</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">SECTION</label>
-                            <select class="w-full border border-brand-formBorder rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-formFocus transition shadow-inner bg-white appearance-none text-gray-700">
-                                <option>Select</option>
-                                <option>A</option>
-                                <option>B</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">STATUS</label>
-                            <select class="w-full border border-brand-formBorder rounded-lg p-2.5 text-sm focus:outline-none focus:border-brand-formFocus transition shadow-inner bg-white appearance-none text-gray-700">
-                                <option>Active</option>
-                                <option>Inactive</option>
-                            </select>
+                    <!-- Class & Admission -->
+                    <div>
+                        <h3 class="text-[15px] font-bold text-gray-800 mb-4 flex items-center border-b border-gray-100 pb-2"><i class="fa-solid fa-graduation-cap mr-2 text-[#00c3a2]"></i> Class & Admission</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <div class="col-span-2">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">CLASS <span class="text-red-500">*</span></label>
+                                <select class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2] text-gray-500">
+                                    <option>Select Class</option>
+                                </select>
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">SECTION</label>
+                                <select class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2] text-gray-500">
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">STATUS</label>
+                                <select class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2] text-gray-500">
+                                    <option>Active</option>
+                                    <option>Inactive</option>
+                                </select>
+                            </div>
+
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">ADMISSION DATE</label>
+                                <input type="date" value="2026-09-23" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2] text-gray-500">
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">CATEGORY</label>
+                                <select class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2] text-gray-500">
+                                    <option>Select</option>
+                                    <option>General</option>
+                                    <option>OBC</option>
+                                </select>
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">RELIGION</label>
+                                <select class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2] text-gray-500">
+                                    <option>Select</option>
+                                    <option>Hindu</option>
+                                    <option>Muslim</option>
+                                </select>
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">NATIONALITY</label>
+                                <select class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2] text-gray-500">
+                                    <option>Indian</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Action Buttons (Align bottom) -->
-                <div class="flex items-center gap-5 pt-8 mt-auto border-t border-[#e4e7eb]">
-                    <button type="button" class="bg-brand-accentTeal hover:bg-[#00a68d] text-white px-8 py-3 rounded-lg text-sm font-semibold transition flex items-center gap-2 shadow-lg shadow-brand-accentTeal/20"><i class="fa-solid fa-user-plus text-xs"></i> Register Student</button>
-                    <button type="button" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-8 py-3 rounded-lg text-sm font-semibold transition flex items-center gap-1.5">Cancel Registration</button>
-                </div>
+                    <!-- Contact Details -->
+                    <div>
+                        <h3 class="text-[15px] font-bold text-gray-800 mb-4 flex items-center border-b border-gray-100 pb-2"><i class="fa-solid fa-phone mr-2 text-[#00c3a2]"></i> Contact Details</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">MOBILE NO</label>
+                                <input type="text" placeholder="+91 XXXXX XXXXX" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">ALT MOBILE NO (FOR ID CARD)</label>
+                                <input type="text" placeholder="Alternate number" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">EMAIL</label>
+                                <input type="email" placeholder="email@example.com" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
+                            </div>
 
-            </form>
+                            <div class="col-span-2">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">ADDRESS</label>
+                                <textarea rows="2" placeholder="Full residential address" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]"></textarea>
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">PIN CODE</label>
+                                <input type="text" placeholder="e.g. 284001" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
+                            </div>
+
+                            <div class="col-span-1 md:col-span-1">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">DISTRICT</label>
+                                <input type="text" placeholder="e.g. Kanpur Nagar" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
+                            </div>
+                            <div class="col-span-2">
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">STATE</label>
+                                <input type="text" placeholder="Uttar Pradesh" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transport Fee -->
+                    <div>
+                        <h3 class="text-[15px] font-bold text-gray-800 mb-4 flex items-center border-b border-gray-100 pb-2"><i class="fa-solid fa-bus mr-2 text-orange-400"></i> Transport Fee</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">TRANSPORT FEE AMOUNT (YEARLY TOTAL)</label>
+                                <input type="text" value="0" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
+                            </div>
+                            <div class="flex items-center">
+                                <p class="text-[10px] text-gray-400 mt-4"><i class="fa-solid fa-circle-info"></i> Poore saal ki transport fee total amount daalein - donon ke hisab se: 0 = transport fee nahi lagogi.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Photo & Remarks -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-[15px] font-bold text-gray-800 mb-4 flex items-center border-b border-gray-100 pb-2"><i class="fa-solid fa-camera mr-2 text-purple-500"></i> Student Photo</h3>
+                            <div class="flex items-center gap-4">
+                                <div class="w-20 h-24 bg-gray-100 border border-gray-300 rounded flex items-center justify-center text-gray-400">
+                                    <i class="fa-solid fa-user text-3xl"></i>
+                                </div>
+                                <div>
+                                    <button type="button" class="border border-gray-300 px-4 py-1.5 rounded text-sm text-gray-600 hover:bg-gray-50"><i class="fa-solid fa-upload mr-1"></i> Choose Photo</button>
+                                    <p class="text-[10px] text-gray-400 mt-2">JPG/PNG, max 2MB</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-[15px] font-bold text-gray-800 mb-4 flex items-center border-b border-gray-100 pb-2"><i class="fa-solid fa-comment-dots mr-2 text-orange-400"></i> Remarks</h3>
+                            <textarea rows="3" placeholder="Any special notes..." class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex items-center gap-4 pt-4 border-t border-gray-100">
+                        <button type="button" class="bg-[#00c3a2] hover:bg-[#00a68d] text-white px-6 py-2 rounded text-sm font-semibold transition"><i class="fa-solid fa-user-plus mr-1"></i> Register Student</button>
+                        <button type="button" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded text-sm font-semibold transition">Cancel</button>
+                    </div>
+
+                </form>
+            </div>
         </div>
     </main>
 </body>
