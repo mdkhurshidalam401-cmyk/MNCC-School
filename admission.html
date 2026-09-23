@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Admission - School ERP</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Supabase Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -18,89 +21,198 @@
         main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .modal-active { display: flex !important; animation: fadeIn 0.3s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        /* Form Focus Styles */
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #00c3a2; box-shadow: 0 0 0 3px rgba(0, 195, 162, 0.1); }
     </style>
 </head>
 <body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
 
-    <!-- SIDEBAR (Image jaisa exact design) -->
+    <!-- SIDEBAR -->
     <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20">
-        <div class="p-5 flex items-center border-b border-white/5 sticky top-0 bg-[#003126] z-10">
-            <div class="bg-[#00927a] text-[#003126] w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#003126] z-10">
+            <div class="bg-[#00c3a2] text-[#003126] w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
                 <i class="fa-solid fa-school text-xl"></i>
             </div>
             <div>
-                <h1 class="text-[16px] font-bold leading-tight tracking-wide text-white">data click education</h1>
-                <p class="text-[12px] text-[#8aa8a3] mt-0.5">Management System</p>
+                <h1 class="text-sm font-bold leading-tight tracking-wide text-white">data click education</h1>
+                <p class="text-[10px] text-[#8aa8a3] mt-0.5">Management System</p>
             </div>
         </div>
 
-        <nav class="flex-1 px-4 py-6 text-[14.5px] font-medium">
-            <div class="mb-3 text-[12px] text-[#6b8f89] font-bold tracking-wider uppercase px-2">Main</div>
-            <a href="index.html" class="flex items-center px-4 py-2.5 hover:bg-white/5 text-gray-200 rounded-md mb-6 transition-colors"><i class="fa-solid fa-house w-6 text-lg"></i> Dashboard</a>
+        <div class="p-4 flex items-center border-b border-white/10">
+            <div class="w-9 h-9 rounded-full bg-[#e0fcf4] text-[#003126] flex items-center justify-center font-bold mr-3 text-sm">S</div>
+            <div>
+                <h2 class="text-[13px] font-semibold text-white">Super Administrator</h2>
+                <p class="text-[11px] text-yellow-400 mt-0.5"><i class="fa-solid fa-star text-[10px]"></i> Super Admin</p>
+            </div>
+        </div>
 
-            <div class="mb-3 text-[12px] text-[#6b8f89] font-bold tracking-wider uppercase px-2">Students</div>
+        <nav class="flex-1 px-3 py-6 text-[14px] font-medium">
+            <div class="mb-3 text-[11px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">MAIN</div>
+            <a href="index.html" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-6 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-lg"></i> Dashboard</a>
+
+            <div class="mb-3 text-[11px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STUDENTS</div>
             <a href="#" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-clipboard w-6 text-lg"></i> Admission Enquiry</a>
             <a href="students.html" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-users w-6 text-lg"></i> All Students</a>
-            <!-- New Admission Active hai yahan -->
-            <a href="admission.html" class="flex items-center px-4 py-2.5 bg-[#00c3a2] text-white rounded-md mb-1 shadow-sm"><i class="fa-solid fa-user-plus w-6 text-lg"></i> New Admission</a>
+            <a href="admission.html" class="flex items-center px-4 py-2.5 bg-[#00c3a2] text-white rounded-md mb-6 shadow-sm"><i class="fa-solid fa-user-plus w-6 text-lg"></i> New Admission</a>
+
+            <div class="mb-3 text-[11px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FEES</div>
+            <a href="#" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-lg"></i> Fee Structure</a>
+            <a href="#" class="flex items-center px-4 py-2.5 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-lg"></i> Fee Collection</a>
         </nav>
     </aside>
 
     <!-- MAIN CONTENT -->
     <main class="flex-1 flex flex-col h-full overflow-y-auto">
         <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
-            <div><h2 class="text-2xl font-bold text-[#102a43]">Register Student</h2></div>
-            <a href="students.html" class="bg-[#e0fcf4] text-[#00c3a2] hover:bg-[#c9f9ec] transition-colors px-4 py-1.5 rounded-full text-xs font-semibold border border-[#b2f2e3]">
-                <i class="fa-solid fa-arrow-left mr-1"></i> Back to Students
+            <div>
+                <h2 class="text-2xl font-bold text-[#102a43]">Student Admission Form</h2>
+                <p class="text-xs text-gray-500 mt-1">Fill in the complete details for new student registration.</p>
+            </div>
+            <a href="students.html" class="bg-[#e0fcf4] text-[#00c3a2] hover:bg-[#c9f9ec] transition-colors px-4 py-2 rounded-full text-xs font-semibold border border-[#b2f2e3] flex items-center shadow-sm">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Back to Student List
             </a>
         </header>
 
         <div class="p-8 pt-6">
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 flex-1">
-                <form id="admissionForm" class="space-y-8">
-                    <div>
-                        <h3 class="text-[15px] font-bold text-gray-800 mb-4 flex items-center border-b border-gray-100 pb-2"><i class="fa-regular fa-id-card mr-2 text-[#00c3a2]"></i> Basic Information</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                            <div class="col-span-1">
-                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">ADM NO</label>
-                                <input type="text" id="admNo" value="ADM-26-1001" class="w-full border border-gray-300 rounded p-2 text-sm bg-gray-50 outline-none" readonly>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <form id="admissionForm">
+                    
+                    <!-- SECTION 1: ACADEMIC DETAILS -->
+                    <div class="p-8 border-b border-gray-100 bg-gray-50/50">
+                        <h3 class="text-[15px] font-bold text-gray-800 mb-5 flex items-center"><i class="fa-solid fa-graduation-cap mr-2 text-[#00c3a2]"></i> 1. Academic Details</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Admission No.</label>
+                                <input type="text" id="admNo" value="ADM-26-1001" class="w-full border border-gray-300 rounded-md p-2.5 text-sm bg-gray-100 text-gray-600 font-semibold cursor-not-allowed" readonly>
                             </div>
-                            <div class="col-span-3">
-                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">FULL NAME <span class="text-red-500">*</span></label>
-                                <input type="text" id="studentName" required class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
-                            </div>
-                            <div class="col-span-2">
-                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">FATHER'S NAME <span class="text-red-500">*</span></label>
-                                <input type="text" id="fatherName" required class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
-                            </div>
-                            <div class="col-span-2">
-                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">MOBILE NO <span class="text-red-500">*</span></label>
-                                <input type="tel" id="mobileNo" required pattern="[0-9]{10}" maxlength="10" class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="text-[15px] font-bold text-gray-800 mb-4 flex items-center border-b border-gray-100 pb-2"><i class="fa-solid fa-graduation-cap mr-2 text-[#00c3a2]"></i> Class</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="col-span-2">
-                                <label class="block text-[11px] font-semibold text-gray-500 mb-1 uppercase">CLASS <span class="text-red-500">*</span></label>
-                                <select id="classSelect" required class="w-full border border-gray-300 rounded p-2 text-sm outline-none focus:border-[#00c3a2]">
-                                    <option value="">Select Class</option>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Admission For Class <span class="text-red-500">*</span></label>
+                                <select id="classSelect" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all bg-white">
+                                    <option value="">-- Select Class --</option>
+                                    <option value="Pre-Nursery">Pre-Nursery</option>
+                                    <option value="Nursery">Nursery</option>
+                                    <option value="LKG">LKG</option>
+                                    <option value="UKG">UKG</option>
                                     <option value="Class 1">Class 1</option>
                                     <option value="Class 2">Class 2</option>
                                     <option value="Class 3">Class 3</option>
                                     <option value="Class 4">Class 4</option>
                                     <option value="Class 5">Class 5</option>
+                                    <option value="Class 6">Class 6</option>
+                                    <option value="Class 7">Class 7</option>
+                                    <option value="Class 8">Class 8</option>
+                                    <option value="Class 9">Class 9</option>
                                     <option value="Class 10">Class 10</option>
                                 </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Academic Session</label>
+                                <input type="text" value="2027-2028" class="w-full border border-gray-300 rounded-md p-2.5 text-sm bg-gray-50" readonly>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-4 pt-4 border-t border-gray-100">
-                        <button type="submit" id="registerBtn" class="bg-[#00c3a2] hover:bg-[#00a68d] text-white px-8 py-2.5 rounded text-sm font-semibold transition flex items-center gap-2">
-                            <i class="fa-solid fa-user-plus"></i> Save Record
+                    <!-- SECTION 2: PERSONAL INFORMATION -->
+                    <div class="p-8 border-b border-gray-100">
+                        <h3 class="text-[15px] font-bold text-gray-800 mb-5 flex items-center"><i class="fa-regular fa-user mr-2 text-[#00c3a2]"></i> 2. Student's Personal Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="md:col-span-3">
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Full Name of Student <span class="text-red-500">*</span></label>
+                                <input type="text" id="studentName" placeholder="Enter student's full name" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Date of Birth</label>
+                                <input type="date" id="dob" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all text-gray-600">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Gender</label>
+                                <select id="gender" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Blood Group</label>
+                                <select id="bloodGroup" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                                    <option value="">Select Group</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Category</label>
+                                <select id="category" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                                    <option value="General">General</option>
+                                    <option value="OBC">OBC</option>
+                                    <option value="SC">SC</option>
+                                    <option value="ST">ST</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Religion</label>
+                                <input type="text" id="religion" placeholder="e.g. Hindu, Muslim, Sikh" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3: FAMILY DETAILS -->
+                    <div class="p-8 border-b border-gray-100 bg-gray-50/50">
+                        <h3 class="text-[15px] font-bold text-gray-800 mb-5 flex items-center"><i class="fa-solid fa-people-roof mr-2 text-[#00c3a2]"></i> 3. Family Details</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Father's Name <span class="text-red-500">*</span></label>
+                                <input type="text" id="fatherName" placeholder="Enter father's full name" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Father's Occupation</label>
+                                <input type="text" id="fatherOcc" placeholder="e.g. Business, Service, Farmer" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Mother's Name</label>
+                                <input type="text" id="motherName" placeholder="Enter mother's full name" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Mother's Occupation</label>
+                                <input type="text" id="motherOcc" placeholder="e.g. Housewife, Teacher" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 4: CONTACT & ADDRESS -->
+                    <div class="p-8">
+                        <h3 class="text-[15px] font-bold text-gray-800 mb-5 flex items-center"><i class="fa-solid fa-address-book mr-2 text-[#00c3a2]"></i> 4. Contact Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Primary Mobile No. <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-2.5 text-sm text-gray-400">+91</span>
+                                    <input type="tel" id="mobileNo" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" class="w-full pl-10 border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Email Address</label>
+                                <input type="email" id="email" placeholder="example@email.com" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Complete Address</label>
+                                <textarea id="address" rows="3" placeholder="Enter house no., street, landmark, and city" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all resize-none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FORM SUBMIT BUTTON -->
+                    <div class="p-8 pt-0 flex justify-end">
+                        <button type="submit" id="registerBtn" class="bg-[#00c3a2] hover:bg-[#00a68d] text-white px-10 py-3 rounded-lg text-sm font-bold transition-all shadow-md hover:shadow-lg flex items-center gap-2">
+                            <i class="fa-solid fa-check"></i> Submit Admission Form
                         </button>
                     </div>
                 </form>
@@ -110,14 +222,16 @@
 
     <!-- SUCCESS MODAL -->
     <div id="successModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center backdrop-blur-sm">
-        <div class="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full text-center">
-            <div class="w-16 h-16 bg-[#e0fcf4] rounded-full flex items-center justify-center mx-auto mb-4">
+        <div class="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full text-center transform transition-all">
+            <div class="w-16 h-16 bg-[#e0fcf4] rounded-full flex items-center justify-center mx-auto mb-4 border-[4px] border-white shadow-sm">
                 <i class="fa-solid fa-check text-3xl text-[#00c3a2]"></i>
             </div>
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">Saved!</h2>
-            <p class="text-gray-600 text-sm mb-6">Student added successfully to the database.</p>
-            <a href="students.html" class="bg-[#003126] text-white px-6 py-2 rounded-lg font-semibold inline-block">View Records</a>
-            <button id="closeModalBtn" class="ml-2 text-gray-500 underline text-sm hover:text-gray-700">Add another</button>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Admission Successful!</h2>
+            <p class="text-gray-500 text-sm mb-6">The student's data has been recorded in the system.</p>
+            <div class="flex gap-3 justify-center">
+                <button id="closeModalBtn" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors">Add Another</button>
+                <a href="students.html" class="bg-[#003126] text-white hover:bg-[#001e17] px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors shadow-md">View Records</a>
+            </div>
         </div>
     </div>
 
@@ -132,31 +246,33 @@
 
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            registerBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+            registerBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
             registerBtn.disabled = true;
 
-            const name = document.getElementById('studentName').value;
-            const father = document.getElementById('fatherName').value;
-            const studentClass = document.getElementById('classSelect').value;
-            const admNo = document.getElementById('admNo').value;
-            const mobile = document.getElementById('mobileNo').value;
-
+            // DHYAN DEIN: Database me abhi sirf 5 column hain, isliye sirf yahi 5 save ho rahe hain.
+            // Baki data (DOB, Address, Mother Name) save karne ke liye Supabase me naye column banane padenge.
             const { data, error } = await db.from('students').insert([
-                { adm_no: admNo, student_name: name, father_name: father, class_name: studentClass, mobile_no: mobile }
+                { 
+                    adm_no: document.getElementById('admNo').value, 
+                    student_name: document.getElementById('studentName').value, 
+                    father_name: document.getElementById('fatherName').value, 
+                    class_name: document.getElementById('classSelect').value, 
+                    mobile_no: document.getElementById('mobileNo').value 
+                }
             ]);
 
             if (error) {
-                alert("Database Error: " + error.message);
-                registerBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Save Record';
+                alert("Error: " + error.message);
+                registerBtn.innerHTML = '<i class="fa-solid fa-check"></i> Submit Admission Form';
                 registerBtn.disabled = false;
                 return;
             }
 
-            registerBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Save Record';
+            registerBtn.innerHTML = '<i class="fa-solid fa-check"></i> Submit Admission Form';
             registerBtn.disabled = false;
             modal.classList.add('modal-active');
             
-            const currentNo = parseInt(admNo.split('-')[2]);
+            const currentNo = parseInt(document.getElementById('admNo').value.split('-')[2]);
             document.getElementById('admNo').value = `ADM-26-${currentNo + 1}`;
         });
 
