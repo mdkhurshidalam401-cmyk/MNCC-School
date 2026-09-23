@@ -39,13 +39,11 @@
 
         <nav class="flex-1 px-2 py-4 text-[12px]">
             <div class="mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">MAIN</div>
-            <!-- DASHBOARD IS NOW ACTIVE -->
             <a href="#" class="flex items-center px-2 py-2 bg-[#00c3a2] text-white rounded mb-1 font-medium transition-colors shadow-md"><i class="fa-solid fa-house w-6"></i> Dashboard</a>
 
             <div class="mt-4 mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">STUDENTS</div>
             <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300 transition-colors"><i class="fa-regular fa-clipboard w-6"></i> Admission Enquiry</a>
             <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300 transition-colors"><i class="fa-solid fa-users w-6"></i> All Students</a>
-            <!-- NEW ADMISSION IS NOW NORMAL -->
             <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300 transition-colors"><i class="fa-solid fa-user-plus w-6"></i> New Admission</a>
             
             <div class="mt-4 mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">FEES</div>
@@ -78,20 +76,20 @@
             <!-- Welcome Message -->
             <div class="mb-8">
                 <h3 class="text-xl font-bold text-gray-800">Welcome back, Super Admin! 👋</h3>
-                <p class="text-sm text-gray-500 mt-1">Here is what's happening in your school today.</p>
+                <p class="text-sm text-gray-500 mt-1">Your dashboard is ready. Start adding students and staff.</p>
             </div>
 
-            <!-- Top 4 Statistics Cards -->
+            <!-- Top 4 Statistics Cards (Clean/Zero Data) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <!-- Card 1: Total Students -->
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition-shadow">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Students</p>
-                        <h4 class="text-3xl font-bold text-gray-800">1,248</h4>
-                        <p class="text-xs text-green-500 font-medium mt-2"><i class="fa-solid fa-arrow-trend-up mr-1"></i> +12 this month</p>
+                        <h4 class="text-3xl font-bold text-gray-800">0</h4>
+                        <p class="text-xs text-gray-400 font-medium mt-2">No students added yet</p>
                     </div>
                     <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center">
-                        <i class="fa-solid fa-user-graduate text-2xl text-blue-500"></i>
+                        <i class="fa-solid fa-user-graduate text-2xl text-blue-500 opacity-50"></i>
                     </div>
                 </div>
 
@@ -99,11 +97,11 @@
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition-shadow">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Staff</p>
-                        <h4 class="text-3xl font-bold text-gray-800">84</h4>
-                        <p class="text-xs text-green-500 font-medium mt-2"><i class="fa-solid fa-arrow-trend-up mr-1"></i> +2 new hired</p>
+                        <h4 class="text-3xl font-bold text-gray-800">0</h4>
+                        <p class="text-xs text-gray-400 font-medium mt-2">No staff added yet</p>
                     </div>
                     <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center">
-                        <i class="fa-solid fa-chalkboard-user text-2xl text-purple-500"></i>
+                        <i class="fa-solid fa-chalkboard-user text-2xl text-purple-500 opacity-50"></i>
                     </div>
                 </div>
 
@@ -111,11 +109,11 @@
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition-shadow">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Fee Collected</p>
-                        <h4 class="text-3xl font-bold text-gray-800">₹8.4L</h4>
-                        <p class="text-xs text-gray-500 font-medium mt-2">This month</p>
+                        <h4 class="text-3xl font-bold text-gray-800">₹0</h4>
+                        <p class="text-xs text-gray-400 font-medium mt-2">This month</p>
                     </div>
                     <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center">
-                        <i class="fa-solid fa-indian-rupee-sign text-2xl text-green-500"></i>
+                        <i class="fa-solid fa-indian-rupee-sign text-2xl text-green-500 opacity-50"></i>
                     </div>
                 </div>
 
@@ -123,11 +121,11 @@
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition-shadow">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Today's Attendance</p>
-                        <h4 class="text-3xl font-bold text-gray-800">92%</h4>
-                        <p class="text-xs text-red-400 font-medium mt-2"><i class="fa-solid fa-arrow-trend-down mr-1"></i> -1.5% from yesterday</p>
+                        <h4 class="text-3xl font-bold text-gray-800">0%</h4>
+                        <p class="text-xs text-gray-400 font-medium mt-2">No data for today</p>
                     </div>
                     <div class="w-14 h-14 rounded-full bg-orange-50 flex items-center justify-center">
-                        <i class="fa-solid fa-calendar-check text-2xl text-orange-500"></i>
+                        <i class="fa-solid fa-calendar-check text-2xl text-orange-500 opacity-50"></i>
                     </div>
                 </div>
             </div>
@@ -135,56 +133,21 @@
             <!-- Bottom Section (Charts & Tables) -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 
-                <!-- Recent Admissions Table -->
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 col-span-2 overflow-hidden">
+                <!-- Recent Admissions Table (Empty State) -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 col-span-2 overflow-hidden flex flex-col">
                     <div class="p-6 border-b border-gray-100 flex justify-between items-center">
                         <h3 class="text-lg font-bold text-gray-800">Recent Admissions</h3>
-                        <button class="text-[#00c3a2] text-sm font-semibold hover:underline">View All</button>
+                        <button class="text-[#00c3a2] text-sm font-semibold hover:underline opacity-50 cursor-not-allowed">View All</button>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">
-                                    <th class="p-4 font-semibold">Adm No</th>
-                                    <th class="p-4 font-semibold">Student Name</th>
-                                    <th class="p-4 font-semibold">Class</th>
-                                    <th class="p-4 font-semibold">Date</th>
-                                    <th class="p-4 font-semibold">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-sm">
-                                <tr class="border-b border-gray-50 hover:bg-gray-50/50 transition">
-                                    <td class="p-4 font-medium text-gray-800">ADM-26-1025</td>
-                                    <td class="p-4 flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">A</div>
-                                        Aarav Sharma
-                                    </td>
-                                    <td class="p-4 text-gray-600">Class 5 (A)</td>
-                                    <td class="p-4 text-gray-500">Today</td>
-                                    <td class="p-4"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold">ACTIVE</span></td>
-                                </tr>
-                                <tr class="border-b border-gray-50 hover:bg-gray-50/50 transition">
-                                    <td class="p-4 font-medium text-gray-800">ADM-26-1024</td>
-                                    <td class="p-4 flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center font-bold text-xs">R</div>
-                                        Riya Singh
-                                    </td>
-                                    <td class="p-4 text-gray-600">Class 2 (B)</td>
-                                    <td class="p-4 text-gray-500">Yesterday</td>
-                                    <td class="p-4"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold">ACTIVE</span></td>
-                                </tr>
-                                <tr class="hover:bg-gray-50/50 transition">
-                                    <td class="p-4 font-medium text-gray-800">ADM-26-1023</td>
-                                    <td class="p-4 flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">K</div>
-                                        Kabir Khan
-                                    </td>
-                                    <td class="p-4 text-gray-600">Class 8 (A)</td>
-                                    <td class="p-4 text-gray-500">21 Sep 2026</td>
-                                    <td class="p-4"><span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-[10px] font-bold">PENDING</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="flex-1 flex flex-col items-center justify-center p-12 text-center">
+                        <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-4 border border-gray-100">
+                            <i class="fa-solid fa-folder-open text-3xl text-gray-300"></i>
+                        </div>
+                        <h4 class="text-gray-600 font-semibold mb-1">No Recent Admissions</h4>
+                        <p class="text-sm text-gray-400 max-w-sm mb-6">You haven't admitted any students yet. New registrations will appear here automatically.</p>
+                        <button class="bg-[#00c3a2] hover:bg-[#00a68d] text-white px-6 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2 shadow-md">
+                            <i class="fa-solid fa-plus"></i> Add First Student
+                        </button>
                     </div>
                 </div>
 
