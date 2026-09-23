@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Admission - School ERP</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-[#f4f7f6] font-sans flex h-screen overflow-hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-[#0a3622] text-white flex flex-col h-full overflow-y-auto hidden md:flex">
+        <!-- Logo Area -->
+        <div class="p-4 flex items-center border-b border-green-800">
+            <div class="bg-white text-[#0a3622] p-2 rounded mr-3"><i class="fa-solid fa-school"></i></div>
+            <div>
+                <h1 class="text-sm font-bold leading-tight">data click education</h1>
+                <p class="text-[10px] text-gray-300">Management System</p>
+            </div>
+        </div>
+
+        <!-- User Profile -->
+        <div class="p-4 flex items-center border-b border-green-800">
+            <div class="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-bold mr-3">S</div>
+            <div>
+                <h2 class="text-sm font-semibold">Super Administrator</h2>
+                <p class="text-[11px] text-yellow-400"><i class="fa-solid fa-star"></i> Super Admin</p>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="flex-1 px-2 py-4 text-sm">
+            <div class="mb-2 text-xs text-gray-400 px-2 font-semibold tracking-wider">STUDENTS</div>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-[#1a4a36] rounded mb-1 text-gray-300">
+                <i class="fa-solid fa-clipboard-question w-6"></i> Admission Enquiry
+            </a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-[#1a4a36] rounded mb-1 text-gray-300">
+                <i class="fa-solid fa-users w-6"></i> All Students
+            </a>
+            <!-- Active Menu -->
+            <a href="#" class="flex items-center px-2 py-2 bg-[#00bfa5] text-white rounded mb-1 font-medium shadow">
+                <i class="fa-solid fa-user-plus w-6"></i> New Admission
+            </a>
+            
+            <div class="mt-4 mb-2 text-xs text-gray-400 px-2 font-semibold tracking-wider">FEES</div>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-[#1a4a36] rounded mb-1 text-gray-300">
+                <i class="fa-solid fa-list w-6"></i> Fee Structure
+            </a>
+            <a href="#" class="flex items-center px-2 py-2 hover:bg-[#1a4a36] rounded mb-1 text-gray-300">
+                <i class="fa-solid fa-money-bill-wave w-6"></i> Fee Collection
+            </a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        
+        <!-- Top Header -->
+        <header class="bg-white p-4 shadow-sm flex justify-between items-center sticky top-0 z-10">
+            <div>
+                <h2 class="text-xl font-bold text-gray-800">New Admission</h2>
+                <p class="text-xs text-gray-500">Register a new student</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-sm text-gray-600 border px-3 py-1 rounded bg-gray-50"><i class="fa-regular fa-calendar mr-2"></i>2027-28</div>
+                <button class="bg-[#e6fcf5] text-[#00bfa5] px-4 py-1.5 rounded-full text-sm font-medium border border-[#b2f2e3]"><i class="fa-solid fa-arrow-left mr-1"></i> Back to Students</button>
+            </div>
+        </header>
+
+        <!-- Form Container -->
+        <div class="p-6">
+            <form class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 space-y-8">
+                
+                <!-- Section 1: Basic Information -->
+                <div>
+                    <h3 class="text-md font-bold text-[#0a3622] mb-4 flex items-center border-b pb-2"><i class="fa-regular fa-id-card mr-2 text-[#00bfa5]"></i> Basic Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Input Group -->
+                        <div class="col-span-1">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">ADM NO <span class="text-red-500">*</span></label>
+                            <input type="text" value="ADM-26-1022" class="w-full border border-gray-300 rounded p-2 text-sm bg-gray-50 focus:outline-none focus:border-[#00bfa5]" readonly>
+                        </div>
+                        <div class="col-span-1 md:col-span-3">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">ADMISSION FORM NO (OPTIONAL)</label>
+                            <input type="text" placeholder="e.g. FORM-26-1001" class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-[#00bfa5]">
+                        </div>
+                        
+                        <div class="col-span-1 lg:col-span-4">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">FULL NAME <span class="text-red-500">*</span></label>
+                            <input type="text" placeholder="Student full name" class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-[#00bfa5]">
+                        </div>
+
+                        <div class="col-span-1 lg:col-span-2">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">FATHER'S NAME</label>
+                            <input type="text" placeholder="Father's name" class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-[#00bfa5]">
+                        </div>
+                        <div class="col-span-1 lg:col-span-2">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">MOTHER'S NAME</label>
+                            <input type="text" placeholder="Mother's name" class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-[#00bfa5]">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Class & Admission -->
+                <div>
+                    <h3 class="text-md font-bold text-[#0a3622] mb-4 flex items-center border-b pb-2"><i class="fa-solid fa-graduation-cap mr-2 text-[#00bfa5]"></i> Class & Admission</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">CLASS <span class="text-red-500">*</span></label>
+                            <select class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-[#00bfa5]">
+                                <option>Select Class</option>
+                                <option>Class 1</option>
+                                <option>Class 2</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">SECTION</label>
+                            <select class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-[#00bfa5]">
+                                <option>Select</option>
+                                <option>A</option>
+                                <option>B</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">STATUS</label>
+                            <select class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-[#00bfa5]">
+                                <option>Active</option>
+                                <option>Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center gap-4 pt-4 mt-4 border-t border-gray-200">
+                    <button type="button" class="bg-[#00bfa5] hover:bg-[#00a38d] text-white px-6 py-2 rounded text-sm font-semibold transition"><i class="fa-solid fa-user-plus mr-2"></i> Register Student</button>
+                    <button type="button" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded text-sm font-semibold transition">Cancel</button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+</body>
+</html>
