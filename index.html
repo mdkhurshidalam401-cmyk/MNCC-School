@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - School ERP</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <!-- Supabase Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -33,14 +30,6 @@
             </div>
         </div>
 
-        <div class="p-4 flex items-center border-b border-white/10">
-            <div class="w-8 h-8 rounded-full bg-teal-100 text-[#003126] flex items-center justify-center font-bold mr-3 text-sm">S</div>
-            <div>
-                <h2 class="text-[13px] font-semibold">Super Administrator</h2>
-                <p class="text-[10px] text-yellow-400"><i class="fa-solid fa-star"></i> Super Admin</p>
-            </div>
-        </div>
-
         <nav class="flex-1 px-2 py-4 text-[12px]">
             <div class="mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">MAIN</div>
             <a href="index.html" class="flex items-center px-2 py-2 bg-[#00c3a2] text-white rounded mb-1 font-medium transition-colors shadow-md"><i class="fa-solid fa-house w-6"></i> Dashboard</a>
@@ -49,43 +38,29 @@
             <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300 transition-colors"><i class="fa-regular fa-clipboard w-6"></i> Admission Enquiry</a>
             <a href="students.html" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300 transition-colors"><i class="fa-solid fa-users w-6"></i> All Students</a>
             <a href="admission.html" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300 transition-colors"><i class="fa-solid fa-user-plus w-6"></i> New Admission</a>
-            
-            <div class="mt-4 mb-1 text-[10px] text-teal-100/50 px-2 font-bold tracking-wider">FEES</div>
-            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300 transition-colors"><i class="fa-solid fa-list-ul w-6"></i> Fee Structure</a>
-            <a href="#" class="flex items-center px-2 py-2 hover:bg-white/5 rounded mb-1 text-gray-300 transition-colors"><i class="fa-solid fa-money-bill w-6"></i> Fee Collection</a>
         </nav>
     </aside>
 
-    <!-- MAIN CONTENT - DASHBOARD -->
+    <!-- MAIN CONTENT -->
     <main class="flex-1 flex flex-col h-full overflow-y-auto">
-        <!-- Header -->
         <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
             <div>
                 <h2 class="text-2xl font-bold text-[#102a43]">Dashboard Overview</h2>
             </div>
             <div class="flex items-center gap-4">
                 <div class="text-sm font-medium text-gray-600 flex items-center gap-2 bg-gray-50 px-4 py-1.5 rounded-full border border-gray-200"><i class="fa-regular fa-calendar text-[#00c3a2]"></i> Session: 2027-28</div>
-                <div class="flex gap-1.5 ml-2">
-                    <div class="w-3 h-3 rounded-full bg-purple-500 shadow-sm"></div>
-                    <div class="w-3 h-3 rounded-full bg-pink-500 shadow-sm"></div>
-                    <div class="w-3 h-3 rounded-full bg-blue-500 shadow-sm"></div>
-                    <div class="w-3 h-3 rounded-full bg-[#00c3a2] shadow-sm"></div>
-                </div>
             </div>
         </header>
 
-        <!-- Dashboard Content -->
         <div class="p-8">
-            <!-- Welcome Message -->
             <div class="mb-8">
                 <h3 class="text-xl font-bold text-gray-800">Welcome back, Super Admin! 👋</h3>
                 <p class="text-sm text-gray-500 mt-1">Here is what's happening in your school today.</p>
             </div>
 
-            <!-- Top 4 Statistics Cards -->
+            <!-- Stats Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <!-- Card 1: Total Students (Live Data) -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition-shadow">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Students</p>
                         <h4 id="totalStudentsCount" class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h4>
@@ -96,46 +71,33 @@
                     </div>
                 </div>
 
-                <!-- Card 2: Total Staff -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition-shadow">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Staff</p>
                         <h4 class="text-3xl font-bold text-gray-800">84</h4>
-                        <p class="text-xs text-green-500 font-medium mt-2"><i class="fa-solid fa-arrow-trend-up mr-1"></i> Active staff</p>
                     </div>
-                    <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center">
-                        <i class="fa-solid fa-chalkboard-user text-2xl text-purple-500"></i>
-                    </div>
+                    <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center"><i class="fa-solid fa-chalkboard-user text-2xl text-purple-500"></i></div>
                 </div>
 
-                <!-- Card 3: Fee Collection -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition-shadow">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Fee Collected</p>
                         <h4 class="text-3xl font-bold text-gray-800">₹0</h4>
-                        <p class="text-xs text-gray-500 font-medium mt-2">This month</p>
                     </div>
-                    <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center">
-                        <i class="fa-solid fa-indian-rupee-sign text-2xl text-green-500"></i>
-                    </div>
+                    <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center"><i class="fa-solid fa-indian-rupee-sign text-2xl text-green-500"></i></div>
                 </div>
 
-                <!-- Card 4: Today's Attendance -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition-shadow">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Today's Attendance</p>
                         <h4 class="text-3xl font-bold text-gray-800">0%</h4>
-                        <p class="text-xs text-gray-400 font-medium mt-2">No data yet</p>
                     </div>
-                    <div class="w-14 h-14 rounded-full bg-orange-50 flex items-center justify-center">
-                        <i class="fa-solid fa-calendar-check text-2xl text-orange-500"></i>
-                    </div>
+                    <div class="w-14 h-14 rounded-full bg-orange-50 flex items-center justify-center"><i class="fa-solid fa-calendar-check text-2xl text-orange-500"></i></div>
                 </div>
             </div>
 
-            <!-- Bottom Section -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Recent Admissions Table (Live Data) -->
+                <!-- Recent Admissions -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 col-span-2 overflow-hidden flex flex-col">
                     <div class="p-6 border-b border-gray-100 flex justify-between items-center">
                         <h3 class="text-lg font-bold text-gray-800">Recent Admissions</h3>
@@ -148,13 +110,12 @@
                                     <th class="p-4 font-semibold">Adm No</th>
                                     <th class="p-4 font-semibold">Student Name</th>
                                     <th class="p-4 font-semibold">Class</th>
-                                    <th class="p-4 font-semibold">Date</th>
                                     <th class="p-4 font-semibold">Status</th>
                                 </tr>
                             </thead>
                             <tbody id="recentAdmissionsTable" class="text-sm">
                                 <tr>
-                                    <td colspan="5" class="p-8 text-center text-gray-400">
+                                    <td colspan="4" class="p-8 text-center text-gray-400">
                                         <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2 text-[#00c3a2]"></i>
                                         <p>Loading recent admissions...</p>
                                     </td>
@@ -163,80 +124,35 @@
                         </table>
                     </div>
                 </div>
-
-                <!-- Quick Actions Panel -->
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                    <h3 class="text-lg font-bold text-gray-800 mb-6">Quick Actions</h3>
-                    <div class="space-y-4">
-                        <a href="admission.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-[#00c3a2] hover:bg-[#e0fcf4] transition-all group cursor-pointer block">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-teal-50 text-[#00c3a2] flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-user-plus"></i></div>
-                                <div class="text-left">
-                                    <h4 class="text-sm font-bold text-gray-800">New Admission</h4>
-                                    <p class="text-[11px] text-gray-500">Register a new student</p>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-[#00c3a2]"></i>
-                        </a>
-
-                        <button class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-green-500 hover:bg-green-50 transition-all group">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-green-50 text-green-500 flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-indian-rupee-sign"></i></div>
-                                <div class="text-left">
-                                    <h4 class="text-sm font-bold text-gray-800">Collect Fee</h4>
-                                    <p class="text-[11px] text-gray-500">Record a new payment</p>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-green-500"></i>
-                        </button>
-
-                        <button class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-all group">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-bullhorn"></i></div>
-                                <div class="text-left">
-                                    <h4 class="text-sm font-bold text-gray-800">Send Notice</h4>
-                                    <p class="text-[11px] text-gray-500">Announce to all students</p>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-blue-500"></i>
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
     </main>
 
-    <!-- JAVASCRIPT: SUPABASE LIVE DASHBOARD DATA -->
     <script>
-        // Supabase Connection (Sahi JWT Key lagayi gayi hai)
+        // VARIABLE NAME CHANGED TO 'db' TO FIX JAVASCRIPT CONFLICT
         const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         async function fetchDashboardData() {
             try {
-                // Database se saare students ka data mangwana
-                const { data, error } = await supabase
+                // Using 'db' instead of 'supabase'
+                const { data, error } = await db
                     .from('students')
                     .select('*')
                     .order('id', { ascending: false });
 
                 if (error) throw error;
 
-                // 1. Total Students Ka Number Update Karna
                 document.getElementById('totalStudentsCount').innerText = data.length;
-
-                // 2. Recent Admissions Table Update Karna
                 const tbody = document.getElementById('recentAdmissionsTable');
                 tbody.innerHTML = '';
 
-                // Agar data khali hai
                 if (data.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-gray-500">No students registered yet.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-500">No students registered yet.</td></tr>`;
                     return;
                 }
 
-                // Sirf top 4 naye students ko dashboard par dikhana
                 const recentStudents = data.slice(0, 4);
                 
                 recentStudents.forEach(student => {
@@ -251,20 +167,16 @@
                             ${student.student_name || 'N/A'}
                         </td>
                         <td class="p-4 text-gray-600"><span class="bg-gray-100 px-2 py-1 rounded text-xs font-medium border border-gray-200">${student.class_name || '-'}</span></td>
-                        <td class="p-4 text-gray-500">Recently Added</td>
                         <td class="p-4"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold">ACTIVE</span></td>
                     `;
                     tbody.appendChild(tr);
                 });
-
             } catch (error) {
                 console.error("Dashboard fetch error:", error);
                 document.getElementById('totalStudentsCount').innerText = 'Error';
-                document.getElementById('recentAdmissionsTable').innerHTML = `<tr><td colspan="5" class="p-4 text-center text-red-500">Failed to load data.</td></tr>`;
+                document.getElementById('recentAdmissionsTable').innerHTML = `<tr><td colspan="4" class="p-4 text-center text-red-500">Failed to load data.</td></tr>`;
             }
         }
-
-        // Page load hote hi data fetch function chalana
         window.addEventListener('DOMContentLoaded', fetchDashboardData);
     </script>
 </body>
