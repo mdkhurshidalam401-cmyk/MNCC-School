@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - School ERP</title>
+    <title>Student Promotion - School ERP</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <!-- Supabase Library -->
+    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -19,11 +19,12 @@
         main::-webkit-scrollbar { width: 6px; }
         main::-webkit-scrollbar-track { background: #f0f4f8; }
         main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        input[type="checkbox"] { accent-color: #00c3a2; transform: scale(1.2); cursor: pointer; }
     </style>
 </head>
 <body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
 
-    <!-- 100% COMPLETE MEGA SIDEBAR (With Fixed Links) -->
+    <!-- 100% COMPLETE MEGA SIDEBAR -->
     <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
         <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#003126] z-10">
             <div class="bg-white text-orange-500 w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
@@ -35,199 +36,118 @@
             </div>
         </div>
 
-        <div class="p-4 flex items-center border-b border-white/10">
-            <div class="w-8 h-8 rounded-full bg-white text-[#003126] flex items-center justify-center font-bold mr-3 text-xs">S</div>
-            <div>
-                <h2 class="text-[12px] font-semibold text-white">Super Administrator</h2>
-                <p class="text-[10px] text-yellow-400 mt-0.5"><i class="fa-solid fa-star text-[9px]"></i> Super Admin</p>
-            </div>
-        </div>
-
         <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
             <div class="mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">MAIN</div>
-            <a href="index.html" class="flex items-center px-4 py-2 bg-[#00c3a2] text-white rounded-md mb-1 shadow-sm"><i class="fa-solid fa-house w-6 text-sm"></i> Dashboard</a>
+            <a href="index.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> Dashboard</a>
 
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STUDENTS</div>
-            <!-- Link Fixed Here -->
             <a href="admission_enquiry.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-clipboard w-6 text-sm"></i> Admission Enquiry</a>
             <a href="students.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> All Students</a>
             <a href="admission.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-plus w-6 text-sm"></i> New Admission</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-box-archive w-6 text-sm"></i> Passed Out Archive</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-graduation-cap w-6 text-sm"></i> Promotion</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-yellow-500 transition-colors"><i class="fa-solid fa-file-lines w-6 text-sm"></i> Session Report</a>
+            
+            <a href="passed_out_archive.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-box-archive w-6 text-sm"></i> Passed Out Archive</a>
+            <!-- Promotion Active -->
+            <a href="promotion.html" class="flex items-center px-4 py-2 bg-[#00c3a2] text-white rounded-md mb-0.5 shadow-sm"><i class="fa-solid fa-graduation-cap w-6 text-sm"></i> Promotion</a>
+            <a href="session_report.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-yellow-500 transition-colors"><i class="fa-solid fa-file-lines w-6 text-sm"></i> Session Report</a>
 
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FEES</div>
-            <!-- Links Fixed Here -->
             <a href="fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-sm"></i> Fee Structure</a>
             <a href="fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-sm"></i> Fee Collection</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-green-400 transition-colors"><i class="fa-solid fa-bolt w-6 text-sm"></i> Quick Fee Collect</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-green-400 transition-colors"><i class="fa-brands fa-whatsapp w-6 text-sm"></i> WhatsApp Reminder</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-red-400 transition-colors"><i class="fa-solid fa-trash-can w-6 text-sm"></i> Fee Deletion Log</a>
-
-            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ACADEMICS</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Attendance</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-line w-6 text-sm"></i> Attendance Report</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-file-lines w-6 text-sm"></i> Exams</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Marks Entry</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-check w-6 text-sm"></i> Class Result</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-book w-6 text-sm"></i> Subjects</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-link w-6 text-sm"></i> Class-Subject Map</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-calendar w-6 text-sm"></i> Exam Schedule</a>
-
-            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FINANCE</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-receipt w-6 text-sm"></i> Expenses</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-pie w-6 text-sm"></i> Reports</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-purple-400 transition-colors"><i class="fa-solid fa-scale-balanced w-6 text-sm"></i> Income vs Expense</a>
-
-            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STAFF / PAYROLL</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-tie w-6 text-sm"></i> Staff Management</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Salary Management</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-chart-column w-6 text-sm"></i> Salary Report</a>
-
-            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">COMMUNICATION</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-bell w-6 text-sm"></i> Notices</a>
-
-            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ADMIN</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-gear w-6 text-sm"></i> Admin Settings</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-sliders w-6 text-sm"></i> Settings</a>
-
-            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ACCOUNT</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-key w-6 text-sm"></i> Password Change</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-red-400 transition-colors"><i class="fa-solid fa-arrow-right-from-bracket w-6 text-sm"></i> Logout</a>
         </nav>
     </aside>
 
-    <!-- MAIN CONTENT - DASHBOARD -->
+    <!-- MAIN CONTENT -->
     <main class="flex-1 flex flex-col h-full overflow-y-auto">
         <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
             <div>
-                <h2 class="text-2xl font-bold text-[#102a43]">Dashboard Overview</h2>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="text-sm font-medium text-gray-600 flex items-center gap-2 bg-gray-50 px-4 py-1.5 rounded-full border border-gray-200"><i class="fa-regular fa-calendar text-[#00c3a2]"></i> Session: 2027-28</div>
-                <div class="flex gap-1.5 ml-2">
-                    <div class="w-3 h-3 rounded-full bg-purple-500 shadow-sm"></div>
-                    <div class="w-3 h-3 rounded-full bg-pink-500 shadow-sm"></div>
-                    <div class="w-3 h-3 rounded-full bg-blue-500 shadow-sm"></div>
-                    <div class="w-3 h-3 rounded-full bg-[#00c3a2] shadow-sm"></div>
-                </div>
+                <h2 class="text-2xl font-bold text-[#102a43]">Student Promotion</h2>
+                <p class="text-xs text-gray-500 mt-1">Upgrade students to the next class for the new session.</p>
             </div>
         </header>
 
-        <div class="p-8">
-            <div class="mb-8">
-                <h3 class="text-xl font-bold text-gray-800">Welcome back, Super Admin! 👋</h3>
-                <p class="text-sm text-gray-500 mt-1">Here is what's happening in your school today.</p>
+        <div class="p-8 pt-6">
+            
+            <!-- Class Selection Box -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                <div class="flex flex-col md:flex-row gap-4 items-end">
+                    <div class="flex-1">
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Promote From (Current Class)</label>
+                        <select id="fromClass" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all bg-white focus:border-[#00c3a2]">
+                            <option value="">-- Select Current Class --</option>
+                            <option value="Pre-Nursery">Pre-Nursery</option>
+                            <option value="Nursery">Nursery</option>
+                            <option value="LKG">LKG</option>
+                            <option value="UKG">UKG</option>
+                            <option value="Class 1">Class 1</option>
+                            <option value="Class 2">Class 2</option>
+                            <option value="Class 3">Class 3</option>
+                            <option value="Class 4">Class 4</option>
+                            <option value="Class 5">Class 5</option>
+                            <option value="Class 6">Class 6</option>
+                            <option value="Class 7">Class 7</option>
+                            <option value="Class 8">Class 8</option>
+                            <option value="Class 9">Class 9</option>
+                            <option value="Class 10">Class 10</option>
+                        </select>
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Promote To (Next Class)</label>
+                        <select id="toClass" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all bg-white focus:border-[#00c3a2]">
+                            <option value="">-- Select Next Class --</option>
+                            <option value="Nursery">Nursery</option>
+                            <option value="LKG">LKG</option>
+                            <option value="UKG">UKG</option>
+                            <option value="Class 1">Class 1</option>
+                            <option value="Class 2">Class 2</option>
+                            <option value="Class 3">Class 3</option>
+                            <option value="Class 4">Class 4</option>
+                            <option value="Class 5">Class 5</option>
+                            <option value="Class 6">Class 6</option>
+                            <option value="Class 7">Class 7</option>
+                            <option value="Class 8">Class 8</option>
+                            <option value="Class 9">Class 9</option>
+                            <option value="Class 10">Class 10</option>
+                            <option value="Passed Out">⭐ Mark as Passed Out (Alumni)</option>
+                        </select>
+                    </div>
+                    <button id="fetchBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-2.5 rounded-md text-sm font-bold transition-all shadow-sm">
+                        Fetch Students
+                    </button>
+                </div>
             </div>
 
-            <!-- Stats Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Students</p>
-                        <h4 id="totalStudentsCount" class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h4>
-                        <p class="text-xs text-green-500 font-medium mt-2">Active records</p>
-                    </div>
-                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center">
-                        <i class="fa-solid fa-user-graduate text-2xl text-blue-500"></i>
-                    </div>
+            <!-- Students List Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hidden" id="tableContainer">
+                <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                    <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-users-viewfinder mr-2 text-blue-500"></i> Eligible Students</h3>
+                    <div class="text-xs font-bold text-gray-500">Found: <span id="studentCount" class="text-blue-500">0</span></div>
                 </div>
 
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Staff</p>
-                        <h4 class="text-3xl font-bold text-gray-800">84</h4>
-                    </div>
-                    <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center"><i class="fa-solid fa-chalkboard-user text-2xl text-purple-500"></i></div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Fee Collected</p>
-                        <h4 id="totalFeeCollected" class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h4>
-                        <p class="text-xs text-gray-500 font-medium mt-2">Overall Collection</p>
-                    </div>
-                    <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center"><i class="fa-solid fa-indian-rupee-sign text-2xl text-green-500"></i></div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
-                    <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Today's Attendance</p>
-                        <h4 class="text-3xl font-bold text-gray-800">0%</h4>
-                    </div>
-                    <div class="w-14 h-14 rounded-full bg-orange-50 flex items-center justify-center"><i class="fa-solid fa-calendar-check text-2xl text-orange-500"></i></div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Recent Admissions -->
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 col-span-2 overflow-hidden flex flex-col">
-                    <div class="p-6 border-b border-gray-100 flex justify-between items-center">
-                        <h3 class="text-lg font-bold text-gray-800">Recent Admissions</h3>
-                        <a href="students.html" class="text-[#00c3a2] text-sm font-semibold hover:underline">View All</a>
-                    </div>
-                    <div class="overflow-x-auto flex-1">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">
-                                    <th class="p-4 font-semibold">Adm No</th>
-                                    <th class="p-4 font-semibold">Student Name</th>
-                                    <th class="p-4 font-semibold">Class</th>
-                                    <th class="p-4 font-semibold">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="recentAdmissionsTable" class="text-sm">
-                                <tr>
-                                    <td colspan="4" class="p-8 text-center text-gray-400">
-                                        <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2 text-[#00c3a2]"></i>
-                                        <p>Loading recent admissions...</p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="overflow-x-auto max-h-96">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="sticky top-0 bg-gray-50">
+                            <tr class="text-gray-500 text-[11px] uppercase tracking-wider border-b border-gray-200">
+                                <th class="p-4 w-12 text-center">
+                                    <input type="checkbox" id="selectAll" checked>
+                                </th>
+                                <th class="p-4 font-semibold">Adm No</th>
+                                <th class="p-4 font-semibold">Student Name</th>
+                                <th class="p-4 font-semibold">Current Class</th>
+                            </tr>
+                        </thead>
+                        <tbody id="promoTableBody" class="text-sm text-gray-700">
+                            <!-- Data injected here -->
+                        </tbody>
+                    </table>
                 </div>
                 
-                <!-- Quick Actions Panel -->
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                    <h3 class="text-lg font-bold text-gray-800 mb-6">Quick Actions</h3>
-                    <div class="space-y-4">
-                        <a href="admission.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-[#00c3a2] hover:bg-[#e0fcf4] transition-all group cursor-pointer block">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-teal-50 text-[#00c3a2] flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-user-plus"></i></div>
-                                <div class="text-left">
-                                    <h4 class="text-sm font-bold text-gray-800">New Admission</h4>
-                                    <p class="text-[11px] text-gray-500">Register a new student</p>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-[#00c3a2]"></i>
-                        </a>
-
-                        <a href="fee_collection.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-green-500 hover:bg-green-50 transition-all group cursor-pointer block">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-green-50 text-green-500 flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-indian-rupee-sign"></i></div>
-                                <div class="text-left">
-                                    <h4 class="text-sm font-bold text-gray-800">Collect Fee</h4>
-                                    <p class="text-[11px] text-gray-500">Record a new payment</p>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-green-500"></i>
-                        </a>
-
-                        <button class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-all group">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-bullhorn"></i></div>
-                                <div class="text-left">
-                                    <h4 class="text-sm font-bold text-gray-800">Send Notice</h4>
-                                    <p class="text-[11px] text-gray-500">Announce to all students</p>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-blue-500"></i>
-                        </button>
-                    </div>
+                <div class="p-5 bg-gray-50 border-t border-gray-200 flex justify-end">
+                    <button id="promoteBtn" class="bg-[#00c3a2] hover:bg-[#00a68d] text-white px-8 py-3 rounded-lg text-sm font-bold shadow-md transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Promote Selected Students
+                    </button>
                 </div>
-
             </div>
+
         </div>
     </main>
 
@@ -236,58 +156,109 @@
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
         const db = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        async function fetchDashboardData() {
+        let currentStudents = [];
+
+        // 1. FETCH LOGIC
+        document.getElementById('fetchBtn').addEventListener('click', async () => {
+            const fromClass = document.getElementById('fromClass').value;
+            if(!fromClass) { alert('Kripya pehle Current Class select karein!'); return; }
+
+            const btn = document.getElementById('fetchBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading...';
+            btn.disabled = true;
+            
             try {
-                // Fetch Students Data
-                const { data: students, error: stdError } = await db
-                    .from('students')
-                    .select('*')
-                    .order('id', { ascending: false });
-
-                if (stdError) throw stdError;
-
-                document.getElementById('totalStudentsCount').innerText = students.length;
+                // Fetching only 'Active' students for the selected class
+                const { data, error } = await db.from('students')
+                                                .select('id, adm_no, student_name, class_name')
+                                                .eq('class_name', fromClass)
+                                                .eq('status', 'Active');
                 
-                const tbody = document.getElementById('recentAdmissionsTable');
-                tbody.innerHTML = '';
-
-                if (students.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-500">No students registered yet.</td></tr>`;
-                } else {
-                    const recentStudents = students.slice(0, 4);
-                    recentStudents.forEach(student => {
-                        const tr = document.createElement('tr');
-                        tr.className = 'border-b border-gray-50 hover:bg-gray-50/50 transition';
-                        const initial = student.student_name ? student.student_name.charAt(0).toUpperCase() : 'U';
-
-                        tr.innerHTML = `
-                            <td class="p-4 font-medium text-gray-800">${student.adm_no || '-'}</td>
-                            <td class="p-4 flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">${initial}</div>
-                                ${student.student_name || 'N/A'}
-                            </td>
-                            <td class="p-4 text-gray-600"><span class="bg-gray-100 px-2 py-1 rounded text-xs font-medium border border-gray-200">${student.class_name || '-'}</span></td>
-                            <td class="p-4"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold">ACTIVE</span></td>
-                        `;
-                        tbody.appendChild(tr);
-                    });
-                }
-
-                // Fetch Fees Data for the Total Amount
-                const { data: feesData, error: feeError } = await db.from('fees_collection').select('amount_paid');
+                if (error) throw error;
                 
-                if (!feeError && feesData) {
-                    const totalFee = feesData.reduce((sum, record) => sum + Number(record.amount_paid || 0), 0);
-                    document.getElementById('totalFeeCollected').innerText = '₹ ' + totalFee.toLocaleString('en-IN');
-                } else {
-                    document.getElementById('totalFeeCollected').innerText = '₹ 0';
-                }
+                currentStudents = data;
+                renderTable();
+                document.getElementById('tableContainer').classList.remove('hidden');
 
             } catch (error) {
-                console.error("Dashboard fetch error:", error);
+                alert("Database Error: " + error.message);
             }
+            
+            btn.innerText = 'Fetch Students';
+            btn.disabled = false;
+        });
+
+        // 2. RENDER TABLE
+        function renderTable() {
+            const tbody = document.getElementById('promoTableBody');
+            document.getElementById('studentCount').innerText = currentStudents.length;
+            tbody.innerHTML = '';
+
+            if (currentStudents.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-gray-500">Is class mein koi Active student nahi mila.</td></tr>`;
+                return;
+            }
+
+            currentStudents.forEach(student => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-gray-50 hover:bg-gray-50 transition';
+                tr.innerHTML = `
+                    <td class="p-4 text-center"><input type="checkbox" class="student-checkbox" value="${student.id}" checked></td>
+                    <td class="p-4 font-bold text-gray-800">${student.adm_no}</td>
+                    <td class="p-4 font-medium">${student.student_name}</td>
+                    <td class="p-4"><span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-[11px] font-semibold">${student.class_name}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
         }
-        window.addEventListener('DOMContentLoaded', fetchDashboardData);
+
+        // 3. SELECT ALL CHECKBOX LOGIC
+        document.getElementById('selectAll').addEventListener('change', function(e) {
+            const checkboxes = document.querySelectorAll('.student-checkbox');
+            checkboxes.forEach(cb => cb.checked = e.target.checked);
+        });
+
+        // 4. PROMOTE (UPDATE DATABASE) LOGIC
+        document.getElementById('promoteBtn').addEventListener('click', async () => {
+            const toClass = document.getElementById('toClass').value;
+            if(!toClass) { alert('Kripya select karein ki baccho ko kis class me bhejna hai (Next Class).'); return; }
+
+            const checkboxes = document.querySelectorAll('.student-checkbox:checked');
+            if(checkboxes.length === 0) { alert('Kripya kam se kam ek student select karein.'); return; }
+
+            const btn = document.getElementById('promoteBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Promoting...';
+            btn.disabled = true;
+
+            // Converting string ID to numbers for database safety
+            const selectedIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+
+            // Set update values
+            let updates;
+            if (toClass === 'Passed Out') {
+                updates = { status: 'Passed Out' }; 
+            } else {
+                updates = { class_name: toClass };
+            }
+
+            try {
+                // Supabase Bulk Update Query
+                const { error } = await db.from('students').update(updates).in('id', selectedIds);
+
+                if (error) throw error;
+
+                alert(`Success! ${selectedIds.length} students successfully promote ho gaye hain.`);
+                document.getElementById('tableContainer').classList.add('hidden');
+                document.getElementById('fromClass').value = '';
+                document.getElementById('toClass').value = '';
+                
+            } catch (error) {
+                alert("Promote fail ho gaya: " + error.message);
+            }
+
+            btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Promote Selected Students';
+            btn.disabled = false;
+        });
     </script>
 </body>
 </html>
