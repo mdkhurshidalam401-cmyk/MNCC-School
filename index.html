@@ -84,9 +84,9 @@
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-pie w-6 text-sm"></i> Reports</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-purple-400 transition-colors"><i class="fa-solid fa-scale-balanced w-6 text-sm"></i> Income vs Expense</a>
 
-            <!-- STAFF / PAYROLL -->
+            <!-- STAFF / PAYROLL (Link updated here) -->
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STAFF / PAYROLL</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-tie w-6 text-sm"></i> Staff Management</a>
+            <a href="staff.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-tie w-6 text-sm"></i> Staff Management</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Salary Management</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-chart-column w-6 text-sm"></i> Salary Report</a>
 
@@ -126,10 +126,12 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md">
+                <!-- Live Staff Count Card -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md cursor-pointer" onclick="window.location.href='staff.html'">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Staff</p>
-                        <h4 class="text-3xl font-bold text-gray-800">24</h4>
+                        <h4 id="totalStaffCount" class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h4>
+                        <p class="text-xs text-purple-500 font-medium mt-2">Active employees</p>
                     </div>
                     <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center"><i class="fa-solid fa-chalkboard-user text-2xl text-purple-500"></i></div>
                 </div>
@@ -282,6 +284,14 @@
                     document.getElementById('totalExpenses').innerText = '₹ ' + totalExp.toLocaleString('en-IN');
                 } else {
                     document.getElementById('totalExpenses').innerText = '₹ 0';
+                }
+
+                // 4. Fetch Total Staff Data (NEW!)
+                const { data: staffData } = await db.from('staff').select('id');
+                if (staffData) {
+                    document.getElementById('totalStaffCount').innerText = staffData.length;
+                } else {
+                    document.getElementById('totalStaffCount').innerText = '0';
                 }
 
             } catch (error) {
