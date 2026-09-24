@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Enquiry - School ERP</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        main::-webkit-scrollbar { width: 6px; }
+        main::-webkit-scrollbar-track { background: #f0f4f8; }
+        main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .modal-active { display: flex !important; animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        input:focus, select:focus { outline: none; border-color: #00c3a2; box-shadow: 0 0 0 3px rgba(0, 195, 162, 0.1); }
+    </style>
+</head>
+<body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
+
+    <!-- 100% COMPLETE MEGA SIDEBAR -->
+    <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#003126] z-10">
+            <div class="bg-white text-orange-500 w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+                <i class="fa-solid fa-school text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-[13px] font-bold leading-tight tracking-wide text-white">data click education</h1>
+                <p class="text-[9px] text-[#8aa8a3] mt-0.5">Management System</p>
+            </div>
+        </div>
+
+        <div class="p-4 flex items-center border-b border-white/10">
+            <div class="w-8 h-8 rounded-full bg-white text-[#003126] flex items-center justify-center font-bold mr-3 text-xs">S</div>
+            <div>
+                <h2 class="text-[12px] font-semibold text-white">Super Administrator</h2>
+                <p class="text-[10px] text-yellow-400 mt-0.5"><i class="fa-solid fa-star text-[9px]"></i> Super Admin</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
+            <div class="mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">MAIN</div>
+            <a href="index.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> Dashboard</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STUDENTS</div>
+            <!-- Admission Enquiry Active -->
+            <a href="admission_enquiry.html" class="flex items-center px-4 py-2 bg-[#00c3a2] text-white rounded-md mb-0.5 shadow-sm"><i class="fa-regular fa-clipboard w-6 text-sm"></i> Admission Enquiry</a>
+            <a href="students.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> All Students</a>
+            <a href="admission.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-plus w-6 text-sm"></i> New Admission</a>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-box-archive w-6 text-sm"></i> Passed Out Archive</a>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-graduation-cap w-6 text-sm"></i> Promotion</a>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-yellow-500 transition-colors"><i class="fa-solid fa-file-lines w-6 text-sm"></i> Session Report</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FEES</div>
+            <a href="fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-sm"></i> Fee Structure</a>
+            <a href="fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-sm"></i> Fee Collection</a>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-green-400 transition-colors"><i class="fa-solid fa-bolt w-6 text-sm"></i> Quick Fee Collect</a>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-green-400 transition-colors"><i class="fa-brands fa-whatsapp w-6 text-sm"></i> WhatsApp Reminder</a>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-red-400 transition-colors"><i class="fa-solid fa-trash-can w-6 text-sm"></i> Fee Deletion Log</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ACADEMICS</div>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Attendance</a>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-line w-6 text-sm"></i> Attendance Report</a>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-file-lines w-6 text-sm"></i> Exams</a>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Marks Entry</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FINANCE</div>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-receipt w-6 text-sm"></i> Expenses</a>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-pie w-6 text-sm"></i> Reports</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STAFF / PAYROLL</div>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-tie w-6 text-sm"></i> Staff Management</a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto relative">
+        <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
+            <div>
+                <h2 class="text-2xl font-bold text-[#102a43]">Admission Enquiry</h2>
+                <p class="text-xs text-gray-500 mt-1">Manage new student enquiries and follow-ups.</p>
+            </div>
+            <button id="openEnquiryModalBtn" class="bg-[#00c3a2] hover:bg-[#00a68d] text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition flex items-center gap-2 shadow-md">
+                <i class="fa-solid fa-plus"></i> New Enquiry
+            </button>
+        </header>
+
+        <div class="p-8">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
+                <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                    <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-phone-volume mr-2 text-[#00c3a2]"></i> Recent Enquiries</h3>
+                    <div class="text-xs font-bold text-gray-500">Total: <span id="totalEnquiriesCount" class="text-[#00c3a2]">0</span></div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[800px]">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-500 text-[11px] uppercase tracking-wider border-b border-gray-200">
+                                <th class="p-4 font-semibold">Date</th>
+                                <th class="p-4 font-semibold">Student Name</th>
+                                <th class="p-4 font-semibold">Father's Name & Contact</th>
+                                <th class="p-4 font-semibold">Class Applied</th>
+                                <th class="p-4 font-semibold">Status</th>
+                                <th class="p-4 font-semibold text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="enquiryTableBody" class="text-sm text-gray-700">
+                            <tr>
+                                <td colspan="6" class="p-8 text-center text-gray-400">
+                                    <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2 text-[#00c3a2]"></i>
+                                    <p>Loading enquiries...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- NEW ENQUIRY MODAL -->
+    <div id="enquiryModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center backdrop-blur-sm">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden transform transition-all">
+            <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                <h3 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-clipboard-question mr-2 text-[#00c3a2]"></i> Add New Enquiry</h3>
+                <button id="closeModalBtn" class="text-gray-400 hover:text-red-500 transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            
+            <form id="enquiryForm" class="p-6">
+                <div class="grid grid-cols-1 gap-5">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Student Name <span class="text-red-500">*</span></label>
+                        <input type="text" id="eqStudentName" required placeholder="Enter student's name" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all focus:border-[#00c3a2]">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Father's Name <span class="text-red-500">*</span></label>
+                        <input type="text" id="eqFatherName" required placeholder="Enter father's name" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all focus:border-[#00c3a2]">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Mobile Number <span class="text-red-500">*</span></label>
+                        <input type="tel" id="eqMobile" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all focus:border-[#00c3a2]">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Class Applied For <span class="text-red-500">*</span></label>
+                        <select id="eqClass" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all bg-white focus:border-[#00c3a2]">
+                            <option value="">-- Select Class --</option>
+                            <option value="Pre-Nursery">Pre-Nursery</option>
+                            <option value="Nursery">Nursery</option>
+                            <option value="LKG">LKG</option>
+                            <option value="UKG">UKG</option>
+                            <option value="Class 1">Class 1</option>
+                            <option value="Class 2">Class 2</option>
+                            <option value="Class 3">Class 3</option>
+                            <option value="Class 4">Class 4</option>
+                            <option value="Class 5">Class 5</option>
+                            <option value="Class 6">Class 6</option>
+                            <option value="Class 7">Class 7</option>
+                            <option value="Class 8">Class 8</option>
+                            <option value="Class 9">Class 9</option>
+                            <option value="Class 10">Class 10</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex justify-end gap-3">
+                    <button type="button" id="cancelBtn" class="px-5 py-2.5 rounded-lg text-sm font-semibold text-gray-600 border border-gray-300 hover:bg-gray-50 transition">Cancel</button>
+                    <button type="submit" id="saveEnquiryBtn" class="bg-[#00c3a2] hover:bg-[#00a68d] text-white px-8 py-2.5 rounded-lg text-sm font-bold shadow-md transition">Save Enquiry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT: SUPABASE & LOGIC -->
+    <script>
+        const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const modal = document.getElementById('enquiryModal');
+        const form = document.getElementById('enquiryForm');
+        
+        // Modal Handlers
+        document.getElementById('openEnquiryModalBtn').addEventListener('click', () => {
+            form.reset();
+            modal.classList.add('modal-active');
+        });
+        document.getElementById('closeModalBtn').addEventListener('click', () => modal.classList.remove('modal-active'));
+        document.getElementById('cancelBtn').addEventListener('click', () => modal.classList.remove('modal-active'));
+
+        // Format Date Helper
+        function formatDate(dateStr) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateStr).toLocaleDateString('en-IN', options);
+        }
+
+        // Load Enquiries from Database
+        async function loadEnquiries() {
+            const tableBody = document.getElementById('enquiryTableBody');
+            
+            try {
+                const { data, error } = await db.from('admission_enquiries').select('*').order('id', { ascending: false });
+                if (error) throw error;
+
+                document.getElementById('totalEnquiriesCount').innerText = data.length;
+                tableBody.innerHTML = '';
+                
+                if (data.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-gray-500">No enquiries found. Click "New Enquiry" to add one.</td></tr>`;
+                    return;
+                }
+
+                data.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.className = 'border-b border-gray-50 hover:bg-gray-50 transition text-gray-700';
+                    tr.innerHTML = `
+                        <td class="p-4 text-xs font-semibold text-gray-500">${formatDate(item.enquiry_date)}</td>
+                        <td class="p-4 font-bold text-gray-800">${item.student_name}</td>
+                        <td class="p-4">
+                            <div class="text-sm font-semibold">${item.father_name}</div>
+                            <div class="text-xs text-gray-500"><i class="fa-solid fa-phone text-[10px]"></i> ${item.mobile_no}</div>
+                        </td>
+                        <td class="p-4"><span class="bg-gray-100 border border-gray-200 text-gray-700 px-2.5 py-1 rounded text-xs font-semibold">${item.class_applied}</span></td>
+                        <td class="p-4"><span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">${item.status}</span></td>
+                        <td class="p-4 text-center">
+                            <button class="text-blue-500 hover:text-blue-700 hover:bg-blue-50 w-8 h-8 rounded-full transition ml-1 delete-btn" data-id="${item.id}"><i class="fa-regular fa-trash-can"></i></button>
+                        </td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+
+                // Add delete functionality
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', async function() {
+                        if(confirm('Are you sure you want to delete this enquiry?')) {
+                            const id = this.getAttribute('data-id');
+                            await db.from('admission_enquiries').delete().eq('id', id);
+                            loadEnquiries();
+                        }
+                    });
+                });
+
+            } catch (error) {
+                console.error("Fetch Error: ", error);
+                tableBody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-red-500">Error loading data.</td></tr>`;
+            }
+        }
+
+        // Save Enquiry to Database
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('saveEnquiryBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+            btn.disabled = true;
+
+            const payload = {
+                student_name: document.getElementById('eqStudentName').value,
+                father_name: document.getElementById('eqFatherName').value,
+                mobile_no: document.getElementById('eqMobile').value,
+                class_applied: document.getElementById('eqClass').value,
+                status: 'Pending'
+            };
+
+            const { data, error } = await db.from('admission_enquiries').insert([payload]);
+
+            if (error) {
+                alert("Database Error: " + error.message);
+            } else {
+                modal.classList.remove('modal-active');
+                loadEnquiries();
+            }
+
+            btn.innerText = 'Save Enquiry';
+            btn.disabled = false;
+        });
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', loadEnquiries);
+    </script>
+</body>
+</html>
