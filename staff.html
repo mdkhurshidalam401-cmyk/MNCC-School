@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Management - HIKVENA PVT.LTD</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        main::-webkit-scrollbar { width: 6px; }
+        main::-webkit-scrollbar-track { background: #f0f4f8; }
+        main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        input:focus, select:focus { outline: none; border-color: #00c3a2; box-shadow: 0 0 0 3px rgba(0, 195, 162, 0.1); }
+    </style>
+</head>
+<body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
+
+    <!-- 100% COMPLETE MEGA SIDEBAR -->
+    <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
+        <!-- BRANDING SECTION -->
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#003126] z-10">
+            <div class="bg-white text-[#00c3a2] w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+                <i class="fa-solid fa-graduation-cap text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-[14px] font-extrabold leading-tight tracking-wider text-white uppercase">HIKVENA PVT.LTD</h1>
+                <p class="text-[9px] text-[#8aa8a3] mt-0.5 font-bold uppercase tracking-widest">School Management System</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
+            <!-- MAIN -->
+            <div class="mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">MAIN</div>
+            <a href="index.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> Dashboard</a>
+
+            <!-- STUDENTS -->
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STUDENTS</div>
+            <a href="admission_enquiry.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-clipboard w-6 text-sm"></i> Admission Enquiry</a>
+            <a href="students.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> All Students</a>
+            <a href="admission.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-plus w-6 text-sm"></i> New Admission</a>
+            <a href="passed_out_archive.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-box-archive w-6 text-sm"></i> Passed Out Archive</a>
+            <a href="promotion.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-graduation-cap w-6 text-sm"></i> Promotion</a>
+            <a href="session_report.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-yellow-500 transition-colors"><i class="fa-solid fa-file-lines w-6 text-sm"></i> Session Report</a>
+
+            <!-- FEES -->
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FEES</div>
+            <a href="fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-sm"></i> Fee Structure</a>
+            <a href="fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-sm"></i> Fee Collection</a>
+
+            <!-- ACADEMICS -->
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ACADEMICS</div>
+            <a href="attendance.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Attendance</a>
+            <a href="attendance_report.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-line w-6 text-sm"></i> Attendance Report</a>
+            <a href="exams.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-file-lines w-6 text-sm"></i> Exams</a>
+            <a href="marks_entry.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Marks Entry</a>
+            <a href="class_result.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-check w-6 text-sm"></i> Class Result</a>
+            <a href="subjects.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-book w-6 text-sm"></i> Subjects</a>
+
+            <!-- FINANCE -->
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FINANCE</div>
+            <a href="expenses.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-receipt w-6 text-sm"></i> Expenses</a>
+
+            <!-- STAFF / PAYROLL (Staff Management is Active here) -->
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STAFF / PAYROLL</div>
+            <a href="staff.html" class="flex items-center px-4 py-2 bg-[#00c3a2] text-white rounded-md mb-0.5 shadow-sm"><i class="fa-solid fa-user-tie w-6 text-sm"></i> Staff Management</a>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Salary Management</a>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-chart-column w-6 text-sm"></i> Salary Report</a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
+            <div>
+                <h2 class="text-2xl font-bold text-[#102a43]">Staff Management</h2>
+                <p class="text-xs text-gray-500 mt-1">Register and manage school teachers and employees.</p>
+            </div>
+        </header>
+
+        <div class="p-8 pt-6">
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                
+                <!-- ADD STAFF FORM -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 h-fit xl:col-span-1">
+                    <h3 class="text-[15px] font-bold text-gray-800 mb-5 border-b pb-2"><i class="fa-solid fa-user-plus mr-2 text-[#00c3a2]"></i> Add New Staff</h3>
+                    <form id="staffForm">
+                        <div class="mb-4">
+                            <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Full Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="staffName" required placeholder="e.g. Ramesh Kumar" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all focus:border-[#00c3a2]">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Role <span class="text-red-500">*</span></label>
+                                <select id="staffRole" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all bg-white focus:border-[#00c3a2]">
+                                    <option value="Teacher">Teacher</option>
+                                    <option value="Principal">Principal</option>
+                                    <option value="Admin">Admin Staff</option>
+                                    <option value="Clerk">Clerk / Accountant</option>
+                                    <option value="Peon">Peon / Helper</option>
+                                    <option value="Driver">Driver</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Gender <span class="text-red-500">*</span></label>
+                                <select id="staffGender" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all bg-white focus:border-[#00c3a2]">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Phone Number <span class="text-red-500">*</span></label>
+                            <input type="tel" id="staffPhone" required placeholder="10-digit mobile number" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all focus:border-[#00c3a2]">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 mb-5">
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Joining Date <span class="text-red-500">*</span></label>
+                                <input type="date" id="staffJoinDate" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all focus:border-[#00c3a2]">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Basic Salary (₹)</label>
+                                <input type="number" id="staffSalary" placeholder="0" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all focus:border-[#00c3a2]">
+                            </div>
+                        </div>
+
+                        <button type="submit" id="saveStaffBtn" class="w-full bg-[#00c3a2] hover:bg-[#00a68d] text-white px-5 py-2.5 rounded-lg text-sm font-bold shadow-md transition-all">
+                            Register Staff
+                        </button>
+                    </form>
+                </div>
+
+                <!-- STAFF LIST TABLE -->
+                <div class="xl:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
+                    <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                        <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-users-rectangle mr-2 text-blue-500"></i> Active Staff Directory</h3>
+                        <div class="text-xs font-bold text-gray-500">Total Staff: <span id="staffCount" class="text-blue-500">0</span></div>
+                    </div>
+
+                    <div class="overflow-x-auto max-h-[600px]">
+                        <table class="w-full text-left border-collapse min-w-[700px]">
+                            <thead class="sticky top-0 bg-gray-50 z-10 shadow-sm">
+                                <tr class="text-gray-500 text-[11px] uppercase tracking-wider border-b border-gray-200">
+                                    <th class="p-4 font-semibold">Staff Details</th>
+                                    <th class="p-4 font-semibold">Role</th>
+                                    <th class="p-4 font-semibold">Contact Info</th>
+                                    <th class="p-4 font-semibold text-center w-16">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="staffTableBody" class="text-sm text-gray-700">
+                                <tr>
+                                    <td colspan="4" class="p-8 text-center text-gray-400">
+                                        <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2 text-blue-400"></i>
+                                        <p>Loading staff data...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Set default date to today
+        document.getElementById('staffJoinDate').value = new Date().toISOString().split('T')[0];
+
+        // Format Date Helper
+        function formatDate(dateStr) {
+            if(!dateStr) return '-';
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateStr).toLocaleDateString('en-IN', options);
+        }
+
+        // LOAD STAFF DATA
+        async function loadStaff() {
+            const tableBody = document.getElementById('staffTableBody');
+            
+            try {
+                // Fetch staff ensuring table schema is queried
+                const { data, error } = await db.from('staff').select('*').order('id', { ascending: false });
+                
+                if (error) {
+                    // Auto-create table logic workaround if it wasn't made correctly via SQL yet
+                    if(error.code === '42P01') { 
+                        tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-500">Staff table missing. Please run the creation script in Supabase SQL editor.</td></tr>`;
+                        return;
+                    }
+                    throw error;
+                }
+
+                document.getElementById('staffCount').innerText = data.length;
+                tableBody.innerHTML = '';
+                
+                if (data.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-500">Koi staff register nahi kiya gaya hai.</td></tr>`;
+                    return;
+                }
+
+                data.forEach(item => {
+                    const initial = item.name ? item.name.charAt(0).toUpperCase() : 'S';
+                    const badgeColor = item.role === 'Teacher' ? 'bg-blue-100 text-blue-700 border-blue-200' : 
+                                      (item.role === 'Principal' ? 'bg-purple-100 text-purple-700 border-purple-200' : 'bg-gray-100 text-gray-700 border-gray-200');
+
+                    const tr = document.createElement('tr');
+                    tr.className = 'border-b border-gray-50 hover:bg-gray-50 transition text-gray-700';
+                    tr.innerHTML = `
+                        <td class="p-4 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-teal-50 text-[#00c3a2] flex items-center justify-center font-bold text-sm shadow-sm">${initial}</div>
+                            <div>
+                                <div class="font-bold text-gray-800 text-base">${item.name}</div>
+                                <div class="text-[10px] text-gray-500 uppercase tracking-wider">Joined: ${formatDate(item.joining_date)}</div>
+                            </div>
+                        </td>
+                        <td class="p-4">
+                            <span class="${badgeColor} border px-2.5 py-1 rounded-md text-xs font-bold">${item.role}</span>
+                        </td>
+                        <td class="p-4">
+                            <div class="text-sm font-semibold text-gray-600"><i class="fa-solid fa-phone text-xs mr-1 text-gray-400"></i> ${item.phone || '-'}</div>
+                            <div class="text-xs text-green-600 font-semibold mt-0.5">₹ ${Number(item.basic_salary || 0).toLocaleString('en-IN')} /mo</div>
+                        </td>
+                        <td class="p-4 text-center">
+                            <button class="text-red-400 hover:text-red-600 hover:bg-red-50 w-8 h-8 rounded-full transition delete-btn" data-id="${item.id}" title="Delete Staff">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+
+                // ADD DELETE FUNCTIONALITY
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', async function() {
+                        if(confirm('Kya aap is staff member ka record permanently delete karna chahte hain?')) {
+                            const id = this.getAttribute('data-id');
+                            await db.from('staff').delete().eq('id', id);
+                            loadStaff();
+                        }
+                    });
+                });
+
+            } catch (error) {
+                console.error("Fetch Error: ", error);
+                tableBody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-red-500">Error loading data.</td></tr>`;
+            }
+        }
+
+        // SAVE STAFF LOGIC
+        document.getElementById('staffForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('saveStaffBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+            btn.disabled = true;
+
+            const payload = {
+                name: document.getElementById('staffName').value,
+                role: document.getElementById('staffRole').value,
+                gender: document.getElementById('staffGender').value,
+                phone: document.getElementById('staffPhone').value,
+                joining_date: document.getElementById('staffJoinDate').value,
+                basic_salary: document.getElementById('staffSalary').value || 0
+            };
+
+            const { error } = await db.from('staff').insert([payload]);
+
+            if (error) {
+                // Fallback Table Creation Notice (Just in case RLS or Schema is missing)
+                if(error.code === '42P01') {
+                    alert("Database Error: 'staff' table exist nahi karti. Kripya Supabase SQL editor se table banayein.");
+                } else {
+                    alert("Database Error: " + error.message);
+                }
+            } else {
+                document.getElementById('staffForm').reset();
+                document.getElementById('staffJoinDate').value = new Date().toISOString().split('T')[0];
+                loadStaff();
+            }
+
+            btn.innerText = 'Register Staff';
+            btn.disabled = false;
+        });
+
+        // Initialize table on load
+        window.addEventListener('DOMContentLoaded', loadStaff);
+    </script>
+</body>
+</html>
