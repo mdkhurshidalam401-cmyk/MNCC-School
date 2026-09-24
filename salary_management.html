@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Management - HIKVENA PVT.LTD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        main::-webkit-scrollbar { width: 6px; }
+        main::-webkit-scrollbar-track { background: #f0f4f8; }
+        main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
+
+    <!-- MEGA SIDEBAR -->
+    <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#003126] z-10">
+            <div class="bg-white text-[#00c3a2] w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+                <i class="fa-solid fa-graduation-cap text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-[14px] font-extrabold leading-tight tracking-wider text-white uppercase">HIKVENA PVT.LTD</h1>
+                <p class="text-[9px] text-[#8aa8a3] mt-0.5 font-bold uppercase tracking-widest">School Management System</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
+            <div class="mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">MAIN</div>
+            <a href="index.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> Dashboard</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STUDENTS</div>
+            <a href="admission_enquiry.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-clipboard w-6 text-sm"></i> Admission Enquiry</a>
+            <a href="students.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> All Students</a>
+            <a href="admission.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-plus w-6 text-sm"></i> New Admission</a>
+            <a href="passed_out_archive.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-box-archive w-6 text-sm"></i> Passed Out Archive</a>
+            <a href="promotion.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-graduation-cap w-6 text-sm"></i> Promotion</a>
+            
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FEES</div>
+            <a href="fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-sm"></i> Fee Structure</a>
+            <a href="fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-sm"></i> Fee Collection</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ACADEMICS</div>
+            <a href="attendance.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Attendance</a>
+            <a href="attendance_report.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-line w-6 text-sm"></i> Attendance Report</a>
+            <a href="exams.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-file-lines w-6 text-sm"></i> Exams</a>
+            <a href="marks_entry.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Marks Entry</a>
+            <a href="class_result.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-check w-6 text-sm"></i> Class Result</a>
+            <a href="subjects.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-book w-6 text-sm"></i> Subjects</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FINANCE</div>
+            <a href="expenses.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-receipt w-6 text-sm"></i> Expenses</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STAFF / PAYROLL</div>
+            <a href="staff.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-tie w-6 text-sm"></i> Staff Management</a>
+            <a href="salary_management.html" class="flex items-center px-4 py-2 bg-[#00c3a2] text-white rounded-md mb-0.5 shadow-sm"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Salary Management</a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
+            <div>
+                <h2 class="text-2xl font-bold text-[#102a43]">Salary Management</h2>
+                <p class="text-xs text-gray-500 mt-1">Process and track monthly staff salaries.</p>
+            </div>
+        </header>
+
+        <div class="p-8 pt-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- PAY SALARY FORM -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 h-fit">
+                    <h3 class="text-[15px] font-bold text-gray-800 mb-5 border-b pb-2"><i class="fa-solid fa-wallet mr-2 text-[#00c3a2]"></i> Pay Salary</h3>
+                    <form id="salaryForm">
+                        <div class="mb-4">
+                            <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Select Staff <span class="text-red-500">*</span></label>
+                            <select id="staffSelect" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all bg-white focus:border-[#00c3a2]">
+                                <option value="">-- Loading Staff --</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Salary Month <span class="text-red-500">*</span></label>
+                            <input type="month" id="salaryMonth" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all text-gray-700">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Payment Method <span class="text-red-500">*</span></label>
+                            <select id="payMethod" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all bg-white">
+                                <option value="Bank Transfer">Bank Transfer</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="UPI">UPI</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-5">
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Payment Date</label>
+                                <input type="date" id="payDate" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all text-gray-700">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Amount (₹) <span class="text-red-500">*</span></label>
+                                <input type="number" id="payAmount" required placeholder="0" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all font-bold text-[#00c3a2]">
+                            </div>
+                        </div>
+
+                        <button type="submit" id="saveSalaryBtn" class="w-full bg-[#00c3a2] hover:bg-[#00a68d] text-white px-5 py-2.5 rounded-lg text-sm font-bold shadow-md transition-all">
+                            Process Salary
+                        </button>
+                    </form>
+                </div>
+
+                <!-- SALARY RECORDS TABLE -->
+                <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
+                    <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                        <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-money-check-dollar mr-2 text-blue-500"></i> Recent Payouts</h3>
+                    </div>
+
+                    <div class="overflow-x-auto max-h-[500px]">
+                        <table class="w-full text-left border-collapse min-w-[500px]">
+                            <thead class="sticky top-0 bg-gray-50 z-10 shadow-sm">
+                                <tr class="text-gray-500 text-[11px] uppercase tracking-wider border-b border-gray-200">
+                                    <th class="p-4 font-semibold">Staff Name</th>
+                                    <th class="p-4 font-semibold">Month</th>
+                                    <th class="p-4 font-semibold">Method & Date</th>
+                                    <th class="p-4 font-semibold text-right">Amount Paid</th>
+                                </tr>
+                            </thead>
+                            <tbody id="salaryTableBody" class="text-sm text-gray-700">
+                                <tr>
+                                    <td colspan="4" class="p-8 text-center text-gray-400">
+                                        <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2 text-[#00c3a2]"></i>
+                                        <p>Loading records...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const staffSelect = document.getElementById('staffSelect');
+        const payAmount = document.getElementById('payAmount');
+        let staffList = [];
+
+        // Set defaults
+        document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
+        
+        // Format Month-Year
+        function formatMonth(monthStr) {
+            if(!monthStr) return '-';
+            const date = new Date(monthStr + '-01');
+            return date.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' });
+        }
+
+        // LOAD STAFF FOR DROPDOWN
+        async function loadStaffList() {
+            try {
+                const { data, error } = await db.from('staff').select('id, name, basic_salary, role');
+                if (error) throw error;
+                staffList = data;
+                
+                staffSelect.innerHTML = '<option value="">-- Select Staff --</option>';
+                data.forEach(s => {
+                    staffSelect.innerHTML += `<option value="${s.id}">${s.name} (${s.role})</option>`;
+                });
+            } catch(e) {
+                staffSelect.innerHTML = '<option value="">Error loading staff</option>';
+            }
+        }
+
+        // Auto-fill salary when staff is selected
+        staffSelect.addEventListener('change', function() {
+            const selectedId = this.value;
+            const staff = staffList.find(s => s.id == selectedId);
+            if(staff && staff.basic_salary) {
+                payAmount.value = staff.basic_salary;
+            } else {
+                payAmount.value = '';
+            }
+        });
+
+        // LOAD RECENT SALARY PAYMENTS
+        async function loadSalaries() {
+            const tableBody = document.getElementById('salaryTableBody');
+            try {
+                const { data, error } = await db.from('salary_payments').select('*').order('id', { ascending: false });
+                if (error) throw error;
+
+                tableBody.innerHTML = '';
+                
+                if (data.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-500">Koi salary record nahi mila.</td></tr>`;
+                    return;
+                }
+
+                data.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.className = 'border-b border-gray-50 hover:bg-gray-50 transition text-gray-700';
+                    tr.innerHTML = `
+                        <td class="p-4 font-bold text-[#102a43]">${item.staff_name}</td>
+                        <td class="p-4"><span class="bg-blue-50 text-blue-700 px-2 py-1 rounded font-bold text-xs border border-blue-100">${formatMonth(item.month_year)}</span></td>
+                        <td class="p-4">
+                            <div class="text-sm font-semibold">${item.payment_method}</div>
+                            <div class="text-xs text-gray-500 mt-0.5">${item.payment_date}</div>
+                        </td>
+                        <td class="p-4 text-right font-bold text-[#00c3a2]">₹ ${Number(item.amount_paid).toLocaleString('en-IN')}</td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            } catch (error) {
+                tableBody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-red-500">Error loading data.</td></tr>`;
+            }
+        }
+
+        // SUBMIT FORM
+        document.getElementById('salaryForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('saveSalaryBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+            btn.disabled = true;
+
+            const selectedStaffId = staffSelect.value;
+            const staffName = staffSelect.options[staffSelect.selectedIndex].text.split(' (')[0]; // Extract just the name
+
+            const payload = {
+                staff_id: selectedStaffId,
+                staff_name: staffName,
+                month_year: document.getElementById('salaryMonth').value,
+                amount_paid: document.getElementById('payAmount').value,
+                payment_method: document.getElementById('payMethod').value,
+                payment_date: document.getElementById('payDate').value
+            };
+
+            const { error } = await db.from('salary_payments').insert([payload]);
+
+            if (error) {
+                alert("Database Error: " + error.message);
+            } else {
+                document.getElementById('salaryForm').reset();
+                document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
+                loadSalaries(); // Refresh list
+            }
+
+            btn.innerText = 'Process Salary';
+            btn.disabled = false;
+        });
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadStaffList();
+            loadSalaries();
+        });
+    </script>
+</body>
+</html>
