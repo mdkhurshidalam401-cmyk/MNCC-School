@@ -84,10 +84,10 @@
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-pie w-6 text-sm"></i> Reports</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-purple-400 transition-colors"><i class="fa-solid fa-scale-balanced w-6 text-sm"></i> Income vs Expense</a>
 
-            <!-- STAFF / PAYROLL (Link updated here) -->
+            <!-- STAFF / PAYROLL -->
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STAFF / PAYROLL</div>
             <a href="staff.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-tie w-6 text-sm"></i> Staff Management</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Salary Management</a>
+            <a href="salary_management.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Salary Management</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-chart-column w-6 text-sm"></i> Salary Report</a>
 
             <!-- COMMUNICATION -->
@@ -126,7 +126,6 @@
                     </div>
                 </div>
 
-                <!-- Live Staff Count Card -->
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md cursor-pointer" onclick="window.location.href='staff.html'">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Staff</p>
@@ -286,7 +285,7 @@
                     document.getElementById('totalExpenses').innerText = '₹ 0';
                 }
 
-                // 4. Fetch Total Staff Data (NEW!)
+                // 4. Fetch Total Staff Data
                 const { data: staffData } = await db.from('staff').select('id');
                 if (staffData) {
                     document.getElementById('totalStaffCount').innerText = staffData.length;
