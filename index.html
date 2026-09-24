@@ -13,9 +13,9 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
-        aside::-webkit-scrollbar { width: 4px; }
-        aside::-webkit-scrollbar-track { background: transparent; }
-        aside::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
         main::-webkit-scrollbar { width: 6px; }
         main::-webkit-scrollbar-track { background: #f0f4f8; }
         main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -23,10 +23,8 @@
 </head>
 <body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
 
-  <!-- 100% COMPLETE MEGA SIDEBAR -->
+    <!-- 100% COMPLETE MEGA SIDEBAR (With Fixed Links) -->
     <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
-        
-        <!-- Logo Section -->
         <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#003126] z-10">
             <div class="bg-white text-orange-500 w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
                 <i class="fa-solid fa-school text-xl"></i>
@@ -37,7 +35,6 @@
             </div>
         </div>
 
-        <!-- Super Admin Profile -->
         <div class="p-4 flex items-center border-b border-white/10">
             <div class="w-8 h-8 rounded-full bg-white text-[#003126] flex items-center justify-center font-bold mr-3 text-xs">S</div>
             <div>
@@ -46,21 +43,21 @@
             </div>
         </div>
 
-        <!-- Navigation Menu -->
         <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
-            
             <div class="mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">MAIN</div>
-            <a href="index.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> Dashboard</a>
+            <a href="index.html" class="flex items-center px-4 py-2 bg-[#00c3a2] text-white rounded-md mb-1 shadow-sm"><i class="fa-solid fa-house w-6 text-sm"></i> Dashboard</a>
 
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STUDENTS</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-clipboard w-6 text-sm"></i> Admission Enquiry</a>
+            <!-- Link Fixed Here -->
+            <a href="admission_enquiry.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-clipboard w-6 text-sm"></i> Admission Enquiry</a>
             <a href="students.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> All Students</a>
-            <a href="admission.html" class="flex items-center px-4 py-2 bg-[#00c3a2] text-white rounded-md mb-0.5 shadow-sm"><i class="fa-solid fa-user-plus w-6 text-sm"></i> New Admission</a>
+            <a href="admission.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-plus w-6 text-sm"></i> New Admission</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-box-archive w-6 text-sm"></i> Passed Out Archive</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-graduation-cap w-6 text-sm"></i> Promotion</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-yellow-500 transition-colors"><i class="fa-solid fa-file-lines w-6 text-sm"></i> Session Report</a>
 
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FEES</div>
+            <!-- Links Fixed Here -->
             <a href="fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-sm"></i> Fee Structure</a>
             <a href="fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-sm"></i> Fee Collection</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-green-400 transition-colors"><i class="fa-solid fa-bolt w-6 text-sm"></i> Quick Fee Collect</a>
@@ -97,16 +94,8 @@
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ACCOUNT</div>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-key w-6 text-sm"></i> Password Change</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-red-400 transition-colors"><i class="fa-solid fa-arrow-right-from-bracket w-6 text-sm"></i> Logout</a>
-
         </nav>
     </aside>
-
-    <!-- Is code ko har page ke head me CSS style tag ke andar daal lijiye taaki lamba scrollbar patla aur sundar dikhe -->
-    <style>
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-    </style>
 
     <!-- MAIN CONTENT - DASHBOARD -->
     <main class="flex-1 flex flex-col h-full overflow-y-auto">
@@ -152,7 +141,6 @@
                     <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center"><i class="fa-solid fa-chalkboard-user text-2xl text-purple-500"></i></div>
                 </div>
 
-                <!-- Fee Collected Card -->
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Fee Collected</p>
@@ -215,7 +203,6 @@
                             <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-[#00c3a2]"></i>
                         </a>
 
-                        <!-- Link updated for Fee Collection -->
                         <a href="fee_collection.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-green-500 hover:bg-green-50 transition-all group cursor-pointer block">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-lg bg-green-50 text-green-500 flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-indian-rupee-sign"></i></div>
@@ -290,9 +277,7 @@
                 const { data: feesData, error: feeError } = await db.from('fees_collection').select('amount_paid');
                 
                 if (!feeError && feesData) {
-                    // Calculate Total Sum
                     const totalFee = feesData.reduce((sum, record) => sum + Number(record.amount_paid || 0), 0);
-                    // Add comma formatting (e.g. 5,000)
                     document.getElementById('totalFeeCollected').innerText = '₹ ' + totalFee.toLocaleString('en-IN');
                 } else {
                     document.getElementById('totalFeeCollected').innerText = '₹ 0';
@@ -300,9 +285,6 @@
 
             } catch (error) {
                 console.error("Dashboard fetch error:", error);
-                document.getElementById('totalStudentsCount').innerText = 'Error';
-                document.getElementById('totalFeeCollected').innerText = 'Error';
-                document.getElementById('recentAdmissionsTable').innerHTML = `<tr><td colspan="4" class="p-4 text-center text-red-500">Failed to load data.</td></tr>`;
             }
         }
         window.addEventListener('DOMContentLoaded', fetchDashboardData);
