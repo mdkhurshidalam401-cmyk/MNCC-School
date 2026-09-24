@@ -13,24 +13,21 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
-        aside::-webkit-scrollbar { width: 4px; }
-        aside::-webkit-scrollbar-track { background: transparent; }
-        aside::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
         main::-webkit-scrollbar { width: 6px; }
         main::-webkit-scrollbar-track { background: #f0f4f8; }
         main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .modal-active { display: flex !important; animation: fadeIn 0.3s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        /* Form Focus Styles */
         input:focus, select:focus, textarea:focus { outline: none; border-color: #00c3a2; box-shadow: 0 0 0 3px rgba(0, 195, 162, 0.1); }
     </style>
 </head>
 <body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
 
-  <!-- 100% COMPLETE MEGA SIDEBAR -->
+    <!-- 100% COMPLETE MEGA SIDEBAR -->
     <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
-        
-        <!-- Logo Section -->
         <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#003126] z-10">
             <div class="bg-white text-orange-500 w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
                 <i class="fa-solid fa-school text-xl"></i>
@@ -41,7 +38,6 @@
             </div>
         </div>
 
-        <!-- Super Admin Profile -->
         <div class="p-4 flex items-center border-b border-white/10">
             <div class="w-8 h-8 rounded-full bg-white text-[#003126] flex items-center justify-center font-bold mr-3 text-xs">S</div>
             <div>
@@ -50,9 +46,7 @@
             </div>
         </div>
 
-        <!-- Navigation Menu -->
         <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
-            
             <div class="mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">MAIN</div>
             <a href="index.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> Dashboard</a>
 
@@ -101,16 +95,8 @@
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ACCOUNT</div>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-key w-6 text-sm"></i> Password Change</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-red-400 transition-colors"><i class="fa-solid fa-arrow-right-from-bracket w-6 text-sm"></i> Logout</a>
-
         </nav>
     </aside>
-
-    <!-- Is code ko har page ke head me CSS style tag ke andar daal lijiye taaki lamba scrollbar patla aur sundar dikhe -->
-    <style>
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-    </style>
 
     <!-- MAIN CONTENT -->
     <main class="flex-1 flex flex-col h-full overflow-y-auto">
@@ -262,7 +248,7 @@
                     <!-- FORM SUBMIT BUTTON -->
                     <div class="p-8 pt-0 flex justify-end">
                         <button type="submit" id="registerBtn" class="bg-[#00c3a2] hover:bg-[#00a68d] text-white px-10 py-3 rounded-lg text-sm font-bold transition-all shadow-md hover:shadow-lg flex items-center gap-2">
-                            <i class="fa-solid fa-check"></i> Submit Admission Form
+                            <i class="fa-solid fa-check"></i> Submit Full Admission
                         </button>
                     </div>
                 </form>
@@ -277,7 +263,7 @@
                 <i class="fa-solid fa-check text-3xl text-[#00c3a2]"></i>
             </div>
             <h2 class="text-2xl font-bold text-gray-800 mb-2">Admission Successful!</h2>
-            <p class="text-gray-500 text-sm mb-6">The student's data has been recorded in the system.</p>
+            <p class="text-gray-500 text-sm mb-6">All student details have been saved to the database.</p>
             <div class="flex gap-3 justify-center">
                 <button id="closeModalBtn" class="bg-gray-100 text-gray-700 hover:bg-gray-200 px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors">Add Another</button>
                 <a href="students.html" class="bg-[#003126] text-white hover:bg-[#001e17] px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors shadow-md">View Records</a>
@@ -285,6 +271,7 @@
         </div>
     </div>
 
+    <!-- SCRIPT (Database insert query updated with all fields) -->
     <script>
         const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
@@ -296,32 +283,44 @@
 
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            registerBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+            registerBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
             registerBtn.disabled = true;
 
-            // DHYAN DEIN: Database me abhi sirf 5 column hain, isliye sirf yahi 5 save ho rahe hain.
-            // Baki data (DOB, Address, Mother Name) save karne ke liye Supabase me naye column banane padenge.
+            // Updated Database call: Saving all data to the new columns
             const { data, error } = await db.from('students').insert([
                 { 
                     adm_no: document.getElementById('admNo').value, 
-                    student_name: document.getElementById('studentName').value, 
-                    father_name: document.getElementById('fatherName').value, 
                     class_name: document.getElementById('classSelect').value, 
-                    mobile_no: document.getElementById('mobileNo').value 
+                    student_name: document.getElementById('studentName').value, 
+                    dob: document.getElementById('dob').value,
+                    gender: document.getElementById('gender').value,
+                    blood_group: document.getElementById('bloodGroup').value,
+                    category: document.getElementById('category').value,
+                    religion: document.getElementById('religion').value,
+                    father_name: document.getElementById('fatherName').value, 
+                    father_occ: document.getElementById('fatherOcc').value,
+                    mother_name: document.getElementById('motherName').value,
+                    mother_occ: document.getElementById('motherOcc').value,
+                    mobile_no: document.getElementById('mobileNo').value,
+                    email: document.getElementById('email').value,
+                    address: document.getElementById('address').value,
+                    status: 'Active'
                 }
             ]);
 
             if (error) {
                 alert("Error: " + error.message);
-                registerBtn.innerHTML = '<i class="fa-solid fa-check"></i> Submit Admission Form';
+                registerBtn.innerHTML = '<i class="fa-solid fa-check"></i> Submit Full Admission';
                 registerBtn.disabled = false;
                 return;
             }
 
-            registerBtn.innerHTML = '<i class="fa-solid fa-check"></i> Submit Admission Form';
+            // Success handling
+            registerBtn.innerHTML = '<i class="fa-solid fa-check"></i> Submit Full Admission';
             registerBtn.disabled = false;
             modal.classList.add('modal-active');
             
+            // Auto increment admission number for next student
             const currentNo = parseInt(document.getElementById('admNo').value.split('-')[2]);
             document.getElementById('admNo').value = `ADM-26-${currentNo + 1}`;
         });

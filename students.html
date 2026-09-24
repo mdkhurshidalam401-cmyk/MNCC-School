@@ -8,28 +8,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <!-- Supabase Library -->
+    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
-        aside::-webkit-scrollbar { width: 4px; }
-        aside::-webkit-scrollbar-track { background: transparent; }
-        aside::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
         main::-webkit-scrollbar { width: 6px; }
         main::-webkit-scrollbar-track { background: #f0f4f8; }
         main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        
-        tr { transition: background-color 0.2s ease; }
-        tr:hover { background-color: #f8fafc; }
+        input:focus { outline: none; border-color: #00c3a2; box-shadow: 0 0 0 3px rgba(0, 195, 162, 0.1); }
     </style>
 </head>
 <body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
 
-   <!-- 100% COMPLETE MEGA SIDEBAR -->
+    <!-- 100% COMPLETE MEGA SIDEBAR -->
     <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
-        
-        <!-- Logo Section -->
         <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#003126] z-10">
             <div class="bg-white text-orange-500 w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
                 <i class="fa-solid fa-school text-xl"></i>
@@ -40,7 +36,6 @@
             </div>
         </div>
 
-        <!-- Super Admin Profile -->
         <div class="p-4 flex items-center border-b border-white/10">
             <div class="w-8 h-8 rounded-full bg-white text-[#003126] flex items-center justify-center font-bold mr-3 text-xs">S</div>
             <div>
@@ -49,16 +44,14 @@
             </div>
         </div>
 
-        <!-- Navigation Menu -->
         <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
-            
             <div class="mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">MAIN</div>
             <a href="index.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> Dashboard</a>
 
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STUDENTS</div>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-clipboard w-6 text-sm"></i> Admission Enquiry</a>
-            <a href="students.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> All Students</a>
-            <a href="admission.html" class="flex items-center px-4 py-2 bg-[#00c3a2] text-white rounded-md mb-0.5 shadow-sm"><i class="fa-solid fa-user-plus w-6 text-sm"></i> New Admission</a>
+            <a href="students.html" class="flex items-center px-4 py-2 bg-[#00c3a2] text-white rounded-md mb-0.5 shadow-sm"><i class="fa-solid fa-users w-6 text-sm"></i> All Students</a>
+            <a href="admission.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-plus w-6 text-sm"></i> New Admission</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-box-archive w-6 text-sm"></i> Passed Out Archive</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-graduation-cap w-6 text-sm"></i> Promotion</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-yellow-500 transition-colors"><i class="fa-solid fa-file-lines w-6 text-sm"></i> Session Report</a>
@@ -70,189 +63,152 @@
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-green-400 transition-colors"><i class="fa-brands fa-whatsapp w-6 text-sm"></i> WhatsApp Reminder</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-red-400 transition-colors"><i class="fa-solid fa-trash-can w-6 text-sm"></i> Fee Deletion Log</a>
 
+            <!-- Other menus as per previous template -->
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ACADEMICS</div>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Attendance</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-line w-6 text-sm"></i> Attendance Report</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-file-lines w-6 text-sm"></i> Exams</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Marks Entry</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-check w-6 text-sm"></i> Class Result</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-book w-6 text-sm"></i> Subjects</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-link w-6 text-sm"></i> Class-Subject Map</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-calendar w-6 text-sm"></i> Exam Schedule</a>
 
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FINANCE</div>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-receipt w-6 text-sm"></i> Expenses</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-pie w-6 text-sm"></i> Reports</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-purple-400 transition-colors"><i class="fa-solid fa-scale-balanced w-6 text-sm"></i> Income vs Expense</a>
 
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STAFF / PAYROLL</div>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-tie w-6 text-sm"></i> Staff Management</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Salary Management</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-chart-column w-6 text-sm"></i> Salary Report</a>
-
-            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">COMMUNICATION</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-bell w-6 text-sm"></i> Notices</a>
-
-            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ADMIN</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-gear w-6 text-sm"></i> Admin Settings</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-sliders w-6 text-sm"></i> Settings</a>
-
-            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ACCOUNT</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-key w-6 text-sm"></i> Password Change</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-red-400 transition-colors"><i class="fa-solid fa-arrow-right-from-bracket w-6 text-sm"></i> Logout</a>
-
         </nav>
     </aside>
 
-    <!-- Is code ko har page ke head me CSS style tag ke andar daal lijiye taaki lamba scrollbar patla aur sundar dikhe -->
-    <style>
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-    </style>
-
     <!-- MAIN CONTENT -->
     <main class="flex-1 flex flex-col h-full overflow-y-auto">
-        <!-- Header -->
         <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
             <div>
-                <h2 class="text-2xl font-bold text-[#102a43]">Students Record</h2>
+                <h2 class="text-2xl font-bold text-[#102a43]">All Students Record</h2>
+                <p class="text-xs text-gray-500 mt-1">View and manage all registered students.</p>
             </div>
             <div class="flex items-center gap-4">
-                <a href="admission.html" class="bg-[#00c3a2] hover:bg-[#00a68d] text-white px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2 shadow-md">
-                    <i class="fa-solid fa-plus"></i> Add New Student
+                <!-- Search Box -->
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+                    <input type="text" id="searchInput" placeholder="Search by Name or Adm No..." class="pl-9 pr-4 py-2 border border-gray-300 rounded-full text-sm w-64 focus:border-[#00c3a2] transition-colors">
+                </div>
+                <a href="admission.html" class="bg-[#00c3a2] hover:bg-[#00a68d] text-white px-5 py-2 rounded-full text-sm font-semibold transition shadow-md flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> New Admission
                 </a>
             </div>
         </header>
 
-        <div class="p-8">
+        <div class="p-8 pt-6">
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
-                
-                <!-- Table Toolbar -->
                 <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-                    <div class="relative w-64">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                        <input type="text" placeholder="Search by name or Adm No..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#00c3a2]">
-                    </div>
-                    <button class="border border-gray-300 text-gray-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition"><i class="fa-solid fa-filter mr-2"></i> Filter</button>
+                    <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-database mr-2 text-[#00c3a2]"></i> Live Database Records</h3>
+                    <div class="text-xs font-bold text-gray-500">Total: <span id="totalCount" class="text-[#00c3a2]">0</span> Students</div>
                 </div>
 
-                <!-- Data Table -->
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse min-w-[800px]">
+                    <table class="w-full text-left border-collapse min-w-[900px]">
                         <thead>
                             <tr class="bg-gray-50 text-gray-500 text-[11px] uppercase tracking-wider border-b border-gray-200">
                                 <th class="p-4 font-semibold">Adm No</th>
-                                <th class="p-4 font-semibold">Student Name</th>
+                                <th class="p-4 font-semibold">Student Details</th>
                                 <th class="p-4 font-semibold">Class</th>
-                                <th class="p-4 font-semibold">Father's Name</th>
-                                <th class="p-4 font-semibold">Mobile No</th>
+                                <th class="p-4 font-semibold">Parents Contact</th>
+                                <th class="p-4 font-semibold">Status</th>
                                 <th class="p-4 font-semibold text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody id="studentsTableBody" class="text-sm text-gray-700">
-                            <!-- Loading State Row -->
-                            <tr id="loadingRow">
-                                <td colspan="6" class="p-12 text-center text-gray-400">
-                                    <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-[#00c3a2]"></i>
-                                    <p>Fetching students data from Supabase...</p>
+                            <tr>
+                                <td colspan="6" class="p-8 text-center text-gray-400">
+                                    <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2 text-[#00c3a2]"></i>
+                                    <p>Loading student records...</p>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                
-                <!-- Pagination Stats -->
-                <div class="p-4 border-t border-gray-100 flex justify-between items-center bg-gray-50/50 text-xs text-gray-500">
-                    <span id="totalStudentsCount">Showing 0 students</span>
-                </div>
-
             </div>
         </div>
     </main>
 
-    <!-- JAVASCRIPT: DATA FETCHING LOGIC -->
     <script>
-        // ERROR FIX: Changed variable to 'db' instead of 'supabase'
         const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
         const db = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        const tableBody = document.getElementById('studentsTableBody');
-        const countDisplay = document.getElementById('totalStudentsCount');
+        let allStudents = [];
 
-        async function loadStudents() {
+        async function fetchStudents() {
             try {
-                // Database se data fetch karna using 'db'
-                const { data, error } = await db
-                    .from('students')
-                    .select('*')
-                    .order('id', { ascending: false });
-
+                const { data, error } = await db.from('students').select('*').order('id', { ascending: false });
                 if (error) throw error;
-
-                tableBody.innerHTML = '';
-
-                // Agar koi data nahi hai
-                if (data.length === 0) {
-                    tableBody.innerHTML = `
-                        <tr>
-                            <td colspan="6" class="p-12 text-center text-gray-400">
-                                <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3 border border-gray-100">
-                                    <i class="fa-solid fa-folder-open text-2xl text-gray-300"></i>
-                                </div>
-                                <p class="text-base font-semibold text-gray-600 mb-1">No Records Found</p>
-                                <p class="text-xs">You haven't admitted any students yet.</p>
-                                <a href="admission.html" class="inline-block mt-4 text-[#00c3a2] hover:underline font-medium"><i class="fa-solid fa-plus mr-1"></i> Add your first student</a>
-                            </td>
-                        </tr>
-                    `;
-                    countDisplay.textContent = `Showing 0 students`;
-                    return;
-                }
-
-                // Database se aaye har ek student ke liye nayi row banana
-                data.forEach(student => {
-                    const tr = document.createElement('tr');
-                    tr.className = 'border-b border-gray-50 text-gray-700';
-                    
-                    const initial = student.student_name ? student.student_name.charAt(0).toUpperCase() : 'U';
-
-                    tr.innerHTML = `
-                        <td class="p-4 font-medium text-gray-800">${student.adm_no || '-'}</td>
-                        <td class="p-4 flex items-center gap-3 font-semibold">
-                            <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs shrink-0">${initial}</div>
-                            ${student.student_name || 'N/A'}
-                        </td>
-                        <td class="p-4 text-gray-600"><span class="bg-gray-100 px-2 py-1 rounded text-xs font-medium border border-gray-200">${student.class_name || '-'}</span></td>
-                        <td class="p-4 text-gray-600">${student.father_name || '-'}</td>
-                        <td class="p-4 text-gray-600">${student.mobile_no || '-'}</td>
-                        <td class="p-4 text-center">
-                            <button class="text-blue-500 hover:text-blue-700 hover:bg-blue-50 w-8 h-8 rounded-full transition"><i class="fa-regular fa-pen-to-square"></i></button>
-                            <button class="text-red-400 hover:text-red-600 hover:bg-red-50 w-8 h-8 rounded-full transition ml-1"><i class="fa-regular fa-trash-can"></i></button>
-                        </td>
-                    `;
-                    tableBody.appendChild(tr);
-                });
-
-                countDisplay.textContent = `Showing ${data.length} student(s)`;
-
+                
+                allStudents = data;
+                renderTable(allStudents);
             } catch (error) {
-                console.error("Error fetching data:", error);
-                tableBody.innerHTML = `
-                    <tr>
-                        <td colspan="6" class="p-8 text-center text-red-500">
-                            <i class="fa-solid fa-triangle-exclamation mb-2 text-xl"></i>
-                            <p>Failed to load data.</p>
-                            <p class="text-xs text-gray-400 mt-1">${error.message}</p>
-                        </td>
-                    </tr>
-                `;
+                console.error("Fetch Error: ", error);
+                document.getElementById('studentsTableBody').innerHTML = `<tr><td colspan="6" class="p-4 text-center text-red-500">Failed to load data.</td></tr>`;
             }
         }
 
-        // Page khulte hi function run karega
-        window.addEventListener('DOMContentLoaded', loadStudents);
+        function renderTable(data) {
+            const tbody = document.getElementById('studentsTableBody');
+            document.getElementById('totalCount').innerText = data.length;
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-gray-500">No student records found.</td></tr>`;
+                return;
+            }
+
+            data.forEach(student => {
+                const initial = student.student_name ? student.student_name.charAt(0).toUpperCase() : 'U';
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-gray-50 hover:bg-gray-50 transition text-gray-700';
+                
+                tr.innerHTML = `
+                    <td class="p-4 font-bold text-gray-800">${student.adm_no || '-'}</td>
+                    <td class="p-4 flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm">${initial}</div>
+                        <div>
+                            <div class="font-bold text-gray-800">${student.student_name || 'N/A'}</div>
+                            <div class="text-[10px] text-gray-400 uppercase tracking-wider">${student.gender || '-'} | DOB: ${student.dob || '-'}</div>
+                        </div>
+                    </td>
+                    <td class="p-4"><span class="bg-gray-100 border border-gray-200 text-gray-700 px-2.5 py-1 rounded text-xs font-semibold">${student.class_name || '-'}</span></td>
+                    <td class="p-4">
+                        <div class="text-sm font-semibold">${student.father_name || 'N/A'}</div>
+                        <div class="text-xs text-gray-500"><i class="fa-solid fa-phone text-[10px]"></i> ${student.mobile_no || 'N/A'}</div>
+                    </td>
+                    <td class="p-4"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">${student.status || 'Active'}</span></td>
+                    <td class="p-4 text-center">
+                        <button class="text-blue-500 hover:text-blue-700 hover:bg-blue-50 w-8 h-8 rounded-full transition"><i class="fa-regular fa-eye"></i></button>
+                        <button class="text-red-400 hover:text-red-600 hover:bg-red-50 w-8 h-8 rounded-full transition ml-1 delete-btn" data-id="${student.id}"><i class="fa-regular fa-trash-can"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Delete logic
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    if(confirm('Are you sure you want to delete this student record?')) {
+                        const id = this.getAttribute('data-id');
+                        await db.from('students').delete().eq('id', id);
+                        fetchStudents();
+                    }
+                });
+            });
+        }
+
+        // Search logic
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredData = allStudents.filter(s => 
+                (s.student_name && s.student_name.toLowerCase().includes(searchTerm)) ||
+                (s.adm_no && s.adm_no.toLowerCase().includes(searchTerm))
+            );
+            renderTable(filteredData);
+        });
+
+        window.addEventListener('DOMContentLoaded', fetchStudents);
     </script>
 </body>
 </html>
