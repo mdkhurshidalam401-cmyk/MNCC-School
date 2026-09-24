@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Promotion - School ERP</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -19,7 +16,7 @@
         main::-webkit-scrollbar { width: 6px; }
         main::-webkit-scrollbar-track { background: #f0f4f8; }
         main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        input[type="checkbox"] { accent-color: #00c3a2; transform: scale(1.2); }
+        input[type="checkbox"] { accent-color: #00c3a2; transform: scale(1.2); cursor: pointer; }
     </style>
 </head>
 <body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
@@ -36,14 +33,6 @@
             </div>
         </div>
 
-        <div class="p-4 flex items-center border-b border-white/10">
-            <div class="w-8 h-8 rounded-full bg-white text-[#003126] flex items-center justify-center font-bold mr-3 text-xs">S</div>
-            <div>
-                <h2 class="text-[12px] font-semibold text-white">Super Administrator</h2>
-                <p class="text-[10px] text-yellow-400 mt-0.5"><i class="fa-solid fa-star text-[9px]"></i> Super Admin</p>
-            </div>
-        </div>
-
         <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
             <div class="mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">MAIN</div>
             <a href="index.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> Dashboard</a>
@@ -53,7 +42,6 @@
             <a href="students.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> All Students</a>
             <a href="admission.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-plus w-6 text-sm"></i> New Admission</a>
             
-            <!-- NEW ACTIVATED LINKS -->
             <a href="passed_out_archive.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-box-archive w-6 text-sm"></i> Passed Out Archive</a>
             <a href="promotion.html" class="flex items-center px-4 py-2 bg-[#00c3a2] text-white rounded-md mb-0.5 shadow-sm"><i class="fa-solid fa-graduation-cap w-6 text-sm"></i> Promotion</a>
             <a href="session_report.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-yellow-500 transition-colors"><i class="fa-solid fa-file-lines w-6 text-sm"></i> Session Report</a>
@@ -61,7 +49,6 @@
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FEES</div>
             <a href="fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-sm"></i> Fee Structure</a>
             <a href="fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-sm"></i> Fee Collection</a>
-            <!-- Keep rest of the sidebar same -->
         </nav>
     </aside>
 
@@ -90,6 +77,13 @@
                             <option value="Class 1">Class 1</option>
                             <option value="Class 2">Class 2</option>
                             <option value="Class 3">Class 3</option>
+                            <option value="Class 4">Class 4</option>
+                            <option value="Class 5">Class 5</option>
+                            <option value="Class 6">Class 6</option>
+                            <option value="Class 7">Class 7</option>
+                            <option value="Class 8">Class 8</option>
+                            <option value="Class 9">Class 9</option>
+                            <option value="Class 10">Class 10</option>
                         </select>
                     </div>
                     <div class="flex-1">
@@ -103,6 +97,12 @@
                             <option value="Class 2">Class 2</option>
                             <option value="Class 3">Class 3</option>
                             <option value="Class 4">Class 4</option>
+                            <option value="Class 5">Class 5</option>
+                            <option value="Class 6">Class 6</option>
+                            <option value="Class 7">Class 7</option>
+                            <option value="Class 8">Class 8</option>
+                            <option value="Class 9">Class 9</option>
+                            <option value="Class 10">Class 10</option>
                             <option value="Passed Out">⭐ Mark as Passed Out (Alumni)</option>
                         </select>
                     </div>
@@ -119,20 +119,18 @@
                     <div class="text-xs font-bold text-gray-500">Found: <span id="studentCount" class="text-blue-500">0</span></div>
                 </div>
 
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto max-h-[400px]">
                     <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-gray-50 text-gray-500 text-[11px] uppercase tracking-wider border-b border-gray-200">
-                                <th class="p-4 w-12 text-center">
-                                    <input type="checkbox" id="selectAll" checked>
-                                </th>
+                        <thead class="sticky top-0 bg-gray-50 shadow-sm z-10">
+                            <tr class="text-gray-500 text-[11px] uppercase tracking-wider border-b border-gray-200">
+                                <th class="p-4 w-12 text-center"><input type="checkbox" id="selectAll" checked></th>
                                 <th class="p-4 font-semibold">Adm No</th>
                                 <th class="p-4 font-semibold">Student Name</th>
                                 <th class="p-4 font-semibold">Current Class</th>
                             </tr>
                         </thead>
                         <tbody id="promoTableBody" class="text-sm text-gray-700">
-                            <!-- Data will be injected here -->
+                            <!-- Data injected here -->
                         </tbody>
                     </table>
                 </div>
@@ -154,32 +152,45 @@
 
         let currentStudents = [];
 
-        // Fetch Students Logic
+        // 1. FETCH LOGIC
         document.getElementById('fetchBtn').addEventListener('click', async () => {
             const fromClass = document.getElementById('fromClass').value;
-            if(!fromClass) { alert('Please select Current Class first.'); return; }
+            if(!fromClass) { alert('Kripya pehle Current Class select karein!'); return; }
 
-            document.getElementById('fetchBtn').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            const btn = document.getElementById('fetchBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading...';
+            btn.disabled = true;
             
-            const { data, error } = await db.from('students').select('*').eq('class_name', fromClass).eq('status', 'Active');
-            
-            if (error) {
-                alert("Error fetching students!");
-            } else {
-                currentStudents = data;
+            try {
+                // Fetching students for the selected class (Ignore status to catch all records)
+                const { data, error } = await db.from('students')
+                                                .select('id, adm_no, student_name, class_name, status')
+                                                .eq('class_name', fromClass);
+                
+                if (error) throw error;
+                
+                // Filter out those who are already passed out
+                currentStudents = data.filter(s => s.status !== 'Passed Out');
+                
                 renderTable();
                 document.getElementById('tableContainer').classList.remove('hidden');
+
+            } catch (error) {
+                alert("Database Error: " + error.message);
             }
-            document.getElementById('fetchBtn').innerText = 'Fetch Students';
+            
+            btn.innerText = 'Fetch Students';
+            btn.disabled = false;
         });
 
+        // 2. RENDER TABLE
         function renderTable() {
             const tbody = document.getElementById('promoTableBody');
             document.getElementById('studentCount').innerText = currentStudents.length;
             tbody.innerHTML = '';
 
             if (currentStudents.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-gray-500">No active students found in this class.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-gray-500">Is class mein koi eligible student nahi mila.</td></tr>`;
                 return;
             }
 
@@ -188,51 +199,67 @@
                 tr.className = 'border-b border-gray-50 hover:bg-gray-50 transition';
                 tr.innerHTML = `
                     <td class="p-4 text-center"><input type="checkbox" class="student-checkbox" value="${student.id}" checked></td>
-                    <td class="p-4 font-bold text-gray-800">${student.adm_no}</td>
-                    <td class="p-4 font-medium">${student.student_name}</td>
-                    <td class="p-4"><span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs font-semibold">${student.class_name}</span></td>
+                    <td class="p-4 font-bold text-gray-800">${student.adm_no || 'N/A'}</td>
+                    <td class="p-4 font-medium">${student.student_name || 'N/A'}</td>
+                    <td class="p-4"><span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-[11px] font-semibold">${student.class_name}</span></td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        // Select All Logic
+        // 3. SELECT ALL CHECKBOX LOGIC
         document.getElementById('selectAll').addEventListener('change', function(e) {
             const checkboxes = document.querySelectorAll('.student-checkbox');
             checkboxes.forEach(cb => cb.checked = e.target.checked);
         });
 
-        // Promote Logic
+        // 4. PROMOTE (GUARANTEED UPDATE LOOP) LOGIC
         document.getElementById('promoteBtn').addEventListener('click', async () => {
             const toClass = document.getElementById('toClass').value;
-            if(!toClass) { alert('Please select the Next Class to promote to.'); return; }
+            if(!toClass) { alert('Kripya select karein ki baccho ko kis class me bhejna hai (Next Class).'); return; }
 
             const checkboxes = document.querySelectorAll('.student-checkbox:checked');
-            if(checkboxes.length === 0) { alert('Please select at least one student.'); return; }
+            if(checkboxes.length === 0) { alert('Kripya kam se kam ek student select karein.'); return; }
 
             const btn = document.getElementById('promoteBtn');
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Promoting...';
             btn.disabled = true;
 
-            const selectedIds = Array.from(checkboxes).map(cb => cb.value);
-
-            // Supabase bulk update
-            let updates;
+            const selectedIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+            
+            let updates = {};
             if (toClass === 'Passed Out') {
-                updates = { status: 'Passed Out' }; // Archive them
+                updates = { status: 'Passed Out' }; 
             } else {
-                updates = { class_name: toClass }; // Change Class
+                updates = { class_name: toClass };
             }
 
-            const { error } = await db.from('students').update(updates).in('id', selectedIds);
+            let successCount = 0;
+            let failCount = 0;
 
-            if (error) {
-                alert("Error promoting students: " + error.message);
-            } else {
-                alert(`Successfully updated ${selectedIds.length} students!`);
-                document.getElementById('tableContainer').classList.add('hidden');
-                document.getElementById('fromClass').value = '';
-                document.getElementById('toClass').value = '';
+            try {
+                // Guaranteed One-by-One Update (Fail-safe against Supabase Bulk restrictions)
+                for (let id of selectedIds) {
+                    const { error } = await db.from('students').update(updates).eq('id', id);
+                    if (error) {
+                        console.error(`Failed for ID ${id}:`, error);
+                        failCount++;
+                    } else {
+                        successCount++;
+                    }
+                }
+
+                if (failCount === 0) {
+                    alert(`Success! ${successCount} students ko successfully promote kar diya gaya hai.`);
+                    document.getElementById('tableContainer').classList.add('hidden');
+                    document.getElementById('fromClass').value = '';
+                    document.getElementById('toClass').value = '';
+                } else {
+                    alert(`Update complete, but ${failCount} students failed to promote. Please check console.`);
+                }
+                
+            } catch (error) {
+                alert("Promote fail ho gaya: " + error.message);
             }
 
             btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Promote Selected Students';
