@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - School ERP</title>
+    <title>Admin Dashboard - HIKVENA PVT.LTD</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
@@ -11,7 +11,7 @@
     <!-- Supabase Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -25,13 +25,15 @@
 
     <!-- 100% COMPLETE MEGA SIDEBAR -->
     <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
+        
+        <!-- UPDATED BRANDING SECTION -->
         <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#003126] z-10">
-            <div class="bg-white text-orange-500 w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
-                <i class="fa-solid fa-school text-xl"></i>
+            <div class="bg-white text-[#00c3a2] w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+                <i class="fa-solid fa-graduation-cap text-xl"></i>
             </div>
             <div>
-                <h1 class="text-[13px] font-bold leading-tight tracking-wide text-white">data click education</h1>
-                <p class="text-[9px] text-[#8aa8a3] mt-0.5">Management System</p>
+                <h1 class="text-[14px] font-extrabold leading-tight tracking-wider text-white uppercase">HIKVENA PVT.LTD</h1>
+                <p class="text-[9px] text-[#8aa8a3] mt-0.5 font-bold uppercase tracking-widest">School Management System</p>
             </div>
         </div>
 
@@ -67,14 +69,14 @@
 
             <!-- ACADEMICS -->
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ACADEMICS</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Attendance</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-line w-6 text-sm"></i> Attendance Report</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-file-lines w-6 text-sm"></i> Exams</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Marks Entry</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-check w-6 text-sm"></i> Class Result</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-book w-6 text-sm"></i> Subjects</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-link w-6 text-sm"></i> Class-Subject Map</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-calendar w-6 text-sm"></i> Exam Schedule</a>
+            <a href="attendance.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Attendance</a>
+            <a href="attendance_report.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-line w-6 text-sm"></i> Attendance Report</a>
+            <a href="exams.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-file-lines w-6 text-sm"></i> Exams</a>
+            <a href="marks_entry.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Marks Entry</a>
+            <a href="class_result.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-check w-6 text-sm"></i> Class Result</a>
+            <a href="subjects.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-book w-6 text-sm"></i> Subjects</a>
+            <a href="class_subject_map.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-link w-6 text-sm"></i> Class-Subject Map</a>
+            <a href="exam_schedule.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-calendar w-6 text-sm"></i> Exam Schedule</a>
 
             <!-- FINANCE -->
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FINANCE</div>
@@ -229,19 +231,6 @@
                             </div>
                             <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-blue-500"></i>
                         </a>
-
-
- <a href="attendance.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-blue-500 hover:bg-blue-50 transition-all group block shadow-sm">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center group-hover:bg-white"><i class="fa-regular fa-clipboard"></i></div>
-                                <div class="text-left">
-                                    <h4 class="text-sm font-bold text-gray-800">attendance</h4>
-                                    <p class="text-[11px] text-gray-500"></p>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-blue-500"></i>
-                        </a>
-
                     </div>
                 </div>
 
@@ -257,7 +246,7 @@
 
         async function fetchDashboardData() {
             try {
-                // 1. Fetch Students Data (Only Active Students count)
+                // 1. Fetch Active Students
                 const { data: students, error: stdError } = await db
                     .from('students')
                     .select('*')
@@ -275,7 +264,7 @@
                 if (students.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-500">No students registered yet.</td></tr>`;
                 } else {
-                    const recentStudents = students.slice(0, 4); // Sirf top 4 bache
+                    const recentStudents = students.slice(0, 4);
                     recentStudents.forEach(student => {
                         const tr = document.createElement('tr');
                         tr.className = 'border-b border-gray-50 hover:bg-gray-50/50 transition';
@@ -294,7 +283,7 @@
                     });
                 }
 
-                // 3. Fetch Fees Data for the Total Amount
+                // 3. Fetch Fees Data
                 const { data: feesData, error: feeError } = await db.from('fees_collection').select('amount_paid');
                 
                 if (!feeError && feesData) {
@@ -312,7 +301,6 @@
             }
         }
         
-        // Run logic when page loads
         window.addEventListener('DOMContentLoaded', fetchDashboardData);
     </script>
 </body>
