@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance - School ERP</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        main::-webkit-scrollbar { width: 6px; }
+        main::-webkit-scrollbar-track { background: #f0f4f8; }
+        main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        
+        /* Custom styling for Radio Buttons */
+        .att-radio:checked + label.present { background-color: #d1fae5; color: #047857; border-color: #059669; font-weight: bold; }
+        .att-radio:checked + label.absent { background-color: #fee2e2; color: #b91c1c; border-color: #dc2626; font-weight: bold; }
+        .att-radio:checked + label.halfday { background-color: #ffedd5; color: #c2410c; border-color: #ea580c; font-weight: bold; }
+        .att-radio:checked + label.leave { background-color: #f3f4f6; color: #4b5563; border-color: #6b7280; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
+
+    <!-- 100% COMPLETE MEGA SIDEBAR -->
+    <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#003126] z-10">
+            <div class="bg-white text-orange-500 w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+                <i class="fa-solid fa-school text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-[13px] font-bold leading-tight tracking-wide text-white">data click education</h1>
+                <p class="text-[9px] text-[#8aa8a3] mt-0.5">Management System</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
+            <!-- MAIN -->
+            <div class="mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">MAIN</div>
+            <a href="index.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> Dashboard</a>
+
+            <!-- STUDENTS -->
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STUDENTS</div>
+            <a href="admission_enquiry.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-clipboard w-6 text-sm"></i> Admission Enquiry</a>
+            <a href="students.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> All Students</a>
+            <a href="admission.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-plus w-6 text-sm"></i> New Admission</a>
+            <a href="passed_out_archive.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-box-archive w-6 text-sm"></i> Passed Out Archive</a>
+            <a href="promotion.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-graduation-cap w-6 text-sm"></i> Promotion</a>
+            <a href="session_report.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-yellow-500 transition-colors"><i class="fa-solid fa-file-lines w-6 text-sm"></i> Session Report</a>
+
+            <!-- FEES -->
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FEES</div>
+            <a href="fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-sm"></i> Fee Structure</a>
+            <a href="fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-sm"></i> Fee Collection</a>
+            <!-- Keep rest of Fees same -->
+
+            <!-- ACADEMICS (Naye links add kiye gaye) -->
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ACADEMICS</div>
+            <a href="attendance.html" class="flex items-center px-4 py-2 bg-[#00c3a2] text-white rounded-md mb-0.5 shadow-sm"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Attendance</a>
+            <a href="attendance_report.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-line w-6 text-sm"></i> Attendance Report</a>
+            <a href="exams.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-file-lines w-6 text-sm"></i> Exams</a>
+            <a href="marks_entry.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Marks Entry</a>
+            <a href="class_result.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-check w-6 text-sm"></i> Class Result</a>
+            <a href="subjects.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-book w-6 text-sm"></i> Subjects</a>
+            <a href="class_subject_map.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-link w-6 text-sm"></i> Class-Subject Map</a>
+            <a href="exam_schedule.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-calendar w-6 text-sm"></i> Exam Schedule</a>
+
+            <!-- FINANCE & STAFF (Basic links) -->
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FINANCE</div>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-receipt w-6 text-sm"></i> Expenses</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STAFF / PAYROLL</div>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-tie w-6 text-sm"></i> Staff Management</a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
+            <div>
+                <h2 class="text-2xl font-bold text-[#102a43]">Daily Attendance</h2>
+                <p class="text-xs text-gray-500 mt-1">Mark daily attendance for students class-wise.</p>
+            </div>
+            <a href="attendance_report.html" class="border border-[#00c3a2] text-[#00c3a2] hover:bg-[#e0fcf4] px-4 py-2 rounded-full text-sm font-semibold transition flex items-center gap-2">
+                <i class="fa-solid fa-chart-pie"></i> View Reports
+            </a>
+        </header>
+
+        <div class="p-8 pt-6">
+            
+            <!-- Filters Box -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                <div class="flex flex-col md:flex-row gap-5 items-end">
+                    <div class="flex-1">
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Attendance Date <span class="text-red-500">*</span></label>
+                        <input type="date" id="attDate" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all text-gray-700 focus:border-[#00c3a2]" required>
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Select Class <span class="text-red-500">*</span></label>
+                        <select id="classSelect" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all bg-white focus:border-[#00c3a2]" required>
+                            <option value="">-- Select Class --</option>
+                            <option value="Pre-Nursery">Pre-Nursery</option>
+                            <option value="Nursery">Nursery</option>
+                            <option value="LKG">LKG</option>
+                            <option value="UKG">UKG</option>
+                            <option value="Class 1">Class 1</option>
+                            <option value="Class 2">Class 2</option>
+                            <option value="Class 3">Class 3</option>
+                            <option value="Class 4">Class 4</option>
+                            <option value="Class 5">Class 5</option>
+                            <option value="Class 6">Class 6</option>
+                            <option value="Class 7">Class 7</option>
+                            <option value="Class 8">Class 8</option>
+                            <option value="Class 9">Class 9</option>
+                            <option value="Class 10">Class 10</option>
+                        </select>
+                    </div>
+                    <button id="fetchBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-2.5 rounded-md text-sm font-bold transition-all shadow-sm">
+                        <i class="fa-solid fa-magnifying-glass mr-1"></i> Fetch
+                    </button>
+                </div>
+            </div>
+
+            <!-- Attendance Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hidden flex-col" id="tableContainer">
+                <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                    <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-clipboard-user mr-2 text-[#00c3a2]"></i> Mark Attendance</h3>
+                    <div class="text-xs font-bold text-gray-500">Students: <span id="studentCount" class="text-[#00c3a2]">0</span></div>
+                </div>
+
+                <div class="overflow-x-auto max-h-[500px]">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="sticky top-0 bg-gray-50 shadow-sm z-10">
+                            <tr class="text-gray-500 text-[11px] uppercase tracking-wider border-b border-gray-200">
+                                <th class="p-4 font-semibold w-24">Adm No</th>
+                                <th class="p-4 font-semibold">Student Name</th>
+                                <th class="p-4 font-semibold text-center">Attendance Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attTableBody" class="text-sm text-gray-700">
+                            <!-- Data injected here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="p-5 bg-gray-50 border-t border-gray-200 flex justify-end">
+                    <button id="saveAttBtn" class="bg-[#00c3a2] hover:bg-[#00a68d] text-white px-8 py-3 rounded-lg text-sm font-bold shadow-md transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-check-double"></i> Submit Attendance
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        let currentStudents = [];
+
+        // Set default date to today
+        document.getElementById('attDate').value = new Date().toISOString().split('T')[0];
+
+        // 1. FETCH LOGIC
+        document.getElementById('fetchBtn').addEventListener('click', async () => {
+            const selectedClass = document.getElementById('classSelect').value;
+            const selectedDate = document.getElementById('attDate').value;
+
+            if(!selectedClass || !selectedDate) { 
+                alert('Kripya Class aur Date dono select karein!'); 
+                return; 
+            }
+
+            const btn = document.getElementById('fetchBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+            
+            try {
+                // Fetch active students for this class
+                const { data: students, error } = await db.from('students')
+                                                .select('id, adm_no, student_name, class_name')
+                                                .eq('class_name', selectedClass)
+                                                .eq('status', 'Active');
+                
+                if (error) throw error;
+                currentStudents = students;
+
+                // Check if attendance already exists for this date
+                const { data: existingAtt } = await db.from('student_attendance')
+                                                .select('adm_no, status')
+                                                .eq('class_name', selectedClass)
+                                                .eq('attendance_date', selectedDate);
+
+                // Map existing status to a dictionary for quick lookup
+                const attMap = {};
+                if(existingAtt) {
+                    existingAtt.forEach(record => {
+                        attMap[record.adm_no] = record.status;
+                    });
+                }
+                
+                renderTable(attMap);
+                document.getElementById('tableContainer').classList.remove('hidden');
+                document.getElementById('tableContainer').classList.add('flex');
+
+            } catch (error) {
+                alert("Database Error: " + error.message);
+            }
+            
+            btn.innerHTML = '<i class="fa-solid fa-magnifying-glass mr-1"></i> Fetch';
+            btn.disabled = false;
+        });
+
+        // 2. RENDER TABLE
+        function renderTable(attMap) {
+            const tbody = document.getElementById('attTableBody');
+            document.getElementById('studentCount').innerText = currentStudents.length;
+            tbody.innerHTML = '';
+
+            if (currentStudents.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="p-6 text-center text-gray-500">Is class mein koi Active student nahi hai.</td></tr>`;
+                return;
+            }
+
+            currentStudents.forEach(student => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-gray-50 hover:bg-gray-50 transition';
+                
+                // Set status based on previous record if exists, else default to Present
+                const currentStatus = attMap[student.adm_no] || 'Present';
+
+                tr.innerHTML = `
+                    <td class="p-4 font-bold text-gray-600">${student.adm_no}</td>
+                    <td class="p-4 font-semibold text-gray-800">${student.student_name}</td>
+                    <td class="p-4 flex justify-center gap-3">
+                        <div>
+                            <input type="radio" name="att_${student.adm_no}" id="p_${student.adm_no}" value="Present" class="hidden att-radio" ${currentStatus === 'Present' ? 'checked' : ''}>
+                            <label for="p_${student.adm_no}" class="present cursor-pointer border border-gray-300 text-gray-600 px-3 py-1.5 rounded-md text-xs transition">P</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="att_${student.adm_no}" id="a_${student.adm_no}" value="Absent" class="hidden att-radio" ${currentStatus === 'Absent' ? 'checked' : ''}>
+                            <label for="a_${student.adm_no}" class="absent cursor-pointer border border-gray-300 text-gray-600 px-3 py-1.5 rounded-md text-xs transition">A</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="att_${student.adm_no}" id="hd_${student.adm_no}" value="Half-Day" class="hidden att-radio" ${currentStatus === 'Half-Day' ? 'checked' : ''}>
+                            <label for="hd_${student.adm_no}" class="halfday cursor-pointer border border-gray-300 text-gray-600 px-3 py-1.5 rounded-md text-xs transition">HD</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="att_${student.adm_no}" id="l_${student.adm_no}" value="Leave" class="hidden att-radio" ${currentStatus === 'Leave' ? 'checked' : ''}>
+                            <label for="l_${student.adm_no}" class="leave cursor-pointer border border-gray-300 text-gray-600 px-3 py-1.5 rounded-md text-xs transition">L</label>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 3. SUBMIT ATTENDANCE LOGIC
+        document.getElementById('saveAttBtn').addEventListener('click', async () => {
+            const selectedClass = document.getElementById('classSelect').value;
+            const selectedDate = document.getElementById('attDate').value;
+
+            if(currentStudents.length === 0) return;
+
+            const btn = document.getElementById('saveAttBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+            btn.disabled = true;
+
+            // Collect Data
+            const attendanceData = currentStudents.map(student => {
+                const statusElement = document.querySelector(`input[name="att_${student.adm_no}"]:checked`);
+                return {
+                    adm_no: student.adm_no,
+                    class_name: selectedClass,
+                    attendance_date: selectedDate,
+                    status: statusElement ? statusElement.value : 'Present',
+                    remarks: ''
+                };
+            });
+
+            try {
+                // Delete previous records for same class and date to prevent duplicates
+                await db.from('student_attendance').delete()
+                        .eq('class_name', selectedClass)
+                        .eq('attendance_date', selectedDate);
+
+                // Insert New Bulk Records
+                const { error } = await db.from('student_attendance').insert(attendanceData);
+                if (error) throw error;
+
+                alert(`Success! Attendance for ${selectedClass} on ${selectedDate} has been saved.`);
+                
+            } catch (error) {
+                alert("Attendance save fail ho gaya: " + error.message);
+            }
+
+            btn.innerHTML = '<i class="fa-solid fa-check-double"></i> Submit Attendance';
+            btn.disabled = false;
+        });
+    </script>
+</body>
+</html>
