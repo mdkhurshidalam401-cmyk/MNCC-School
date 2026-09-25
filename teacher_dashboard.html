@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Portal - HIKVENA PVT.LTD</title>
+
+    <!-- 🔒 SECURITY AUTH GUARD (Role-Based Access) 🔒 -->
+    <script>
+        const sessionCheck = localStorage.getItem('school_user');
+        if (!sessionCheck) {
+            window.location.replace('login.html');
+        } else {
+            const user = JSON.parse(sessionCheck);
+            // Sirf Teacher aur Admin yahan aa sakte hain
+            if (user.role !== 'Teacher' && user.role !== 'Admin' && user.role !== 'Principal') {
+                alert("Access Denied! Aap Teacher nahi hain.");
+                window.location.replace('login.html');
+            }
+        }
+    </script>
+    <!-- SECURITY GUARD END -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -36,9 +53,9 @@
 
         <!-- PROFILE -->
         <div class="p-4 flex items-center border-b border-white/10">
-            <div class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold mr-3 text-xs">T</div>
+            <div class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold mr-3 text-xs" id="sidebarInitial">T</div>
             <div>
-                <h2 class="text-[12px] font-semibold text-white">Teacher Panel</h2>
+                <h2 id="sidebarName" class="text-[12px] font-semibold text-white">Teacher Name</h2>
                 <p class="text-[10px] text-green-400 mt-0.5"><i class="fa-solid fa-circle text-[6px]"></i> Online</p>
             </div>
         </div>
@@ -53,7 +70,6 @@
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> My Students</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Mark Attendance</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Upload Marks</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-book w-6 text-sm"></i> Lesson Plan</a>
 
             <!-- COMMUNICATION -->
             <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">COMMUNICATION</div>
@@ -63,7 +79,13 @@
             <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">MY ACCOUNT</div>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> My Salary Slips</a>
             <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-calendar-minus w-6 text-sm"></i> Leave Request</a>
-            <a href="index.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-red-400 transition-colors"><i class="fa-solid fa-arrow-right-from-bracket w-6 text-sm"></i> Logout to Admin</a>
+            
+            <!-- SECURE LOGOUT -->
+            <div class="mt-8 px-3 border-t border-white/10 pt-4">
+                <a href="#" onclick="logoutUser()" class="flex items-center justify-center px-4 py-2.5 bg-red-500/20 hover:bg-red-500 rounded-md text-red-400 hover:text-white transition-all text-sm font-bold border border-red-500/30 shadow-sm">
+                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Secure Logout
+                </a>
+            </div>
         </nav>
     </aside>
 
@@ -79,13 +101,27 @@
         </header>
 
         <div class="p-8">
-            <div class="mb-8">
-                <h3 class="text-xl font-bold text-gray-800">Welcome to your class, Teacher! 📚</h3>
-                <p class="text-sm text-gray-500 mt-1">Manage your students, attendance, and academics from here.</p>
+            <div class="mb-8 flex justify-between items-end">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800">Welcome to your class, <span id="welcomeName">Teacher</span>! 📚</h3>
+                    <p class="text-sm text-gray-500 mt-1">Manage your students, attendance, and academics from here.</p>
+                </div>
             </div>
 
             <!-- Stats Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Salary Card (Personalized) -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md border-l-4 border-l-purple-500">
+                    <div>
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Salary Received</p>
+                        <h4 id="mySalaryAmount" class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h4>
+                        <p class="text-[10px] text-purple-500 font-medium mt-1">This Session</p>
+                    </div>
+                    <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center">
+                        <i class="fa-solid fa-wallet text-2xl text-purple-500"></i>
+                    </div>
+                </div>
+
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md border-l-4 border-l-blue-500">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">My Class Strength</p>
@@ -95,15 +131,6 @@
                     <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center">
                         <i class="fa-solid fa-users text-2xl text-blue-500"></i>
                     </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md border-l-4 border-l-orange-500">
-                    <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Pending Actions</p>
-                        <h4 class="text-3xl font-bold text-gray-800">2</h4>
-                        <p class="text-[10px] text-gray-500 font-medium mt-1">Marks Entry Remaining</p>
-                    </div>
-                    <div class="w-14 h-14 rounded-full bg-orange-50 flex items-center justify-center"><i class="fa-solid fa-pen-nib text-2xl text-orange-500"></i></div>
                 </div>
 
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md border-l-4 border-l-[#00c3a2]">
@@ -180,6 +207,14 @@
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
         const db = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+        // UI Update Based on Login
+        const userData = JSON.parse(localStorage.getItem('school_user'));
+        if(userData) {
+            document.getElementById('sidebarName').innerText = userData.name;
+            document.getElementById('sidebarInitial').innerText = userData.name.charAt(0).toUpperCase();
+            document.getElementById('welcomeName').innerText = userData.name;
+        }
+
         // Display current date
         const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
         document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-IN', options);
@@ -189,11 +224,34 @@
             return new Date(dateStr).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
         }
 
-        // Fetch Notices relevant for Teachers
-        async function fetchTeacherNotices() {
+        // LOGOUT FUNCTION
+        function logoutUser() {
+            if(confirm("Are you sure you want to logout?")) {
+                localStorage.removeItem('school_user');
+                window.location.replace('login.html');
+            }
+        }
+
+        async function fetchTeacherData() {
+            if(!userData) return;
+
+            // 1. Fetch ONLY this Teacher's Salary
+            try {
+                const { data: mySalaryRecords, error: salError } = await db.from('salary_payments')
+                    .select('amount_paid')
+                    .eq('staff_id', userData.id); // 🔥 MAGIC: Yahan par filter laga diya ki sirf iski hi id ho
+
+                if (!salError && mySalaryRecords) {
+                    const totalMySal = mySalaryRecords.reduce((sum, record) => sum + Number(record.amount_paid || 0), 0);
+                    document.getElementById('mySalaryAmount').innerText = '₹ ' + totalMySal.toLocaleString('en-IN');
+                } else {
+                    document.getElementById('mySalaryAmount').innerText = '₹ 0';
+                }
+            } catch (e) { console.error(e); }
+
+            // 2. Fetch Notices relevant for Teachers
             const container = document.getElementById('teacherNoticesContainer');
             try {
-                // Fetch notices meant for 'Everyone' or 'Staff'
                 const { data, error } = await db.from('notices')
                     .select('*')
                     .in('audience', ['Everyone', 'Staff'])
@@ -224,7 +282,7 @@
             }
         }
 
-        window.addEventListener('DOMContentLoaded', fetchTeacherNotices);
+        window.addEventListener('DOMContentLoaded', fetchTeacherData);
     </script>
 </body>
 </html>
