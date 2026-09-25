@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounts Portal - HIKVENA PVT.LTD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        main::-webkit-scrollbar { width: 6px; }
+        main::-webkit-scrollbar-track { background: #f0f4f8; }
+        main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
+
+    <!-- ACCOUNTANT SPECIFIC SIDEBAR -->
+    <aside class="w-64 bg-[#0f5132] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
+        
+        <!-- BRANDING -->
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#0f5132] z-10">
+            <div class="bg-white text-green-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+                <i class="fa-solid fa-calculator text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-[14px] font-extrabold leading-tight tracking-wider text-white uppercase">HIKVENA PVT.LTD</h1>
+                <p class="text-[9px] text-green-300 mt-0.5 font-bold uppercase tracking-widest">Accounts Portal</p>
+            </div>
+        </div>
+
+        <!-- PROFILE -->
+        <div class="p-4 flex items-center border-b border-white/10">
+            <div class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center font-bold mr-3 text-xs">A</div>
+            <div>
+                <h2 class="text-[12px] font-semibold text-white">Accounts Dept.</h2>
+                <p class="text-[10px] text-green-300 mt-0.5"><i class="fa-solid fa-circle text-[6px]"></i> Online</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
+            <!-- MAIN -->
+            <div class="mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">MAIN</div>
+            <a href="accountant_dashboard.html" class="flex items-center px-4 py-2 bg-green-700 text-white rounded-md mb-1 shadow-sm"><i class="fa-solid fa-house w-6 text-sm"></i> Accounts Home</a>
+
+            <!-- FEES -->
+            <div class="mt-4 mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">FEES MANAGEMENT</div>
+            <a href="fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-sm"></i> Fee Structure</a>
+            <a href="fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-sm"></i> Collect Fees</a>
+            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-clock-rotate-left w-6 text-sm"></i> Fee Defaulters</a>
+            
+            <!-- EXPENSES -->
+            <div class="mt-4 mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">EXPENSES</div>
+            <a href="expenses.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-receipt w-6 text-sm"></i> Manage Expenses</a>
+
+            <!-- PAYROLL -->
+            <div class="mt-4 mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">PAYROLL</div>
+            <a href="salary_management.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Pay Staff Salary</a>
+            <a href="salary_report.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-column w-6 text-sm"></i> Salary Report</a>
+
+            <!-- LOGOUT -->
+            <div class="mt-8 px-3">
+                <a href="index.html" class="flex items-center px-4 py-2 bg-white/10 hover:bg-red-500 rounded-md text-gray-200 transition-colors text-sm font-bold"><i class="fa-solid fa-arrow-right-from-bracket w-6"></i> Back to Admin</a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto relative bg-[#f4f7f6]">
+        <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
+            <div>
+                <h2 class="text-2xl font-bold text-[#102a43]">Accounts Workspace</h2>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-sm font-bold text-green-700 flex items-center gap-2 bg-green-50 px-4 py-1.5 rounded-full border border-green-200">
+                    <i class="fa-solid fa-indian-rupee-sign"></i> Finance Mode Active
+                </div>
+            </div>
+        </header>
+
+        <div class="p-8">
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-gray-800">Welcome, Finance Manager! 💼</h3>
+                <p class="text-sm text-gray-500 mt-1">Track school revenue, expenditures, and payroll here.</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md border-l-4 border-l-green-500 cursor-pointer" onclick="window.location.href='fee_collection.html'">
+                    <div>
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Fee Collected</p>
+                        <h4 id="accFeeCount" class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h4>
+                        <p class="text-[10px] text-green-500 font-medium mt-1">Total Revenue</p>
+                    </div>
+                    <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center">
+                        <i class="fa-solid fa-hand-holding-dollar text-2xl text-green-500"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md border-l-4 border-l-red-500 cursor-pointer" onclick="window.location.href='expenses.html'">
+                    <div>
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Expenses</p>
+                        <h4 id="accExpCount" class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h4>
+                        <p class="text-[10px] text-red-500 font-medium mt-1">Operational Costs</p>
+                    </div>
+                    <div class="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center"><i class="fa-solid fa-arrow-trend-down text-2xl text-red-500"></i></div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md border-l-4 border-l-purple-500 cursor-pointer" onclick="window.location.href='salary_report.html'">
+                    <div>
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Staff Salary Paid</p>
+                        <h4 id="accSalCount" class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h4>
+                        <p class="text-[10px] text-purple-500 font-medium mt-1">Payroll Cleared</p>
+                    </div>
+                    <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center"><i class="fa-solid fa-users-viewfinder text-2xl text-purple-500"></i></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Recent Transactions (Dummy for now, can be linked to DB later) -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 col-span-2 overflow-hidden flex flex-col">
+                    <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                        <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-money-bill-transfer mr-2 text-green-600"></i> Recent Fee Collections</h3>
+                        <a href="fee_collection.html" class="text-green-600 text-sm font-semibold hover:underline">Go to Fees</a>
+                    </div>
+                    <div class="p-5 overflow-y-auto max-h-[400px] custom-scrollbar bg-white">
+                        <div class="text-center p-8 text-gray-400 border-2 border-dashed border-gray-200 rounded-lg">
+                            <i class="fa-solid fa-receipt text-3xl mb-3 text-gray-300"></i>
+                            <p class="text-sm font-medium">Please use the 'Collect Fees' module to process new payments.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Tasks -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 bg-gray-50/30">
+                    <h3 class="text-[15px] font-bold text-gray-800 mb-5 border-b pb-2">Financial Tasks</h3>
+                    <div class="space-y-4">
+                        <a href="fee_collection.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-green-500 hover:bg-green-50 transition-all group block shadow-sm">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-green-50 text-green-600 flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                                <div class="text-left">
+                                    <h4 class="text-sm font-bold text-gray-800">Receive Fee</h4>
+                                    <p class="text-[10px] text-gray-500">Generate fee receipt</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-green-500"></i>
+                        </a>
+
+                        <a href="expenses.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-red-500 hover:bg-red-50 transition-all group block shadow-sm">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-red-50 text-red-500 flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-receipt"></i></div>
+                                <div class="text-left">
+                                    <h4 class="text-sm font-bold text-gray-800">Add Expense</h4>
+                                    <p class="text-[10px] text-gray-500">Record school spending</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-red-500"></i>
+                        </a>
+                        
+                        <a href="salary_management.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-purple-500 hover:bg-purple-50 transition-all group block shadow-sm">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-purple-50 text-purple-500 flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-money-check-dollar"></i></div>
+                                <div class="text-left">
+                                    <h4 class="text-sm font-bold text-gray-800">Pay Salary</h4>
+                                    <p class="text-[10px] text-gray-500">Process staff payroll</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-purple-500"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        async function loadAccountStats() {
+            try {
+                // Fetch Total Fees
+                const { data: feesData } = await db.from('fees_collection').select('amount_paid');
+                let totalFee = 0;
+                if (feesData) totalFee = feesData.reduce((sum, record) => sum + Number(record.amount_paid || 0), 0);
+                document.getElementById('accFeeCount').innerText = '₹ ' + totalFee.toLocaleString('en-IN');
+
+                // Fetch Total Expenses
+                const { data: expData } = await db.from('school_expenses').select('amount');
+                let totalExp = 0;
+                if (expData) totalExp = expData.reduce((sum, record) => sum + Number(record.amount || 0), 0);
+                document.getElementById('accExpCount').innerText = '₹ ' + totalExp.toLocaleString('en-IN');
+
+                // Fetch Total Salary Paid
+                const { data: salData } = await db.from('salary_payments').select('amount_paid');
+                let totalSal = 0;
+                if (salData) totalSal = salData.reduce((sum, record) => sum + Number(record.amount_paid || 0), 0);
+                document.getElementById('accSalCount').innerText = '₹ ' + totalSal.toLocaleString('en-IN');
+
+            } catch (error) {
+                console.error("Accounts fetch error:", error);
+            }
+        }
+        window.addEventListener('DOMContentLoaded', loadAccountStats);
+    </script>
+</body>
+</html>
