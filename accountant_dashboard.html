@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accounts Portal - HIKVENA PVT.LTD</title>
+
+    <!-- 🔒 SECURITY AUTH GUARD (Role-Based Access) 🔒 -->
+    <script>
+        const sessionCheck = localStorage.getItem('school_user');
+        if (!sessionCheck) {
+            window.location.replace('login.html');
+        } else {
+            const user = JSON.parse(sessionCheck);
+            // Sirf Accountant, Clerk aur Admin yahan aa sakte hain
+            if (user.role !== 'Accountant' && user.role !== 'Clerk' && user.role !== 'Admin' && user.role !== 'Principal') {
+                alert("Access Denied! Sirf Finance Team is portal ko use kar sakti hai.");
+                window.location.replace('login.html');
+            }
+        }
+    </script>
+    <!-- SECURITY GUARD END -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -36,9 +53,9 @@
 
         <!-- PROFILE -->
         <div class="p-4 flex items-center border-b border-white/10">
-            <div class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center font-bold mr-3 text-xs">A</div>
+            <div class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center font-bold mr-3 text-xs" id="sidebarInitial">A</div>
             <div>
-                <h2 class="text-[12px] font-semibold text-white">Accounts Dept.</h2>
+                <h2 id="sidebarName" class="text-[12px] font-semibold text-white">Accounts Dept.</h2>
                 <p class="text-[10px] text-green-300 mt-0.5"><i class="fa-solid fa-circle text-[6px]"></i> Online</p>
             </div>
         </div>
@@ -63,9 +80,11 @@
             <a href="salary_management.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Pay Staff Salary</a>
             <a href="salary_report.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-column w-6 text-sm"></i> Salary Report</a>
 
-            <!-- LOGOUT -->
-            <div class="mt-8 px-3">
-                <a href="index.html" class="flex items-center px-4 py-2 bg-white/10 hover:bg-red-500 rounded-md text-gray-200 transition-colors text-sm font-bold"><i class="fa-solid fa-arrow-right-from-bracket w-6"></i> Back to Admin</a>
+            <!-- SECURE LOGOUT -->
+            <div class="mt-8 px-3 border-t border-white/10 pt-4">
+                <a href="#" onclick="logoutUser()" class="flex items-center justify-center px-4 py-2.5 bg-red-500/20 hover:bg-red-500 rounded-md text-red-100 hover:text-white transition-all text-sm font-bold border border-red-500/30 shadow-sm">
+                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Secure Logout
+                </a>
             </div>
         </nav>
     </aside>
@@ -85,7 +104,7 @@
 
         <div class="p-8">
             <div class="mb-8">
-                <h3 class="text-xl font-bold text-gray-800">Welcome, Finance Manager! 💼</h3>
+                <h3 class="text-xl font-bold text-gray-800">Welcome, <span id="welcomeName">Finance Manager</span>! 💼</h3>
                 <p class="text-sm text-gray-500 mt-1">Track school revenue, expenditures, and payroll here.</p>
             </div>
 
@@ -122,7 +141,7 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Recent Transactions (Dummy for now, can be linked to DB later) -->
+                <!-- Recent Transactions -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 col-span-2 overflow-hidden flex flex-col">
                     <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
                         <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-money-bill-transfer mr-2 text-green-600"></i> Recent Fee Collections</h3>
@@ -183,6 +202,22 @@
         const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
         const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // UI Update Based on Login
+        const userData = JSON.parse(localStorage.getItem('school_user'));
+        if(userData) {
+            document.getElementById('sidebarName').innerText = userData.name;
+            document.getElementById('sidebarInitial').innerText = userData.name.charAt(0).toUpperCase();
+            document.getElementById('welcomeName').innerText = userData.name;
+        }
+
+        // LOGOUT FUNCTION
+        function logoutUser() {
+            if(confirm("Are you sure you want to logout?")) {
+                localStorage.removeItem('school_user');
+                window.location.replace('login.html');
+            }
+        }
 
         async function loadAccountStats() {
             try {
