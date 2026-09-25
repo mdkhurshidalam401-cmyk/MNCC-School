@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accounts Portal - HIKVENA PVT.LTD</title>
 
-    <!-- 🔒 SECURITY AUTH GUARD (Role-Based Access) 🔒 -->
+    <!-- 🔒 SECURITY AUTH GUARD & SMART ROLE ROUTING 🔒 -->
     <script>
         const sessionCheck = localStorage.getItem('school_user');
         if (!sessionCheck) {
             window.location.replace('login.html');
         } else {
             const user = JSON.parse(sessionCheck);
-            // Sirf Accountant, Clerk aur Admin yahan aa sakte hain
+            // Sirf Accountant, Clerk, Admin aur Principal yahan aa sakte hain
             if (user.role !== 'Accountant' && user.role !== 'Clerk' && user.role !== 'Admin' && user.role !== 'Principal') {
                 alert("Access Denied! Sirf Finance Team is portal ko use kar sakti hai.");
                 window.location.replace('login.html');
@@ -63,13 +63,13 @@
         <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
             <!-- MAIN -->
             <div class="mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">MAIN</div>
-            <a href="accountant_dashboard.html" class="flex items-center px-4 py-2 bg-green-700 text-white rounded-md mb-1 shadow-sm"><i class="fa-solid fa-house w-6 text-sm"></i> Accounts Home</a>
+            <a href="accountant_dashboard.html" id="homeNavLink" class="flex items-center px-4 py-2 bg-green-700 text-white rounded-md mb-1 shadow-sm"><i class="fa-solid fa-house w-6 text-sm"></i> Accounts Home</a>
 
             <!-- FEES -->
             <div class="mt-4 mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">FEES MANAGEMENT</div>
             <a href="fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-sm"></i> Fee Structure</a>
             <a href="fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-sm"></i> Collect Fees</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-clock-rotate-left w-6 text-sm"></i> Fee Defaulters</a>
+            <a href="fee_defaulters.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-brands fa-whatsapp w-6 text-sm"></i> Fee Defaulters</a>
             
             <!-- EXPENSES -->
             <div class="mt-4 mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">EXPENSES</div>
@@ -203,12 +203,17 @@
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
         const db = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // UI Update Based on Login
+        // UI Update Based on Login & Smart Routing for Home Button
         const userData = JSON.parse(localStorage.getItem('school_user'));
         if(userData) {
             document.getElementById('sidebarName').innerText = userData.name;
             document.getElementById('sidebarInitial').innerText = userData.name.charAt(0).toUpperCase();
             document.getElementById('welcomeName').innerText = userData.name;
+
+            // Agar Admin login hai, toh Home button use wapas index.html (Admin Dashboard) par bhejega
+            if(userData.role === 'Admin' || userData.role === 'Principal') {
+                document.getElementById('homeNavLink').setAttribute('href', 'index.html');
+            }
         }
 
         // LOGOUT FUNCTION

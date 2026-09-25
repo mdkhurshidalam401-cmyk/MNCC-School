@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Admission - School ERP</title>
+
+    <!-- 🔒 SECURITY AUTH GUARD & SMART ROLE ROUTING 🔒 -->
+    <script>
+        const sessionCheck = localStorage.getItem('school_user');
+        if (!sessionCheck) {
+            window.location.replace('login.html');
+        } else {
+            const user = JSON.parse(sessionCheck);
+            // Sirf Admin, Principal aur authorized staff admission kar sakte hain (Students nahi)
+            if (user.role === 'Student') {
+                alert("Access Denied! Students is page ko access nahi kar sakte.");
+                window.location.replace('student_dashboard.html');
+            }
+        }
+    </script>
+    <!-- SECURITY GUARD END -->
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
@@ -39,62 +56,56 @@
         </div>
 
         <div class="p-4 flex items-center border-b border-white/10">
-            <div class="w-8 h-8 rounded-full bg-white text-[#003126] flex items-center justify-center font-bold mr-3 text-xs">S</div>
+            <div class="w-8 h-8 rounded-full bg-white text-[#003126] flex items-center justify-center font-bold mr-3 text-xs" id="sidebarInitial">S</div>
             <div>
-                <h2 class="text-[12px] font-semibold text-white">Super Administrator</h2>
-                <p class="text-[10px] text-yellow-400 mt-0.5"><i class="fa-solid fa-star text-[9px]"></i> Super Admin</p>
+                <h2 id="sidebarName" class="text-[12px] font-semibold text-white">Super Administrator</h2>
+                <p class="text-[10px] text-yellow-400 mt-0.5"><i class="fa-solid fa-star text-[9px]"></i> <span id="sidebarRole">Super Admin</span></p>
             </div>
         </div>
 
         <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
             <div class="mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">MAIN</div>
-            <a href="index.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> Dashboard</a>
+            <a href="index.html" id="homeNavLink" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> Dashboard</a>
 
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STUDENTS</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-clipboard w-6 text-sm"></i> Admission Enquiry</a>
+            <a href="admission_enquiry.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-clipboard w-6 text-sm"></i> Admission Enquiry</a>
             <a href="students.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> All Students</a>
             <a href="admission.html" class="flex items-center px-4 py-2 bg-[#00c3a2] text-white rounded-md mb-0.5 shadow-sm"><i class="fa-solid fa-user-plus w-6 text-sm"></i> New Admission</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-box-archive w-6 text-sm"></i> Passed Out Archive</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-graduation-cap w-6 text-sm"></i> Promotion</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-yellow-500 transition-colors"><i class="fa-solid fa-file-lines w-6 text-sm"></i> Session Report</a>
+            <a href="passed_out_archive.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-box-archive w-6 text-sm"></i> Passed Out Archive</a>
+            <a href="promotion.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-graduation-cap w-6 text-sm"></i> Promotion</a>
+            <a href="session_report.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-yellow-500 transition-colors"><i class="fa-solid fa-file-lines w-6 text-sm"></i> Session Report</a>
 
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FEES</div>
             <a href="fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-sm"></i> Fee Structure</a>
             <a href="fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-sm"></i> Fee Collection</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-green-400 transition-colors"><i class="fa-solid fa-bolt w-6 text-sm"></i> Quick Fee Collect</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-green-400 transition-colors"><i class="fa-brands fa-whatsapp w-6 text-sm"></i> WhatsApp Reminder</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-red-400 transition-colors"><i class="fa-solid fa-trash-can w-6 text-sm"></i> Fee Deletion Log</a>
+            <a href="fee_defaulters.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-green-400 transition-colors"><i class="fa-brands fa-whatsapp w-6 text-sm"></i> WhatsApp Reminder</a>
+            <a href="fee_deletion_log.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-red-400 transition-colors"><i class="fa-solid fa-trash-can w-6 text-sm"></i> Fee Deletion Log</a>
 
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ACADEMICS</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Attendance</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-line w-6 text-sm"></i> Attendance Report</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-file-lines w-6 text-sm"></i> Exams</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Marks Entry</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-check w-6 text-sm"></i> Class Result</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-book w-6 text-sm"></i> Subjects</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-link w-6 text-sm"></i> Class-Subject Map</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-calendar w-6 text-sm"></i> Exam Schedule</a>
+            <a href="attendance.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Attendance</a>
+            <a href="attendance_report.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-line w-6 text-sm"></i> Attendance Report</a>
+            <a href="exams.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-file-lines w-6 text-sm"></i> Exams</a>
+            <a href="marks_entry.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Marks Entry</a>
+            <a href="class_result.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-check w-6 text-sm"></i> Class Result</a>
+            <a href="subjects.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-book w-6 text-sm"></i> Subjects</a>
 
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">FINANCE</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-receipt w-6 text-sm"></i> Expenses</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-pie w-6 text-sm"></i> Reports</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-purple-400 transition-colors"><i class="fa-solid fa-scale-balanced w-6 text-sm"></i> Income vs Expense</a>
+            <a href="expenses.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-receipt w-6 text-sm"></i> Expenses</a>
 
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">STAFF / PAYROLL</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-tie w-6 text-sm"></i> Staff Management</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Salary Management</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-chart-column w-6 text-sm"></i> Salary Report</a>
+            <a href="staff.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-user-tie w-6 text-sm"></i> Staff Management</a>
+            <a href="salary_management.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Salary Management</a>
+            <a href="salary_report.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-chart-column w-6 text-sm"></i> Salary Report</a>
 
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">COMMUNICATION</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-bell w-6 text-sm"></i> Notices</a>
-
-            <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ADMIN</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-gear w-6 text-sm"></i> Admin Settings</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-sliders w-6 text-sm"></i> Settings</a>
+            <a href="notices.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-bell w-6 text-sm"></i> Notices</a>
 
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">ACCOUNT</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-key w-6 text-sm"></i> Password Change</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-red-400 transition-colors"><i class="fa-solid fa-arrow-right-from-bracket w-6 text-sm"></i> Logout</a>
+            <div class="mt-2 px-3 border-t border-white/10 pt-4">
+                <a href="#" onclick="logoutUser()" class="flex items-center justify-center px-4 py-2.5 bg-red-500/20 hover:bg-red-500 rounded-md text-red-200 hover:text-white transition-all text-sm font-bold border border-red-500/30 shadow-sm">
+                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Secure Logout
+                </a>
+            </div>
         </nav>
     </aside>
 
@@ -144,7 +155,7 @@
                             </div>
                             <div>
                                 <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Academic Session</label>
-                                <input type="text" value="2027-2028" class="w-full border border-gray-300 rounded-md p-2.5 text-sm bg-gray-50" readonly>
+                                <input type="text" value="2026-2027" class="w-full border border-gray-300 rounded-md p-2.5 text-sm bg-gray-50" readonly>
                             </div>
                         </div>
                     </div>
@@ -235,8 +246,12 @@
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Email Address</label>
-                                <input type="email" id="email" placeholder="example@email.com" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Email Address (For Student Login)</label>
+                                <input type="email" id="email" placeholder="student@hikvena.com" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Password (For Student Login)</label>
+                                <input type="text" id="password" placeholder="Default password e.g. 123456" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all">
                             </div>
                             <div class="md:col-span-2">
                                 <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Complete Address</label>
@@ -271,11 +286,34 @@
         </div>
     </div>
 
-    <!-- SCRIPT (Database insert query updated with all fields) -->
+    <!-- SCRIPT -->
     <script>
         const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
         const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Dynamic Profile & Smart Routing Based on Login
+        const userData = JSON.parse(localStorage.getItem('school_user'));
+        if(userData) {
+            document.getElementById('sidebarName').innerText = userData.name;
+            document.getElementById('sidebarInitial').innerText = userData.name.charAt(0).toUpperCase();
+            document.getElementById('sidebarRole').innerText = userData.role;
+
+            // Agar Teacher ya Accountant login karke yahan aayein, toh Home button unhe unke dashboard par le jayega
+            if(userData.role === 'Teacher') {
+                document.getElementById('homeNavLink').setAttribute('href', 'teacher_dashboard.html');
+            } else if(userData.role === 'Accountant' || userData.role === 'Clerk') {
+                document.getElementById('homeNavLink').setAttribute('href', 'accountant_dashboard.html');
+            }
+        }
+
+        // LOGOUT FUNCTION
+        function logoutUser() {
+            if(confirm("Are you sure you want to logout?")) {
+                localStorage.removeItem('school_user');
+                window.location.replace('login.html');
+            }
+        }
 
         const form = document.getElementById('admissionForm');
         const modal = document.getElementById('successModal');
@@ -286,7 +324,6 @@
             registerBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
             registerBtn.disabled = true;
 
-            // Updated Database call: Saving all data to the new columns
             const { data, error } = await db.from('students').insert([
                 { 
                     adm_no: document.getElementById('admNo').value, 
@@ -303,6 +340,7 @@
                     mother_occ: document.getElementById('motherOcc').value,
                     mobile_no: document.getElementById('mobileNo').value,
                     email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
                     address: document.getElementById('address').value,
                     status: 'Active'
                 }
@@ -315,12 +353,10 @@
                 return;
             }
 
-            // Success handling
             registerBtn.innerHTML = '<i class="fa-solid fa-check"></i> Submit Full Admission';
             registerBtn.disabled = false;
             modal.classList.add('modal-active');
             
-            // Auto increment admission number for next student
             const currentNo = parseInt(document.getElementById('admNo').value.split('-')[2]);
             document.getElementById('admNo').value = `ADM-26-${currentNo + 1}`;
         });

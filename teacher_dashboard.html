@@ -12,7 +12,7 @@
             window.location.replace('login.html');
         } else {
             const user = JSON.parse(sessionCheck);
-            // Sirf Teacher aur Admin yahan aa sakte hain
+            // Sirf Teacher, Admin aur Principal yahan aa sakte hain
             if (user.role !== 'Teacher' && user.role !== 'Admin' && user.role !== 'Principal') {
                 alert("Access Denied! Aap Teacher nahi hain.");
                 window.location.replace('login.html');
@@ -67,18 +67,17 @@
 
             <!-- ACADEMICS -->
             <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">CLASS & ACADEMICS</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> My Students</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Mark Attendance</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Upload Marks</a>
+            <a href="students.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> My Students</a>
+            <a href="attendance.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Mark Attendance</a>
+            <a href="marks_entry.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Upload Marks</a>
 
             <!-- COMMUNICATION -->
             <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">COMMUNICATION</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-300 transition-colors"><i class="fa-regular fa-bell w-6 text-sm"></i> Notice Board</a>
+            <a href="notices.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-300 transition-colors"><i class="fa-regular fa-bell w-6 text-sm"></i> Notice Board</a>
 
             <!-- PERSONAL -->
             <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">MY ACCOUNT</div>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> My Salary Slips</a>
-            <a href="#" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-calendar-minus w-6 text-sm"></i> Leave Request</a>
+            <a href="salary_report.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> My Salary Slips</a>
             
             <!-- SECURE LOGOUT -->
             <div class="mt-8 px-3 border-t border-white/10 pt-4">
@@ -163,7 +162,7 @@
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 bg-gray-50/30">
                     <h3 class="text-[15px] font-bold text-gray-800 mb-5 border-b pb-2">Quick Tasks</h3>
                     <div class="space-y-4">
-                        <a href="#" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-[#00c3a2] hover:bg-[#e0fcf4] transition-all group block shadow-sm">
+                        <a href="attendance.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-[#00c3a2] hover:bg-[#e0fcf4] transition-all group block shadow-sm">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-lg bg-teal-50 text-[#00c3a2] flex items-center justify-center group-hover:bg-white"><i class="fa-regular fa-calendar-check"></i></div>
                                 <div class="text-left">
@@ -174,7 +173,7 @@
                             <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-[#00c3a2]"></i>
                         </a>
 
-                        <a href="#" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-blue-500 hover:bg-blue-50 transition-all group block shadow-sm">
+                        <a href="marks_entry.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-blue-500 hover:bg-blue-50 transition-all group block shadow-sm">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-pen"></i></div>
                                 <div class="text-left">
@@ -183,17 +182,6 @@
                                 </div>
                             </div>
                             <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-blue-500"></i>
-                        </a>
-                        
-                        <a href="#" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-purple-500 hover:bg-purple-50 transition-all group block shadow-sm">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-purple-50 text-purple-500 flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-calendar-minus"></i></div>
-                                <div class="text-left">
-                                    <h4 class="text-sm font-bold text-gray-800">Apply Leave</h4>
-                                    <p class="text-[10px] text-gray-500">Submit leave request</p>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-purple-500"></i>
                         </a>
                     </div>
                 </div>
@@ -239,7 +227,7 @@
             try {
                 const { data: mySalaryRecords, error: salError } = await db.from('salary_payments')
                     .select('amount_paid')
-                    .eq('staff_id', userData.id); // 🔥 MAGIC: Yahan par filter laga diya ki sirf iski hi id ho
+                    .eq('staff_id', userData.id);
 
                 if (!salError && mySalaryRecords) {
                     const totalMySal = mySalaryRecords.reduce((sum, record) => sum + Number(record.amount_paid || 0), 0);
