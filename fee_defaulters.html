@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Defaulters - Accounts Portal</title>
+
+    <!-- 🔒 SECURITY AUTH GUARD -->
+    <script>
+        const sessionCheck = localStorage.getItem('school_user');
+        if (!sessionCheck) window.location.replace('login.html');
+        else {
+            const user = JSON.parse(sessionCheck);
+            if (user.role !== 'Accountant' && user.role !== 'Clerk' && user.role !== 'Admin') {
+                alert("Access Denied!");
+                window.location.replace('login.html');
+            }
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
+
+    <!-- ACCOUNTANT SIDEBAR -->
+    <aside class="w-64 bg-[#0f5132] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20">
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#0f5132] z-10">
+            <div class="bg-white text-green-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0">
+                <i class="fa-solid fa-calculator text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-[14px] font-extrabold text-white uppercase">HIKVENA PVT.LTD</h1>
+                <p class="text-[9px] text-green-300 font-bold uppercase tracking-widest">Accounts Portal</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
+            <a href="accountant_dashboard.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> Accounts Home</a>
+            
+            <div class="mt-4 mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">FEES MANAGEMENT</div>
+            <a href="fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-sm"></i> Fee Structure</a>
+            <a href="fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-sm"></i> Collect Fees</a>
+            <a href="fee_defaulters.html" class="flex items-center px-4 py-2 bg-green-700 text-white rounded-md mb-0.5 shadow-sm"><i class="fa-brands fa-whatsapp w-6 text-sm"></i> Fee Defaulters</a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto bg-[#f4f7f6]">
+        <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
+            <div><h2 class="text-2xl font-bold text-[#102a43]">Fee Defaulters & Reminders</h2></div>
+            <div class="text-sm font-bold text-green-700 bg-green-50 px-4 py-1.5 rounded-full border border-green-200"><i class="fa-solid fa-indian-rupee-sign"></i> Finance Mode Active</div>
+        </header>
+
+        <div class="p-8">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
+                <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                    <h3 class="text-[15px] font-bold text-gray-800">Pending Fees List</h3>
+                    <p class="text-xs text-gray-500">Click the WhatsApp icon to send an instant reminder.</p>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-[#0f5132] text-white">
+                            <tr class="text-[11px] uppercase tracking-wider">
+                                <th class="p-4 font-semibold">Adm No</th>
+                                <th class="p-4 font-semibold">Student Name</th>
+                                <th class="p-4 font-semibold">Class</th>
+                                <th class="p-4 font-semibold text-right">Pending Dues</th>
+                                <th class="p-4 font-semibold text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="defaultersTable" class="text-sm text-gray-700">
+                            <tr>
+                                <td colspan="5" class="p-8 text-center text-gray-400">
+                                    <i class="fa-solid fa-spinner fa-spin text-2xl mb-2 text-green-500"></i>
+                                    <p>Loading defaulters...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        async function fetchDefaulters() {
+            try {
+                // Fetching students who have pending fees
+                const { data, error } = await db.from('students').select('*').order('class_name', { ascending: true });
+                if (error) throw error;
+
+                const tbody = document.getElementById('defaultersTable');
+                tbody.innerHTML = '';
+                
+                let defaultersFound = false;
+
+                data.forEach(student => {
+                    // For testing, assuming anyone with pending_fees > 0 or default 2500 is a defaulter
+                    let dues = student.pending_fees !== null ? student.pending_fees : 2500; 
+                    
+                    if (dues > 0) {
+                        defaultersFound = true;
+                        const tr = document.createElement('tr');
+                        tr.className = 'border-b border-gray-100 hover:bg-gray-50 transition';
+                        
+                        // Fake phone number for testing if not present in DB
+                        let phone = student.parent_phone || '9999999999';
+
+                        tr.innerHTML = `
+                            <td class="p-4 font-bold text-gray-800">${student.adm_no || '-'}</td>
+                            <td class="p-4 font-bold text-[#102a43]">${student.student_name}</td>
+                            <td class="p-4 text-gray-600"><span class="bg-gray-100 px-2 py-1 rounded text-xs font-bold border">${student.class_name || '-'}</span></td>
+                            <td class="p-4 text-right font-bold text-red-500">₹ ${Number(dues).toLocaleString('en-IN')}</td>
+                            <td class="p-4 text-center">
+                                <button onclick="sendWhatsApp('${phone}', '${student.student_name}', ${dues})" class="bg-[#25D366] hover:bg-[#1ebe57] text-white px-4 py-2 rounded-lg text-xs font-bold shadow-md transition-all flex items-center justify-center gap-2 mx-auto">
+                                    <i class="fa-brands fa-whatsapp text-lg"></i> Send Reminder
+                                </button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    }
+                });
+
+                if (!defaultersFound) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-gray-500 font-bold">All fees are cleared! No defaulters found.</td></tr>`;
+                }
+            } catch (error) {
+                console.error(error);
+                document.getElementById('defaultersTable').innerHTML = `<tr><td colspan="5" class="p-8 text-center text-red-500">Database connection error.</td></tr>`;
+            }
+        }
+
+        // WHATSAPP MESSAGING LOGIC
+        function sendWhatsApp(phone, studentName, amount) {
+            // Remove spaces/special characters
+            let cleanPhone = phone.toString().replace(/\D/g,''); 
+            
+            // Add India Country code +91 if length is 10
+            if(cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
+
+            // Prepare the professional message
+            let message = `*FEE REMINDER*\n\nDear Parent,\nThis is a gentle reminder from *HIKVENA PVT.LTD*.\n\nThe fee amount of *₹${amount}* is currently pending for your ward *${studentName}*.\n\nPlease clear the dues at the earliest to avoid late fines.\n\nThank you,\nAccounts Department.`;
+            
+            // Encode message for URL
+            let encodedMessage = encodeURIComponent(message);
+            
+            // Generate WhatsApp URL
+            let waUrl = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
+            
+            // Open in new tab (Will open WhatsApp Web on PC or WhatsApp App on Phone)
+            window.open(waUrl, '_blank');
+        }
+
+        window.addEventListener('DOMContentLoaded', fetchDefaulters);
+    </script>
+</body>
+</html>
