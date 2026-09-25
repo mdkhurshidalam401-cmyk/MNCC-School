@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - HIKVENA PVT.LTD</title>
+
+    <!-- 🔒 SECURITY AUTH GUARD (Chor Darwaza Band) 🔒 -->
+    <script>
+        const sessionCheck = localStorage.getItem('school_user');
+        if (!sessionCheck) {
+            // Agar login nahi hai, toh login page par fek do
+            window.location.replace('login.html');
+        } else {
+            const user = JSON.parse(sessionCheck);
+            // Agar login hai par Admin nahi hai, toh bahar nikaalo
+            if (user.role !== 'Admin' && user.role !== 'Principal') {
+                alert("Security Alert: Access Denied! Sirf Admin is portal ko khol sakte hain.");
+                window.location.replace('login.html');
+            }
+        }
+    </script>
+    <!-- SECURITY GUARD END -->
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
@@ -23,7 +41,7 @@
 </head>
 <body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
 
-    <!-- 100% COMPLETE MEGA SIDEBAR (WITH ALL LINKS ACTIVE) -->
+    <!-- MEGA SIDEBAR -->
     <aside class="w-64 bg-[#003126] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
         
         <!-- BRANDING SECTION -->
@@ -34,6 +52,14 @@
             <div>
                 <h1 class="text-[14px] font-extrabold leading-tight tracking-wider text-white uppercase">HIKVENA PVT.LTD</h1>
                 <p class="text-[9px] text-[#8aa8a3] mt-0.5 font-bold uppercase tracking-widest">School Management System</p>
+            </div>
+        </div>
+
+        <div class="p-4 flex items-center border-b border-white/10">
+            <div class="w-8 h-8 rounded-full bg-white text-[#003126] flex items-center justify-center font-bold mr-3 text-xs">S</div>
+            <div>
+                <h2 id="adminNameDisplay" class="text-[12px] font-semibold text-white">Super Administrator</h2>
+                <p class="text-[10px] text-yellow-400 mt-0.5"><i class="fa-solid fa-star text-[9px]"></i> Admin Portal</p>
             </div>
         </div>
 
@@ -76,9 +102,16 @@
             <a href="salary_management.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Salary Management</a>
             <a href="salary_report.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-chart-column w-6 text-sm"></i> Salary Report</a>
 
-            <!-- COMMUNICATION (Agla Module) -->
+            <!-- COMMUNICATION -->
             <div class="mt-4 mb-2 text-[10px] text-[#6b8f89] font-bold tracking-wider uppercase px-3">COMMUNICATION</div>
             <a href="notices.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-bell w-6 text-sm"></i> Notices</a>
+
+            <!-- SECURE LOGOUT BUTTON -->
+            <div class="mt-8 px-3 border-t border-white/10 pt-4">
+                <a href="#" onclick="logoutUser()" class="flex items-center justify-center px-4 py-2.5 bg-red-500/20 hover:bg-red-500 rounded-md text-red-400 hover:text-white transition-all text-sm font-bold border border-red-500/30 shadow-sm">
+                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Secure Logout
+                </a>
+            </div>
         </nav>
     </aside>
 
@@ -95,7 +128,7 @@
 
         <div class="p-8">
             <div class="mb-8">
-                <h3 class="text-xl font-bold text-gray-800">Welcome back, Super Admin! 👋</h3>
+                <h3 class="text-xl font-bold text-gray-800">Welcome back, <span id="welcomeName">Super Admin</span>! 👋</h3>
                 <p class="text-sm text-gray-500 mt-1">Here is what's happening in your school today.</p>
             </div>
 
@@ -217,6 +250,21 @@
         const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
         const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // UI Update Based on Login
+        const userData = JSON.parse(localStorage.getItem('school_user'));
+        if(userData) {
+            document.getElementById('adminNameDisplay').innerText = userData.name;
+            document.getElementById('welcomeName').innerText = userData.name;
+        }
+
+        // LOGOUT FUNCTION
+        function logoutUser() {
+            if(confirm("Are you sure you want to logout?")) {
+                localStorage.removeItem('school_user');
+                window.location.replace('login.html');
+            }
+        }
 
         async function fetchDashboardData() {
             try {
