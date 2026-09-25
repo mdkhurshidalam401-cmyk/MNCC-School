@@ -27,7 +27,7 @@
                 <p class="text-sm text-[#8aa8a3] font-medium tracking-widest uppercase mb-8">School Management System</p>
                 
                 <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                    Welcome to the secure portal. All logins are protected and verified directly through the encrypted database.
+                    Welcome to the secure portal. All logins (Admin, Staff, and Students) are protected and verified directly through the encrypted database.
                 </p>
             </div>
             
@@ -94,23 +94,18 @@
             const errorBox = document.getElementById('errorBox');
             
             errorBox.classList.add('hidden');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying in Database...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
             btn.disabled = true;
 
             try {
-                // EXCLUSIVELY CHECKING DATABASE FOR MATCH
-                const { data, error } = await db.from('staff')
+                // 1. PEHLE STAFF TABLE MEIN CHECK KAREIN (Admin/Teacher/Accountant)
+                const { data: staffData, error: staffError } = await db.from('staff')
                                         .select('*')
                                         .eq('email', email)
                                         .eq('password', password);
 
-                if (error) throw error;
-
-                if (data && data.length > 0) {
-                    // Match Found in Database!
-                    const user = data[0];
-                    
-                    // Save specific user details in LocalStorage securely
+                if (staffData && staffData.length > 0) {
+                    const user = staffData[0];
                     localStorage.setItem('school_user', JSON.stringify({
                         id: user.id,
                         name: user.name,
@@ -118,28 +113,42 @@
                         email: user.email
                     }));
 
-                    // ROLE BASED REDIRECTION (Kisko kahan bhejna hai)
-                    if (user.role === 'Admin' || user.role === 'Principal') {
-                        window.location.href = 'index.html';
-                    } else if (user.role === 'Teacher') {
-                        window.location.href = 'teacher_dashboard.html';
-                    } else if (user.role === 'Accountant' || user.role === 'Clerk') {
-                        window.location.href = 'accountant_dashboard.html';
-                    } else {
-                        // Agar koi aur role hai toh usko bhi Teacher/General dashboard de sakte hain
-                        window.location.href = 'teacher_dashboard.html'; 
-                    }
-                } else {
-                    // Database Match Failed
-                    errorBox.classList.remove('hidden');
-                    document.getElementById('errorText').innerText = 'Database Mismatch: Incorrect Email or Password.';
-                    btn.innerHTML = '<span>Authenticate</span> <i class="fa-solid fa-server"></i>';
-                    btn.disabled = false;
+                    if (user.role === 'Admin' || user.role === 'Principal') window.location.href = 'index.html';
+                    else if (user.role === 'Teacher') window.location.href = 'teacher_dashboard.html';
+                    else if (user.role === 'Accountant' || user.role === 'Clerk') window.location.href = 'accountant_dashboard.html';
+                    else window.location.href = 'teacher_dashboard.html';
+                    
+                    return; // Stop execution here if staff is found
                 }
+
+                // 2. AGAR STAFF MEIN NAHI MILA, TOH STUDENTS TABLE MEIN CHECK KAREIN
+                const { data: studentData, error: studentError } = await db.from('students')
+                                        .select('*')
+                                        .eq('email', email)
+                                        .eq('password', password);
+
+                if (studentData && studentData.length > 0) {
+                    const student = studentData[0];
+                    localStorage.setItem('school_user', JSON.stringify({
+                        id: student.id,
+                        name: student.student_name,
+                        role: 'Student', // Force role as Student
+                        email: student.email
+                    }));
+
+                    window.location.href = 'student_dashboard.html'; // Direct to student portal
+                    return;
+                }
+
+                // 3. AGAR DONO MEIN NAHI MILA, TOH ERROR DIKHAYEIN
+                errorBox.classList.remove('hidden');
+                document.getElementById('errorText').innerText = 'Incorrect Email or Password.';
+                btn.innerHTML = '<span>Authenticate</span> <i class="fa-solid fa-server"></i>';
+                btn.disabled = false;
 
             } catch (err) {
                 errorBox.classList.remove('hidden');
-                document.getElementById('errorText').innerText = 'Server error. Please check database connection.';
+                document.getElementById('errorText').innerText = 'Server error. Please try again.';
                 btn.innerHTML = '<span>Authenticate</span> <i class="fa-solid fa-server"></i>';
                 btn.disabled = false;
             }
