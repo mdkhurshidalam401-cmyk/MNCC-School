@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HIKVENA PVT.LTD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; }
+        input:focus { outline: none; border-color: #00c3a2; box-shadow: 0 0 0 3px rgba(0, 195, 162, 0.1); }
+    </style>
+</head>
+<body class="h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 flex flex-col md:flex-row w-full max-w-4xl overflow-hidden">
+        
+        <!-- Left Side: Branding -->
+        <div class="w-full md:w-5/12 bg-[#003126] p-10 flex flex-col justify-between text-white relative overflow-hidden">
+            <div class="relative z-10">
+                <div class="bg-white text-[#00c3a2] w-14 h-14 rounded-xl flex items-center justify-center mb-6 shadow-inner">
+                    <i class="fa-solid fa-graduation-cap text-3xl"></i>
+                </div>
+                <h1 class="text-3xl font-extrabold tracking-wider uppercase mb-2">HIKVENA PVT.LTD</h1>
+                <p class="text-sm text-[#8aa8a3] font-medium tracking-widest uppercase mb-8">School Management System</p>
+                
+                <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                    Welcome to the secure portal. Please login with your credentials to access your personalized dashboard.
+                </p>
+            </div>
+            
+            <div class="text-xs text-[#6b8f89] font-medium relative z-10">
+                &copy; 2026 Hikvena Pvt.Ltd. All rights reserved.
+            </div>
+
+            <!-- Background Decoration -->
+            <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"></div>
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-[#00c3a2] opacity-20 rounded-full blur-2xl"></div>
+        </div>
+
+        <!-- Right Side: Login Form -->
+        <div class="w-full md:w-7/12 p-10 md:p-14">
+            <h2 class="text-2xl font-bold text-[#102a43] mb-2">Sign In to Your Account</h2>
+            <p class="text-sm text-gray-500 mb-8">Enter your email and password provided by the school admin.</p>
+
+            <form id="loginForm">
+                <!-- Error Message Box -->
+                <div id="errorBox" class="hidden bg-red-50 text-red-600 p-3 rounded-lg text-sm font-semibold mb-6 flex items-center gap-2 border border-red-100">
+                    <i class="fa-solid fa-circle-exclamation"></i> <span id="errorText">Invalid credentials.</span>
+                </div>
+
+                <div class="mb-5">
+                    <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">Email Address</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <i class="fa-regular fa-envelope"></i>
+                        </div>
+                        <input type="email" id="email" required placeholder="admin@hikvena.com" class="w-full border border-gray-300 rounded-lg pl-10 p-3 text-sm transition-all bg-gray-50 focus:bg-white text-gray-800 font-medium">
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">Password</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <input type="password" id="password" required placeholder="••••••••" class="w-full border border-gray-300 rounded-lg pl-10 p-3 text-sm transition-all bg-gray-50 focus:bg-white text-gray-800 font-medium">
+                    </div>
+                </div>
+
+                <button type="submit" id="loginBtn" class="w-full bg-[#00c3a2] hover:bg-[#00a68d] text-white py-3.5 rounded-lg text-sm font-bold shadow-md shadow-[#00c3a2]/30 transition-all flex justify-center items-center gap-2">
+                    <span>Secure Login</span> <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <!-- Admin Hint -->
+            <div class="mt-8 text-center text-xs text-gray-400 font-medium">
+                Super Admin Login: admin@hikvena.com / admin123
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SUPABASE & LOGIN LOGIC -->
+    <script>
+        const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const btn = document.getElementById('loginBtn');
+            const errorBox = document.getElementById('errorBox');
+            
+            errorBox.classList.add('hidden');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking...';
+            btn.disabled = true;
+
+            try {
+                // 1. HARDCODED SUPER ADMIN CHECK
+                if(email === 'admin@hikvena.com' && password === 'admin123') {
+                    // Save session in LocalStorage
+                    localStorage.setItem('school_user', JSON.stringify({
+                        id: 'admin_1',
+                        name: 'Super Administrator',
+                        role: 'Admin',
+                        email: email
+                    }));
+                    
+                    window.location.href = 'index.html'; // Go to Main Admin Dashboard
+                    return;
+                }
+
+                // 2. CHECK STAFF TABLE FOR TEACHERS & ACCOUNTANTS
+                const { data, error } = await db.from('staff')
+                                        .select('*')
+                                        .eq('email', email)
+                                        .eq('password', password);
+
+                if (error) throw error;
+
+                if (data && data.length > 0) {
+                    const user = data[0];
+                    
+                    // Save specific user details in LocalStorage
+                    localStorage.setItem('school_user', JSON.stringify({
+                        id: user.id,
+                        name: user.name,
+                        role: user.role,
+                        email: user.email
+                    }));
+
+                    // Redirect based on Role
+                    if(user.role === 'Teacher') {
+                        window.location.href = 'teacher_dashboard.html';
+                    } else if (user.role === 'Accountant' || user.role === 'Clerk') {
+                        window.location.href = 'accountant_dashboard.html';
+                    } else {
+                        window.location.href = 'teacher_dashboard.html'; // Default
+                    }
+                } else {
+                    // Invalid Credentials
+                    errorBox.classList.remove('hidden');
+                    document.getElementById('errorText').innerText = 'Incorrect Email or Password.';
+                    btn.innerHTML = '<span>Secure Login</span> <i class="fa-solid fa-arrow-right"></i>';
+                    btn.disabled = false;
+                }
+
+            } catch (err) {
+                errorBox.classList.remove('hidden');
+                document.getElementById('errorText').innerText = 'Database connection error.';
+                btn.innerHTML = '<span>Secure Login</span> <i class="fa-solid fa-arrow-right"></i>';
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
