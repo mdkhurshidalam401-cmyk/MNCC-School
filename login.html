@@ -27,7 +27,7 @@
                 <p class="text-sm text-[#8aa8a3] font-medium tracking-widest uppercase mb-8">School Management System</p>
                 
                 <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                    Welcome to the secure portal. Please login with your credentials to access your personalized dashboard.
+                    Welcome to the secure portal. All logins are protected and verified directly through the encrypted database.
                 </p>
             </div>
             
@@ -42,27 +42,27 @@
 
         <!-- Right Side: Login Form -->
         <div class="w-full md:w-7/12 p-10 md:p-14">
-            <h2 class="text-2xl font-bold text-[#102a43] mb-2">Sign In to Your Account</h2>
-            <p class="text-sm text-gray-500 mb-8">Enter your email and password provided by the school admin.</p>
+            <h2 class="text-2xl font-bold text-[#102a43] mb-2">Database Login</h2>
+            <p class="text-sm text-gray-500 mb-8">Enter your registered Email ID and Password to authenticate.</p>
 
             <form id="loginForm">
                 <!-- Error Message Box -->
                 <div id="errorBox" class="hidden bg-red-50 text-red-600 p-3 rounded-lg text-sm font-semibold mb-6 flex items-center gap-2 border border-red-100">
-                    <i class="fa-solid fa-circle-exclamation"></i> <span id="errorText">Invalid credentials.</span>
+                    <i class="fa-solid fa-circle-exclamation"></i> <span id="errorText">Database Match Failed.</span>
                 </div>
 
                 <div class="mb-5">
-                    <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">Email Address</label>
+                    <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">Registered Email</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
                             <i class="fa-regular fa-envelope"></i>
                         </div>
-                        <input type="email" id="email" required placeholder="admin@hikvena.com" class="w-full border border-gray-300 rounded-lg pl-10 p-3 text-sm transition-all bg-gray-50 focus:bg-white text-gray-800 font-medium">
+                        <input type="email" id="email" required placeholder="name@hikvena.com" class="w-full border border-gray-300 rounded-lg pl-10 p-3 text-sm transition-all bg-gray-50 focus:bg-white text-gray-800 font-medium">
                     </div>
                 </div>
 
                 <div class="mb-8">
-                    <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">Password</label>
+                    <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">Secure Password</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
                             <i class="fa-solid fa-lock"></i>
@@ -72,19 +72,14 @@
                 </div>
 
                 <button type="submit" id="loginBtn" class="w-full bg-[#00c3a2] hover:bg-[#00a68d] text-white py-3.5 rounded-lg text-sm font-bold shadow-md shadow-[#00c3a2]/30 transition-all flex justify-center items-center gap-2">
-                    <span>Secure Login</span> <i class="fa-solid fa-arrow-right"></i>
+                    <span>Authenticate</span> <i class="fa-solid fa-server"></i>
                 </button>
             </form>
-
-            <!-- Admin Hint -->
-            <div class="mt-8 text-center text-xs text-gray-400 font-medium">
-                Super Admin Login: admin@hikvena.com / admin123
-            </div>
         </div>
 
     </div>
 
-    <!-- SUPABASE & LOGIN LOGIC -->
+    <!-- SUPABASE & 100% DATABASE LOGIN LOGIC -->
     <script>
         const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
@@ -99,25 +94,11 @@
             const errorBox = document.getElementById('errorBox');
             
             errorBox.classList.add('hidden');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying in Database...';
             btn.disabled = true;
 
             try {
-                // 1. HARDCODED SUPER ADMIN CHECK
-                if(email === 'admin@hikvena.com' && password === 'admin123') {
-                    // Save session in LocalStorage
-                    localStorage.setItem('school_user', JSON.stringify({
-                        id: 'admin_1',
-                        name: 'Super Administrator',
-                        role: 'Admin',
-                        email: email
-                    }));
-                    
-                    window.location.href = 'index.html'; // Go to Main Admin Dashboard
-                    return;
-                }
-
-                // 2. CHECK STAFF TABLE FOR TEACHERS & ACCOUNTANTS
+                // EXCLUSIVELY CHECKING DATABASE FOR MATCH
                 const { data, error } = await db.from('staff')
                                         .select('*')
                                         .eq('email', email)
@@ -126,9 +107,10 @@
                 if (error) throw error;
 
                 if (data && data.length > 0) {
+                    // Match Found in Database!
                     const user = data[0];
                     
-                    // Save specific user details in LocalStorage
+                    // Save specific user details in LocalStorage securely
                     localStorage.setItem('school_user', JSON.stringify({
                         id: user.id,
                         name: user.name,
@@ -136,26 +118,29 @@
                         email: user.email
                     }));
 
-                    // Redirect based on Role
-                    if(user.role === 'Teacher') {
+                    // ROLE BASED REDIRECTION (Kisko kahan bhejna hai)
+                    if (user.role === 'Admin' || user.role === 'Principal') {
+                        window.location.href = 'index.html';
+                    } else if (user.role === 'Teacher') {
                         window.location.href = 'teacher_dashboard.html';
                     } else if (user.role === 'Accountant' || user.role === 'Clerk') {
                         window.location.href = 'accountant_dashboard.html';
                     } else {
-                        window.location.href = 'teacher_dashboard.html'; // Default
+                        // Agar koi aur role hai toh usko bhi Teacher/General dashboard de sakte hain
+                        window.location.href = 'teacher_dashboard.html'; 
                     }
                 } else {
-                    // Invalid Credentials
+                    // Database Match Failed
                     errorBox.classList.remove('hidden');
-                    document.getElementById('errorText').innerText = 'Incorrect Email or Password.';
-                    btn.innerHTML = '<span>Secure Login</span> <i class="fa-solid fa-arrow-right"></i>';
+                    document.getElementById('errorText').innerText = 'Database Mismatch: Incorrect Email or Password.';
+                    btn.innerHTML = '<span>Authenticate</span> <i class="fa-solid fa-server"></i>';
                     btn.disabled = false;
                 }
 
             } catch (err) {
                 errorBox.classList.remove('hidden');
-                document.getElementById('errorText').innerText = 'Database connection error.';
-                btn.innerHTML = '<span>Secure Login</span> <i class="fa-solid fa-arrow-right"></i>';
+                document.getElementById('errorText').innerText = 'Server error. Please check database connection.';
+                btn.innerHTML = '<span>Authenticate</span> <i class="fa-solid fa-server"></i>';
                 btn.disabled = false;
             }
         });
