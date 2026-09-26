@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Request - HIKVENA PVT.LTD</title>
+
+    <!-- 🔒 SECURITY AUTH GUARD 🔒 -->
+    <script>
+        const sessionCheck = localStorage.getItem('school_user');
+        if (!sessionCheck) window.location.replace('login.html');
+        else {
+            const user = JSON.parse(sessionCheck);
+            if (user.role === 'Student') {
+                alert("Access Denied!");
+                window.location.replace('login.html');
+            }
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+    </style>
+</head>
+<body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
+
+    <!-- TEACHER SIDEBAR -->
+    <aside class="w-64 bg-[#102a43] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#102a43] z-10">
+            <div class="bg-white text-[#3b82f6] w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+                <i class="fa-solid fa-chalkboard-user text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-[14px] font-extrabold leading-tight tracking-wider text-white uppercase">HIKVENA PVT.LTD</h1>
+                <p class="text-[9px] text-[#829ab1] mt-0.5 font-bold uppercase tracking-widest">Teacher Portal</p>
+            </div>
+        </div>
+
+        <div class="p-4 flex items-center border-b border-white/10">
+            <div class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold mr-3 text-xs" id="sidebarInitial">T</div>
+            <div>
+                <h2 id="sidebarName" class="text-[12px] font-semibold text-white">Teacher Name</h2>
+                <p class="text-[10px] text-green-400 mt-0.5"><i class="fa-solid fa-circle text-[6px]"></i> Online</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
+            <div class="mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">MAIN</div>
+            <a href="teacher_dashboard.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> My Dashboard</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">CLASS & ACADEMICS</div>
+            <a href="students.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> My Students</a>
+            <a href="attendance.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Mark Attendance</a>
+            <a href="marks_entry.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Upload Marks</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">COMMUNICATION</div>
+            <a href="notices.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-300 transition-colors"><i class="fa-regular fa-bell w-6 text-sm"></i> Notice Board</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">MY ACCOUNT</div>
+            <a href="my_salary.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> My Salary Slips</a>
+            <a href="leave_request.html" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md mb-0.5 shadow-sm"><i class="fa-solid fa-calendar-minus w-6 text-sm"></i> Leave Request</a>
+            
+            <div class="mt-8 px-3 border-t border-white/10 pt-4">
+                <a href="#" onclick="logoutUser()" class="flex items-center justify-center px-4 py-2.5 bg-red-500/20 hover:bg-red-500 rounded-md text-red-400 hover:text-white transition-all text-sm font-bold border border-red-500/30 shadow-sm">
+                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Secure Logout
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto bg-[#f4f7f6]">
+        <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
+            <div>
+                <h2 class="text-2xl font-bold text-[#102a43]">Leave Application</h2>
+                <p class="text-xs text-gray-500 mt-1">Submit your leave request for administrative approval.</p>
+            </div>
+        </header>
+
+        <div class="p-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Apply Leave Form -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 lg:col-span-1 h-fit">
+                    <h3 class="text-[15px] font-bold text-gray-800 mb-5 border-b pb-2"><i class="fa-regular fa-paper-plane mr-2 text-blue-500"></i> New Leave Request</h3>
+                    <form id="leaveForm">
+                        <div class="mb-4">
+                            <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Leave Type <span class="text-red-500">*</span></label>
+                            <select id="leaveType" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all bg-white">
+                                <option value="Sick Leave">Sick Leave</option>
+                                <option value="Casual Leave">Casual Leave</option>
+                                <option value="Emergency">Emergency Leave</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">From Date <span class="text-red-500">*</span></label>
+                                <input type="date" id="startDate" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">To Date <span class="text-red-500">*</span></label>
+                                <input type="date" id="endDate" required class="w-full border border-gray-300 rounded-md p-2.5 text-sm">
+                            </div>
+                        </div>
+                        <div class="mb-5">
+                            <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Reason <span class="text-red-500">*</span></label>
+                            <textarea id="leaveReason" required rows="4" placeholder="Briefly state the reason..." class="w-full border border-gray-300 rounded-md p-2.5 text-sm resize-none"></textarea>
+                        </div>
+                        <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-sm font-bold shadow-md transition-all">
+                            Submit Application
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Leave History -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 lg:col-span-2 overflow-hidden flex flex-col">
+                    <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                        <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-clock-rotate-left mr-2 text-gray-500"></i> My Leave History</h3>
+                    </div>
+                    <div class="overflow-x-auto max-h-[500px]">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-gray-50 text-gray-500 text-[11px] uppercase tracking-wider sticky top-0 z-10">
+                                <tr>
+                                    <th class="p-4 font-semibold">Type & Reason</th>
+                                    <th class="p-4 font-semibold">Duration</th>
+                                    <th class="p-4 font-semibold">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaveTableBody" class="text-sm">
+                                <tr><td colspan="3" class="p-8 text-center text-gray-400">Loading history...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const userData = JSON.parse(localStorage.getItem('school_user'));
+        if(userData) {
+            document.getElementById('sidebarName').innerText = userData.name;
+            document.getElementById('sidebarInitial').innerText = userData.name.charAt(0).toUpperCase();
+        }
+
+        function logoutUser() {
+            if(confirm("Logout?")) { localStorage.removeItem('school_user'); window.location.replace('login.html'); }
+        }
+
+        async function fetchMyLeaves() {
+            try {
+                const { data, error } = await db.from('leave_requests')
+                    .select('*')
+                    .eq('staff_id', userData.id)
+                    .order('id', { ascending: false });
+
+                const tbody = document.getElementById('leaveTableBody');
+                tbody.innerHTML = '';
+                
+                if (error && error.code === '42P01') {
+                    tbody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-gray-500">No leave requests yet.</td></tr>`;
+                    return;
+                }
+                
+                if(!data || data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="3" class="p-8 text-center text-gray-500">Koi leave apply nahi ki hai.</td></tr>`;
+                    return;
+                }
+
+                data.forEach(item => {
+                    let statusBadge = `<span class="bg-yellow-100 text-yellow-700 px-2.5 py-1 rounded text-xs font-bold border border-yellow-200">Pending</span>`;
+                    if(item.status === 'Approved') statusBadge = `<span class="bg-green-100 text-green-700 px-2.5 py-1 rounded text-xs font-bold border border-green-200">Approved</span>`;
+                    if(item.status === 'Rejected') statusBadge = `<span class="bg-red-100 text-red-700 px-2.5 py-1 rounded text-xs font-bold border border-red-200">Rejected</span>`;
+
+                    tbody.innerHTML += `
+                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                            <td class="p-4">
+                                <div class="font-bold text-gray-800">${item.leave_type}</div>
+                                <div class="text-xs text-gray-500 mt-1">${item.reason}</div>
+                            </td>
+                            <td class="p-4 text-sm font-semibold text-gray-600">${item.start_date} to ${item.end_date}</td>
+                            <td class="p-4">${statusBadge}</td>
+                        </tr>
+                    `;
+                });
+            } catch (err) { console.error(err); }
+        }
+
+        document.getElementById('leaveForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+            btn.disabled = true;
+
+            const payload = {
+                staff_id: userData.id,
+                staff_name: userData.name,
+                leave_type: document.getElementById('leaveType').value,
+                start_date: document.getElementById('startDate').value,
+                end_date: document.getElementById('endDate').value,
+                reason: document.getElementById('leaveReason').value,
+                status: 'Pending'
+            };
+
+            const { error } = await db.from('leave_requests').insert([payload]);
+            if(error) { alert("Error applying leave. Admin might need to create the table."); } 
+            else {
+                document.getElementById('leaveForm').reset();
+                fetchMyLeaves();
+            }
+            btn.innerText = 'Submit Application';
+            btn.disabled = false;
+        });
+
+        window.addEventListener('DOMContentLoaded', fetchMyLeaves);
+    </script>
+</body>
+</html>
