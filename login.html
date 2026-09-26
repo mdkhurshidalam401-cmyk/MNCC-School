@@ -61,18 +61,31 @@
             btn.disabled = true;
 
             try {
-                // 🔒 DIRECT DATABASE MATCH QUERY 🔒
+                // 🛑 ADVANCED DEBUGGING QUERY 🛑
                 const { data, error } = await db.from('users')
                     .select('*')
                     .eq('username', uInput)
                     .eq('password', pInput)
                     .single();
 
-                if (error || !data) {
-                    throw new Error("Invalid Username or Password!");
+                // 1. Check for Database/Connection Errors
+                if (error) {
+                    console.error("Supabase Error Full Detail:", error);
+                    alert("ASLI ERROR:\nMessage: " + error.message + "\nDetails: " + (error.details || "N/A") + "\nHint: " + (error.hint || "N/A"));
+                    btn.innerHTML = '<span>Secure Login</span> <i class="fa-solid fa-arrow-right-to-bracket"></i>';
+                    btn.disabled = false;
+                    return;
                 }
 
-                // Save minimal required verification state in session
+                // 2. Check if user is actually found
+                if (!data) {
+                    alert("GALAT CREDENTIALS: Username ya Password database mein nahi mila.");
+                    btn.innerHTML = '<span>Secure Login</span> <i class="fa-solid fa-arrow-right-to-bracket"></i>';
+                    btn.disabled = false;
+                    return;
+                }
+
+                // 3. SUCCESS - Save Session
                 localStorage.setItem('school_user', JSON.stringify({
                     id: data.id,
                     name: data.name,
@@ -80,7 +93,7 @@
                     username: data.username
                 }));
 
-                // Role-based dynamic routing
+                // 4. Redirect based on role
                 const role = data.role;
                 if (role === 'Admin' || role === 'Principal') {
                     window.location.replace('index.html');
@@ -95,7 +108,8 @@
                 }
 
             } catch (err) {
-                alert("Login Failed: " + err.message);
+                alert("SYSTEM CODE ERROR: " + err.message);
+                console.error(err);
                 btn.innerHTML = '<span>Secure Login</span> <i class="fa-solid fa-arrow-right-to-bracket"></i>';
                 btn.disabled = false;
             }
