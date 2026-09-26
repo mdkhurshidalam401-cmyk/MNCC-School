@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notice Board - Student Portal</title>
+
+    <!-- 🔒 SECURITY AUTH GUARD 🔒 -->
+    <script>
+        const sessionCheck = localStorage.getItem('school_user');
+        if (!sessionCheck) window.location.replace('login.html');
+        else {
+            const user = JSON.parse(sessionCheck);
+            if (user.role !== 'Student') { window.location.replace('login.html'); }
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
+
+    <!-- STUDENT SIDEBAR -->
+    <aside class="w-64 bg-[#1e3a8a] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#1e3a8a] z-10">
+            <div class="bg-white text-blue-800 w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+                <i class="fa-solid fa-user-graduate text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-[14px] font-extrabold leading-tight tracking-wider text-white uppercase">HIKVENA PVT.LTD</h1>
+                <p class="text-[9px] text-blue-300 mt-0.5 font-bold uppercase tracking-widest">Student Portal</p>
+            </div>
+        </div>
+
+        <div class="p-4 flex items-center border-b border-white/10">
+            <div class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold mr-3 text-xs" id="sidebarInitial">S</div>
+            <div>
+                <h2 id="sidebarName" class="text-[12px] font-semibold text-white">Student Name</h2>
+                <p class="text-[10px] text-blue-300 mt-0.5"><i class="fa-solid fa-id-badge text-[9px]"></i> <span id="sidebarAdmNo">Adm No</span></p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
+            <div class="mb-2 text-[10px] text-blue-300 font-bold tracking-wider uppercase px-3">DASHBOARD</div>
+            <a href="student_dashboard.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> My Home</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-blue-300 font-bold tracking-wider uppercase px-3">ACADEMICS</div>
+            <a href="stu_attendance.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> My Attendance</a>
+            <a href="stu_marks.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-ranking-star w-6 text-sm"></i> Exam Results</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-blue-300 font-bold tracking-wider uppercase px-3">FINANCE</div>
+            <a href="stu_fees.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-file-invoice-dollar w-6 text-sm"></i> Fee Records</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-blue-300 font-bold tracking-wider uppercase px-3">SCHOOL UPDATES</div>
+            <a href="stu_notices.html" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md mb-1 shadow-sm"><i class="fa-regular fa-bell w-6 text-sm"></i> Notice Board</a>
+
+            <div class="mt-8 px-3 border-t border-white/10 pt-4">
+                <a href="#" onclick="logoutUser()" class="flex items-center justify-center px-4 py-2.5 bg-red-500/20 hover:bg-red-500 rounded-md text-red-200 hover:text-white transition-all text-sm font-bold border border-red-500/30 shadow-sm">
+                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Secure Logout
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto bg-[#f4f7f6]">
+        <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
+            <div>
+                <h2 class="text-2xl font-bold text-[#102a43]">Notice Board</h2>
+                <p class="text-xs text-gray-500 mt-1">Official circulars and announcements from administration.</p>
+            </div>
+            <button onclick="fetchStudentNotices()" class="border border-blue-600 text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-full text-sm font-semibold transition flex items-center gap-2">
+                <i class="fa-solid fa-rotate-right"></i> Refresh
+            </button>
+        </header>
+
+        <div class="p-8 pt-6">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 min-h-[500px]">
+                <div id="noticesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="col-span-full text-center p-8 text-gray-400">
+                        <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2 text-blue-600"></i>
+                        <p class="text-sm">Loading notices...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const userData = JSON.parse(localStorage.getItem('school_user'));
+        if(userData) {
+            document.getElementById('sidebarName').innerText = userData.name;
+            document.getElementById('sidebarInitial').innerText = userData.name.charAt(0).toUpperCase();
+            if(userData.username) document.getElementById('sidebarAdmNo').innerText = userData.username;
+        }
+
+        function logoutUser() {
+            if(confirm("Logout?")) { localStorage.removeItem('school_user'); window.location.replace('login.html'); }
+        }
+
+        function formatDate(dateStr) {
+            if(!dateStr) return '';
+            return new Date(dateStr).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        async function fetchStudentNotices() {
+            const container = document.getElementById('noticesContainer');
+            container.innerHTML = `<div class="col-span-full text-center p-8 text-gray-400"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2 text-blue-600"></i><p>Loading notices...</p></div>`;
+
+            try {
+                // Fetch notices meant for 'Everyone' or 'Students'
+                const { data, error } = await db.from('notices')
+                    .select('*')
+                    .in('audience', ['Everyone', 'Students'])
+                    .order('id', { ascending: false });
+
+                if (error) throw error;
+                
+                container.innerHTML = '';
+                if (!data || data.length === 0) {
+                    container.innerHTML = `<div class="col-span-full text-center p-8 text-gray-500 border border-dashed rounded-lg">No active notices found.</div>`;
+                    return;
+                }
+
+                data.forEach(item => {
+                    container.innerHTML += `
+                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-between hover:border-blue-300 transition">
+                            <div>
+                                <div class="text-[11px] font-bold text-blue-600 mb-2 uppercase tracking-wider flex items-center">
+                                    <i class="fa-regular fa-calendar mr-1.5"></i> ${formatDate(item.notice_date)}
+                                </div>
+                                <h4 class="text-base font-bold text-gray-900 mb-2 leading-snug">${item.notice_title}</h4>
+                                <p class="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">${item.message}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (err) {
+                container.innerHTML = `<div class="col-span-full text-center p-4 text-red-500">Failed to load notices.</div>`;
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', fetchStudentNotices);
+    </script>
+</body>
+</html>
