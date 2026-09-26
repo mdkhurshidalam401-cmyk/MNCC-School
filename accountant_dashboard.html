@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accounts Workspace - HIKVENA PVT.LTD</title>
 
-    <!-- 🔒 SECURITY AUTH GUARD & SMART ROLE ROUTING 🔒 -->
+    <!-- 🔒 SECURITY AUTH GUARD 🔒 -->
     <script>
         const sessionCheck = localStorage.getItem('school_user');
         if (!sessionCheck) {
@@ -30,16 +30,13 @@
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-        main::-webkit-scrollbar { width: 6px; }
-        main::-webkit-scrollbar-track { background: #f0f4f8; }
-        main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     </style>
 </head>
 <body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
 
-    <!-- ACCOUNTANT SIDEBAR -->
+    <!-- ACCOUNTANT SIDEBAR (Updated with strict acc_ links) -->
     <aside class="w-64 bg-[#0f5132] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
-        <!-- BRANDING SECTION -->
+        <!-- BRANDING -->
         <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#0f5132] z-10">
             <div class="bg-white text-green-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
                 <i class="fa-solid fa-calculator text-xl"></i>
@@ -53,7 +50,7 @@
         <div class="p-4 flex items-center border-b border-white/10">
             <div class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center font-bold mr-3 text-xs" id="sidebarInitial">A</div>
             <div>
-                <h2 id="sidebarName" class="text-[12px] font-semibold text-white">Test Accountant</h2>
+                <h2 id="sidebarName" class="text-[12px] font-semibold text-white">Accountant Name</h2>
                 <p class="text-[10px] text-green-300 mt-0.5"><i class="fa-solid fa-circle text-[6px]"></i> Online</p>
             </div>
         </div>
@@ -63,18 +60,16 @@
             <a href="accountant_dashboard.html" class="flex items-center px-4 py-2 bg-green-700 text-white rounded-md mb-1 shadow-sm"><i class="fa-solid fa-house w-6 text-sm"></i> Accounts Home</a>
             
             <div class="mt-4 mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">FEES MANAGEMENT</div>
-            <a href="fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-sm"></i> Fee Structure</a>
-            <a href="fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-sm"></i> Collect Fees</a>
-            <a href="fee_defaulters.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-brands fa-whatsapp w-6 text-sm"></i> Fee Defaulters</a>
+            <a href="acc_fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-list-ul w-6 text-sm"></i> Fee Structure</a>
+            <a href="acc_fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-sm"></i> Collect Fees</a>
+            <a href="acc_fee_defaulters.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-brands fa-whatsapp w-6 text-sm"></i> Fee Defaulters</a>
 
-            <!-- EXPENSES -->
             <div class="mt-4 mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">EXPENSES</div>
-            <a href="expenses.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-receipt w-6 text-sm"></i> Manage Expenses</a>
+            <a href="acc_expenses.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-receipt w-6 text-sm"></i> Manage Expenses</a>
 
-            <!-- PAYROLL -->
             <div class="mt-4 mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">PAYROLL</div>
-            <a href="salary_management.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Pay Staff Salary</a>
-            <a href="salary_report.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-column w-6 text-sm"></i> Salary Report</a>
+            <a href="acc_salary_pay.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Pay Staff Salary</a>
+            <a href="acc_salary_report.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-column w-6 text-sm"></i> Salary Report</a>
 
             <!-- ACCOUNT / LOGOUT -->
             <div class="mt-8 px-3 border-t border-white/10 pt-4">
@@ -94,13 +89,13 @@
 
         <div class="p-8">
             <div class="mb-8">
-                <h3 class="text-xl font-bold text-gray-800">Welcome, <span id="welcomeName">Test Accountant</span>! 💼</h3>
+                <h3 class="text-xl font-bold text-gray-800">Welcome, <span id="welcomeName">Accountant</span>! 💼</h3>
                 <p class="text-sm text-gray-500 mt-1">Track school revenue, expenditures, and payroll here.</p>
             </div>
 
             <!-- Stats Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between border-l-4 border-l-green-500 cursor-pointer" onclick="window.location.href='fee_collection.html'">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between border-l-4 border-l-green-500 cursor-pointer transition hover:shadow-md" onclick="window.location.href='acc_fee_collection.html'">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Fee Collected</p>
                         <h4 id="totalFee" class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h4>
@@ -109,7 +104,7 @@
                     <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center"><i class="fa-solid fa-indian-rupee-sign text-2xl text-green-600"></i></div>
                 </div>
 
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between border-l-4 border-l-red-500 cursor-pointer" onclick="window.location.href='expenses.html'">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between border-l-4 border-l-red-500 cursor-pointer transition hover:shadow-md" onclick="window.location.href='acc_expenses.html'">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Expenses</p>
                         <h4 id="totalExp" class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h4>
@@ -118,7 +113,7 @@
                     <div class="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center"><i class="fa-solid fa-arrow-trend-down text-2xl text-red-500"></i></div>
                 </div>
 
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between border-l-4 border-l-purple-500 cursor-pointer" onclick="window.location.href='salary_report.html'">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between border-l-4 border-l-purple-500 cursor-pointer transition hover:shadow-md" onclick="window.location.href='acc_salary_report.html'">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Staff Salary Paid</p>
                         <h4 id="totalSal" class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-spinner fa-spin text-lg text-gray-300"></i></h4>
@@ -132,13 +127,13 @@
                 <!-- Recent Fee Collections -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 col-span-2 overflow-hidden flex flex-col">
                     <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-                        <h3 class="text-lg font-bold text-gray-800">Recent Fee Collections</h3>
-                        <a href="fee_collection.html" class="text-green-600 text-sm font-semibold hover:underline">Go to Fees</a>
+                        <h3 class="text-[15px] font-bold text-gray-800">Recent Fee Collections</h3>
+                        <a href="acc_fee_collection.html" class="text-green-600 text-sm font-semibold hover:underline">Go to Fees</a>
                     </div>
                     <div class="overflow-x-auto flex-1">
                         <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">
+                                <tr class="bg-gray-50 text-gray-500 text-[11px] uppercase tracking-wider">
                                     <th class="p-4 font-semibold">Adm No</th>
                                     <th class="p-4 font-semibold">Student Name</th>
                                     <th class="p-4 font-semibold">Class</th>
@@ -159,9 +154,9 @@
                 
                 <!-- Financial Tasks Shortcuts -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 bg-gray-50/30">
-                    <h3 class="text-lg font-bold text-gray-800 mb-6">Financial Tasks</h3>
+                    <h3 class="text-[15px] font-bold text-gray-800 mb-5 border-b pb-2">Financial Tasks</h3>
                     <div class="space-y-4">
-                        <a href="fee_collection.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-green-500 hover:bg-green-50 transition-all group block shadow-sm">
+                        <a href="acc_fee_collection.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-green-500 hover:bg-green-50 transition-all group block shadow-sm">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-lg bg-green-50 text-green-600 flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-indian-rupee-sign"></i></div>
                                 <div class="text-left">
@@ -172,7 +167,7 @@
                             <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-green-500"></i>
                         </a>
 
-                        <a href="expenses.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-red-500 hover:bg-red-50 transition-all group block shadow-sm">
+                        <a href="acc_expenses.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-red-500 hover:bg-red-50 transition-all group block shadow-sm">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-lg bg-red-50 text-red-500 flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-receipt"></i></div>
                                 <div class="text-left">
@@ -183,7 +178,7 @@
                             <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-red-500"></i>
                         </a>
 
-                        <a href="salary_management.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-purple-500 hover:bg-purple-50 transition-all group block shadow-sm">
+                        <a href="acc_salary_pay.html" class="w-full flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-purple-500 hover:bg-purple-50 transition-all group block shadow-sm">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-lg bg-purple-50 text-purple-500 flex items-center justify-center group-hover:bg-white"><i class="fa-solid fa-wallet"></i></div>
                                 <div class="text-left">
@@ -205,7 +200,6 @@
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
         const db = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // UI Update Based on Login
         const userData = JSON.parse(localStorage.getItem('school_user'));
         if(userData) {
             document.getElementById('sidebarName').innerText = userData.name;
@@ -213,7 +207,6 @@
             document.getElementById('sidebarInitial').innerText = userData.name.charAt(0).toUpperCase();
         }
 
-        // LOGOUT FUNCTION
         function logoutUser() {
             if(confirm("Are you sure you want to logout?")) {
                 localStorage.removeItem('school_user');
@@ -223,7 +216,7 @@
 
         async function fetchAccountantStats() {
             try {
-                // 1. Fee Collection
+                // Total Fee
                 const { data: fees } = await db.from('fees_collection').select('*').order('id', { ascending: false });
                 if (fees) {
                     const totalFee = fees.reduce((sum, r) => sum + Number(r.amount_paid || 0), 0);
@@ -247,23 +240,20 @@
                     }
                 }
 
-                // 2. Expenses
+                // Total Exp
                 const { data: exps } = await db.from('school_expenses').select('amount');
                 if (exps) {
                     const totalExp = exps.reduce((sum, r) => sum + Number(r.amount || 0), 0);
                     document.getElementById('totalExp').innerText = '₹ ' + totalExp.toLocaleString('en-IN');
                 }
 
-                // 3. Salary Paid
+                // Salary Paid
                 const { data: sals } = await db.from('salary_payments').select('amount_paid');
                 if (sals) {
                     const totalSal = sals.reduce((sum, r) => sum + Number(r.amount_paid || 0), 0);
                     document.getElementById('totalSal').innerText = '₹ ' + totalSal.toLocaleString('en-IN');
                 }
-
-            } catch (err) {
-                console.error("Dashboard stats error:", err);
-            }
+            } catch (err) { console.error("Dashboard stats error:", err); }
         }
 
         window.addEventListener('DOMContentLoaded', fetchAccountantStats);
