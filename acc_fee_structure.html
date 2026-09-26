@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Structure - Accounts Portal</title>
+
+    <!-- 🔒 SECURITY AUTH GUARD 🔒 -->
+    <script>
+        const sessionCheck = localStorage.getItem('school_user');
+        if (!sessionCheck) window.location.replace('login.html');
+        else {
+            const user = JSON.parse(sessionCheck);
+            if (user.role !== 'Accountant' && user.role !== 'Clerk' && user.role !== 'Admin' && user.role !== 'Principal') {
+                alert("Access Denied!");
+                window.location.replace('login.html');
+            }
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-[#f4f7f6] text-[#334e68] flex h-screen overflow-hidden antialiased">
+
+    <!-- ACCOUNTANT SIDEBAR -->
+    <aside class="w-64 bg-[#0f5132] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#0f5132] z-10">
+            <div class="bg-white text-green-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+                <i class="fa-solid fa-calculator text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-[14px] font-extrabold text-white uppercase tracking-wider leading-tight">HIKVENA PVT.LTD</h1>
+                <p class="text-[9px] text-green-300 font-bold uppercase tracking-widest mt-0.5">Accounts Portal</p>
+            </div>
+        </div>
+
+        <div class="p-4 flex items-center border-b border-white/10">
+            <div class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center font-bold mr-3 text-xs" id="sidebarInitial">A</div>
+            <div>
+                <h2 id="sidebarName" class="text-[12px] font-semibold text-white">Accountant Name</h2>
+                <p class="text-[10px] text-green-300 mt-0.5"><i class="fa-solid fa-circle text-[6px]"></i> Online</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
+            <div class="mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">MAIN</div>
+            <a href="accountant_dashboard.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> Accounts Home</a>
+            
+            <div class="mt-4 mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">FEES MANAGEMENT</div>
+            <a href="acc_fee_structure.html" class="flex items-center px-4 py-2 bg-green-700 text-white rounded-md mb-0.5 shadow-sm"><i class="fa-solid fa-list-ul w-6 text-sm"></i> Fee Structure</a>
+            <a href="acc_fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-bill w-6 text-sm"></i> Collect Fees</a>
+            <a href="acc_fee_defaulters.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-brands fa-whatsapp w-6 text-sm"></i> Fee Defaulters</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">EXPENSES</div>
+            <a href="acc_expenses.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-receipt w-6 text-sm"></i> Manage Expenses</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-green-300 font-bold tracking-wider uppercase px-3">PAYROLL</div>
+            <a href="acc_salary_pay.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> Pay Staff Salary</a>
+            <a href="acc_salary_report.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-chart-column w-6 text-sm"></i> Salary Report</a>
+
+            <!-- ACCOUNT / LOGOUT -->
+            <div class="mt-8 px-3 border-t border-white/10 pt-4">
+                <a href="#" onclick="logoutUser()" class="flex items-center justify-center px-4 py-2.5 bg-red-500/20 hover:bg-red-500 rounded-md text-red-100 hover:text-white transition-all text-sm font-bold border border-red-500/30 shadow-sm">
+                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Secure Logout
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
+            <div>
+                <h2 class="text-2xl font-bold text-[#102a43]">Fee Structure Overview</h2>
+                <p class="text-xs text-gray-500 mt-1">View assigned fee amounts for all classes.</p>
+            </div>
+            <button onclick="fetchFeeStructure()" class="border border-green-600 text-green-600 hover:bg-green-50 px-4 py-2 rounded-full text-sm font-semibold transition flex items-center gap-2">
+                <i class="fa-solid fa-rotate-right"></i> Refresh
+            </button>
+        </header>
+
+        <div class="p-8">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
+                <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                    <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-list mr-2 text-green-600"></i> Class-wise Fee Structure</h3>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-[#102a43] text-white">
+                            <tr class="text-[11px] uppercase tracking-wider">
+                                <th class="p-4 font-semibold rounded-tl-md">Class Name</th>
+                                <th class="p-4 font-semibold">Monthly Tuition Fee</th>
+                                <th class="p-4 font-semibold">Admission Fee (One-time)</th>
+                                <th class="p-4 font-semibold rounded-tr-md">Exam Fee</th>
+                            </tr>
+                        </thead>
+                        <tbody id="feeTableBody" class="text-sm">
+                            <tr><td colspan="4" class="p-8 text-center text-gray-400">Loading fee structure...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const userData = JSON.parse(localStorage.getItem('school_user'));
+        if(userData) {
+            document.getElementById('sidebarName').innerText = userData.name;
+            document.getElementById('sidebarInitial').innerText = userData.name.charAt(0).toUpperCase();
+        }
+
+        function logoutUser() {
+            if(confirm("Logout?")) { localStorage.removeItem('school_user'); window.location.replace('login.html'); }
+        }
+
+        async function fetchFeeStructure() {
+            const tbody = document.getElementById('feeTableBody');
+            tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-400"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading...</td></tr>`;
+            try {
+                const { data, error } = await db.from('fee_structure').select('*').order('id', { ascending: true });
+                if (error || !data || data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-500">No fee structure found. Ask Admin to add structure.</td></tr>`;
+                    return;
+                }
+                tbody.innerHTML = '';
+                data.forEach(item => {
+                    tbody.innerHTML += `
+                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                            <td class="p-4 font-bold text-gray-800">${item.class_name}</td>
+                            <td class="p-4 font-semibold text-green-600">₹ ${Number(item.monthly_fee).toLocaleString('en-IN')}</td>
+                            <td class="p-4 font-medium text-gray-600">₹ ${Number(item.admission_fee).toLocaleString('en-IN')}</td>
+                            <td class="p-4 font-medium text-gray-600">₹ ${Number(item.exam_fee).toLocaleString('en-IN')}</td>
+                        </tr>
+                    `;
+                });
+            } catch (err) { console.error(err); }
+        }
+
+        window.addEventListener('DOMContentLoaded', fetchFeeStructure);
+    </script>
+</body>
+</html>
