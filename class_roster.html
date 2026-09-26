@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Roster - HIKVENA PVT.LTD</title>
+
+    <!-- 🔒 SECURITY AUTH GUARD (Role-Based Access) 🔒 -->
+    <script>
+        const sessionCheck = localStorage.getItem('school_user');
+        if (!sessionCheck) {
+            window.location.replace('login.html');
+        } else {
+            const user = JSON.parse(sessionCheck);
+            if (user.role !== 'Teacher' && user.role !== 'Admin' && user.role !== 'Principal') {
+                alert("Access Denied! Aap Teacher nahi hain.");
+                window.location.replace('login.html');
+            }
+        }
+    </script>
+    <!-- SECURITY GUARD END -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        main::-webkit-scrollbar { width: 6px; }
+        main::-webkit-scrollbar-track { background: #f0f4f8; }
+        main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+    </style>
+</head>
+<body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
+
+    <!-- TEACHER SPECIFIC SIDEBAR (With New Distinct Links) -->
+    <aside class="w-64 bg-[#102a43] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
+        
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#102a43] z-10">
+            <div class="bg-white text-[#3b82f6] w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+                <i class="fa-solid fa-chalkboard-user text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-[14px] font-extrabold leading-tight tracking-wider text-white uppercase">HIKVENA PVT.LTD</h1>
+                <p class="text-[9px] text-[#829ab1] mt-0.5 font-bold uppercase tracking-widest">Teacher Portal</p>
+            </div>
+        </div>
+
+        <div class="p-4 flex items-center border-b border-white/10">
+            <div class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold mr-3 text-xs" id="sidebarInitial">T</div>
+            <div>
+                <h2 id="sidebarName" class="text-[12px] font-semibold text-white">Teacher Name</h2>
+                <p class="text-[10px] text-green-400 mt-0.5"><i class="fa-solid fa-circle text-[6px]"></i> Online</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
+            <div class="mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">MAIN</div>
+            <a href="teacher_dashboard.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> My Dashboard</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">CLASS & ACADEMICS</div>
+            <!-- ALL NEW DISTINCT LINKS FOR TEACHERS -->
+            <a href="class_roster.html" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md mb-0.5 shadow-sm"><i class="fa-solid fa-users w-6 text-sm"></i> My Students</a>
+            <a href="daily_register.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Mark Attendance</a>
+            <a href="exam_grading.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Upload Marks</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">COMMUNICATION</div>
+            <a href="staff_bulletin.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-300 transition-colors"><i class="fa-regular fa-bell w-6 text-sm"></i> Notice Board</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">MY ACCOUNT</div>
+            <a href="my_payslips.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> My Salary Slips</a>
+            <a href="leave_application.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-calendar-minus w-6 text-sm"></i> Leave Request</a>
+            
+            <div class="mt-8 px-3 border-t border-white/10 pt-4">
+                <a href="#" onclick="logoutUser()" class="flex items-center justify-center px-4 py-2.5 bg-red-500/20 hover:bg-red-500 rounded-md text-red-400 hover:text-white transition-all text-sm font-bold border border-red-500/30 shadow-sm">
+                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Secure Logout
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto bg-[#f4f7f6]">
+        <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
+            <div>
+                <h2 class="text-2xl font-bold text-[#102a43]">Class Roster</h2>
+                <p class="text-xs text-gray-500 mt-1">View your students' details and contact information.</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <!-- Search Box -->
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+                    <input type="text" id="searchInput" placeholder="Search by Name or Adm No..." class="pl-9 pr-4 py-2 border border-gray-300 rounded-full text-sm w-64 focus:border-blue-500 transition-colors bg-gray-50">
+                </div>
+            </div>
+        </header>
+
+        <div class="p-8 pt-6">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
+                <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                    <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-users mr-2 text-blue-500"></i> Assigned Students Directory</h3>
+                    <div class="text-xs font-bold text-gray-500">Total: <span id="totalCount" class="text-blue-500">0</span> Students</div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[800px]">
+                        <thead>
+                            <tr class="bg-[#102a43] text-white text-[11px] uppercase tracking-wider border-b border-gray-200">
+                                <th class="p-4 font-semibold">Adm No</th>
+                                <th class="p-4 font-semibold">Student Profile</th>
+                                <th class="p-4 font-semibold">Class</th>
+                                <th class="p-4 font-semibold">Parents Contact</th>
+                                <th class="p-4 font-semibold text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTableBody" class="text-sm text-gray-700">
+                            <tr>
+                                <td colspan="5" class="p-8 text-center text-gray-400">
+                                    <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2 text-blue-400"></i>
+                                    <p>Loading records...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const userData = JSON.parse(localStorage.getItem('school_user'));
+        if(userData) {
+            document.getElementById('sidebarName').innerText = userData.name;
+            document.getElementById('sidebarInitial').innerText = userData.name.charAt(0).toUpperCase();
+        }
+
+        function logoutUser() {
+            if(confirm("Are you sure you want to logout?")) {
+                localStorage.removeItem('school_user');
+                window.location.replace('login.html');
+            }
+        }
+
+        let allStudents = [];
+
+        async function fetchStudents() {
+            try {
+                // Teachers can view all active students. No delete capability.
+                const { data, error } = await db.from('students').select('*').eq('status', 'Active').order('class_name', { ascending: true });
+                if (error) throw error;
+                
+                allStudents = data;
+                renderTable(allStudents);
+            } catch (error) {
+                document.getElementById('studentsTableBody').innerHTML = `<tr><td colspan="5" class="p-4 text-center text-red-500">Failed to load data.</td></tr>`;
+            }
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('studentsTableBody');
+            document.getElementById('totalCount').innerText = data.length;
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-gray-500">No student records found.</td></tr>`;
+                return;
+            }
+
+            data.forEach(student => {
+                const initial = student.student_name ? student.student_name.charAt(0).toUpperCase() : 'U';
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-gray-100 hover:bg-gray-50 transition text-gray-700';
+                
+                tr.innerHTML = `
+                    <td class="p-4 font-bold text-gray-800">${student.adm_no || '-'}</td>
+                    <td class="p-4 flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm">${initial}</div>
+                        <div>
+                            <div class="font-bold text-gray-800">${student.student_name || 'N/A'}</div>
+                            <div class="text-[10px] text-gray-400 uppercase tracking-wider">${student.gender || '-'} | DOB: ${student.dob || '-'}</div>
+                        </div>
+                    </td>
+                    <td class="p-4"><span class="bg-gray-100 border border-gray-200 text-gray-700 px-2.5 py-1 rounded text-xs font-semibold">${student.class_name || '-'}</span></td>
+                    <td class="p-4">
+                        <div class="text-sm font-semibold">${student.father_name || 'N/A'}</div>
+                        <div class="text-xs text-gray-500"><i class="fa-solid fa-phone text-[10px]"></i> ${student.mobile_no || 'N/A'}</div>
+                    </td>
+                    <td class="p-4 text-center"><span class="bg-green-100 text-green-700 border border-green-200 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Active</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredData = allStudents.filter(s => 
+                (s.student_name && s.student_name.toLowerCase().includes(searchTerm)) ||
+                (s.adm_no && s.adm_no.toLowerCase().includes(searchTerm))
+            );
+            renderTable(filteredData);
+        });
+
+        window.addEventListener('DOMContentLoaded', fetchStudents);
+    </script>
+</body>
+</html>

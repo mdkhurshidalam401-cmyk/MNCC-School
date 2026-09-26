@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Marks - HIKVENA PVT.LTD</title>
+
+    <!-- 🔒 SECURITY AUTH GUARD (Role-Based Access) 🔒 -->
+    <script>
+        const sessionCheck = localStorage.getItem('school_user');
+        if (!sessionCheck) {
+            window.location.replace('login.html');
+        } else {
+            const user = JSON.parse(sessionCheck);
+            if (user.role !== 'Teacher' && user.role !== 'Admin' && user.role !== 'Principal') {
+                alert("Access Denied! Aap Teacher nahi hain.");
+                window.location.replace('login.html');
+            }
+        }
+    </script>
+    <!-- SECURITY GUARD END -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        main::-webkit-scrollbar { width: 6px; }
+        main::-webkit-scrollbar-track { background: #f0f4f8; }
+        main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        input:focus, select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .marks-input { width: 80px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
+
+    <!-- TEACHER SPECIFIC SIDEBAR -->
+    <aside class="w-64 bg-[#102a43] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
+        
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#102a43] z-10">
+            <div class="bg-white text-[#3b82f6] w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
+                <i class="fa-solid fa-chalkboard-user text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-[14px] font-extrabold leading-tight tracking-wider text-white uppercase">HIKVENA PVT.LTD</h1>
+                <p class="text-[9px] text-[#829ab1] mt-0.5 font-bold uppercase tracking-widest">Teacher Portal</p>
+            </div>
+        </div>
+
+        <div class="p-4 flex items-center border-b border-white/10">
+            <div class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold mr-3 text-xs" id="sidebarInitial">T</div>
+            <div>
+                <h2 id="sidebarName" class="text-[12px] font-semibold text-white">Teacher Name</h2>
+                <p class="text-[10px] text-green-400 mt-0.5"><i class="fa-solid fa-circle text-[6px]"></i> Online</p>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
+            <div class="mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">MAIN</div>
+            <a href="teacher_dashboard.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-solid fa-house w-6 text-sm"></i> My Dashboard</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">CLASS & ACADEMICS</div>
+            <a href="class_roster.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> My Students</a>
+            <a href="daily_register.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Mark Attendance</a>
+            <a href="exam_grading.html" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md mb-0.5 shadow-sm"><i class="fa-solid fa-pen w-6 text-sm"></i> Upload Marks</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">COMMUNICATION</div>
+            <a href="staff_bulletin.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-300 transition-colors"><i class="fa-regular fa-bell w-6 text-sm"></i> Notice Board</a>
+
+            <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">MY ACCOUNT</div>
+            <a href="my_payslips.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> My Salary Slips</a>
+            <a href="leave_application.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-calendar-minus w-6 text-sm"></i> Leave Request</a>
+            
+            <div class="mt-8 px-3 border-t border-white/10 pt-4">
+                <a href="#" onclick="logoutUser()" class="flex items-center justify-center px-4 py-2.5 bg-red-500/20 hover:bg-red-500 rounded-md text-red-400 hover:text-white transition-all text-sm font-bold border border-red-500/30 shadow-sm">
+                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Secure Logout
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto bg-[#f4f7f6]">
+        <header class="bg-white px-8 py-5 flex justify-between items-center sticky top-0 z-10 shadow-sm border-b border-gray-100">
+            <div>
+                <h2 class="text-2xl font-bold text-[#102a43]">Exam Grading</h2>
+                <p class="text-xs text-gray-500 mt-1">Upload and save marks for your students.</p>
+            </div>
+        </header>
+
+        <div class="p-8 pt-6">
+            
+            <!-- Filters Box -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-5 items-end">
+                    
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Select Exam <span class="text-red-500">*</span></label>
+                        <select id="examSelect" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all bg-white focus:border-blue-500" required>
+                            <option value="">-- Loading Exams --</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Select Class <span class="text-red-500">*</span></label>
+                        <select id="classSelect" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all bg-white focus:border-blue-500" required disabled>
+                            <option value="">-- Select Class --</option>
+                            <option value="Pre-Nursery">Pre-Nursery</option>
+                            <option value="Nursery">Nursery</option>
+                            <option value="LKG">LKG</option>
+                            <option value="UKG">UKG</option>
+                            <option value="Class 1">Class 1</option>
+                            <option value="Class 2">Class 2</option>
+                            <option value="Class 3">Class 3</option>
+                            <option value="Class 4">Class 4</option>
+                            <option value="Class 5">Class 5</option>
+                            <option value="Class 6">Class 6</option>
+                            <option value="Class 7">Class 7</option>
+                            <option value="Class 8">Class 8</option>
+                            <option value="Class 9">Class 9</option>
+                            <option value="Class 10">Class 10</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase">Select Subject <span class="text-red-500">*</span></label>
+                        <select id="subjectSelect" class="w-full border border-gray-300 rounded-md p-2.5 text-sm transition-all bg-white focus:border-blue-500" required disabled>
+                            <option value="">-- Select Subject --</option>
+                        </select>
+                    </div>
+
+                    <button id="fetchBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2.5 rounded-md text-sm font-bold transition-all shadow-sm disabled:opacity-50" disabled>
+                        <i class="fa-solid fa-magnifying-glass mr-1"></i> Get Students
+                    </button>
+                </div>
+            </div>
+
+            <!-- Marks Entry Table (Hidden initially) -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hidden flex-col" id="tableContainer">
+                <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                    <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-pen-nib mr-2 text-blue-500"></i> Enter Marks</h3>
+                    
+                    <div class="flex items-center gap-3">
+                        <label class="text-xs font-bold text-gray-500">Max Marks: </label>
+                        <input type="number" id="globalMaxMarks" value="100" class="border border-gray-300 rounded-md p-1.5 text-sm w-20 text-center font-bold focus:border-blue-500">
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto max-h-[500px]">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="sticky top-0 bg-[#102a43] text-white z-10">
+                            <tr class="text-[11px] uppercase tracking-wider">
+                                <th class="p-4 font-semibold w-24 rounded-tl-md">Adm No</th>
+                                <th class="p-4 font-semibold">Student Name</th>
+                                <th class="p-4 font-semibold text-center rounded-tr-md">Marks Obtained</th>
+                            </tr>
+                        </thead>
+                        <tbody id="marksTableBody" class="text-sm text-gray-700">
+                            <!-- Data injected here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="p-5 bg-gray-50 border-t border-gray-200 flex justify-end items-center gap-4">
+                    <span id="saveStatus" class="text-sm font-bold text-green-600 hidden"><i class="fa-solid fa-check-circle mr-1"></i> Marks Saved!</span>
+                    <button id="saveMarksBtn" class="bg-[#00c3a2] hover:bg-[#00a68d] text-white px-8 py-3 rounded-lg text-sm font-bold shadow-md transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-save"></i> Save All Marks
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
+        const db = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const userData = JSON.parse(localStorage.getItem('school_user'));
+        if(userData) {
+            document.getElementById('sidebarName').innerText = userData.name;
+            document.getElementById('sidebarInitial').innerText = userData.name.charAt(0).toUpperCase();
+        }
+
+        function logoutUser() {
+            if(confirm("Logout?")) { localStorage.removeItem('school_user'); window.location.replace('login.html'); }
+        }
+
+        let currentStudents = [];
+        let existingMarksMap = {};
+
+        const examSelect = document.getElementById('examSelect');
+        const classSelect = document.getElementById('classSelect');
+        const subjectSelect = document.getElementById('subjectSelect');
+        const fetchBtn = document.getElementById('fetchBtn');
+        const globalMaxMarks = document.getElementById('globalMaxMarks');
+
+        // 1. LOAD EXAMS
+        async function loadExams() {
+            try {
+                const { data, error } = await db.from('exams').select('id, exam_name').order('id', { ascending: false });
+                if (error) throw error;
+                
+                examSelect.innerHTML = '<option value="">-- Select Exam --</option>';
+                data.forEach(ex => {
+                    examSelect.innerHTML += `<option value="${ex.id}">${ex.exam_name}</option>`;
+                });
+                classSelect.disabled = false;
+            } catch(e) {
+                examSelect.innerHTML = '<option value="">Error loading exams</option>';
+            }
+        }
+        window.addEventListener('DOMContentLoaded', loadExams);
+
+        // 2. LOAD SUBJECTS WHEN CLASS IS SELECTED
+        classSelect.addEventListener('change', async function() {
+            const className = this.value;
+            subjectSelect.innerHTML = '<option value="">Loading...</option>';
+            subjectSelect.disabled = true;
+            fetchBtn.disabled = true;
+
+            if(!className) return;
+
+            try {
+                const { data, error } = await db.from('subjects').select('id, subject_name').eq('class_name', className);
+                if (error) throw error;
+
+                subjectSelect.innerHTML = '<option value="">-- Select Subject --</option>';
+                data.forEach(sub => {
+                    subjectSelect.innerHTML += `<option value="${sub.id}">${sub.subject_name}</option>`;
+                });
+                
+                subjectSelect.disabled = false;
+            } catch(e) {
+                subjectSelect.innerHTML = '<option value="">Error loading subjects</option>';
+            }
+        });
+
+        // ENABLE FETCH BUTTON
+        subjectSelect.addEventListener('change', function() {
+            if(this.value && examSelect.value && classSelect.value) {
+                fetchBtn.disabled = false;
+            } else {
+                fetchBtn.disabled = true;
+            }
+        });
+
+        // 3. FETCH STUDENTS AND EXISTING MARKS
+        fetchBtn.addEventListener('click', async () => {
+            const className = classSelect.value;
+            const examId = examSelect.value;
+            const subjectId = subjectSelect.value;
+
+            const btn = document.getElementById('fetchBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+            
+            try {
+                // Fetch active students
+                const { data: students, error: stdError } = await db.from('students')
+                    .select('adm_no, student_name')
+                    .eq('class_name', className)
+                    .eq('status', 'Active')
+                    .order('adm_no', { ascending: true });
+                if (stdError) throw stdError;
+                currentStudents = students;
+
+                // Fetch existing marks for this exam & subject
+                const { data: marks, error: marksError } = await db.from('exam_marks')
+                    .select('adm_no, marks_obtained, max_marks')
+                    .eq('exam_id', examId)
+                    .eq('subject_id', subjectId);
+                if (marksError) throw marksError;
+
+                existingMarksMap = {};
+                marks.forEach(m => {
+                    existingMarksMap[m.adm_no] = {
+                        obtained: m.marks_obtained,
+                        max: m.max_marks
+                    };
+                });
+
+                if(marks.length > 0 && marks[0].max_marks) {
+                    globalMaxMarks.value = marks[0].max_marks;
+                }
+
+                renderTable();
+                document.getElementById('tableContainer').classList.remove('hidden');
+                document.getElementById('tableContainer').classList.add('flex');
+                document.getElementById('saveStatus').classList.add('hidden');
+
+            } catch (error) {
+                alert("Database Error: " + error.message);
+            }
+            
+            btn.innerHTML = '<i class="fa-solid fa-magnifying-glass mr-1"></i> Get Students';
+            btn.disabled = false;
+        });
+
+        // 4. RENDER TABLE
+        function renderTable() {
+            const tbody = document.getElementById('marksTableBody');
+            tbody.innerHTML = '';
+
+            if (currentStudents.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="p-6 text-center text-gray-500">No active students in this class.</td></tr>`;
+                return;
+            }
+
+            currentStudents.forEach(student => {
+                const marksObtained = existingMarksMap[student.adm_no] ? existingMarksMap[student.adm_no].obtained : '';
+                
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-gray-100 hover:bg-gray-50 transition';
+                tr.innerHTML = `
+                    <td class="p-4 font-bold text-gray-600">${student.adm_no}</td>
+                    <td class="p-4 font-semibold text-gray-800">${student.student_name}</td>
+                    <td class="p-4 text-center">
+                        <input type="number" id="mark_${student.adm_no}" value="${marksObtained}" class="border border-gray-300 rounded-md p-1.5 text-sm marks-input focus:border-blue-500 outline-none" min="0" placeholder="0">
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 5. SAVE MARKS LOGIC
+        document.getElementById('saveMarksBtn').addEventListener('click', async () => {
+            const examId = examSelect.value;
+            const subjectId = subjectSelect.value;
+            const maxMarks = globalMaxMarks.value;
+
+            if(currentStudents.length === 0) return;
+
+            const btn = document.getElementById('saveMarksBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+            btn.disabled = true;
+
+            const marksData = [];
+            let allValid = true;
+
+            currentStudents.forEach(student => {
+                const val = document.getElementById(`mark_${student.adm_no}`).value;
+                if(val !== '') {
+                    if(parseFloat(val) > parseFloat(maxMarks)) {
+                        alert(`Marks cannot be greater than Max Marks (${maxMarks}) for ${student.student_name}.`);
+                        allValid = false;
+                    }
+                    marksData.push({
+                        adm_no: student.adm_no,
+                        exam_id: parseInt(examId),
+                        subject_id: parseInt(subjectId),
+                        marks_obtained: parseFloat(val),
+                        max_marks: parseFloat(maxMarks)
+                    });
+                }
+            });
+
+            if(!allValid) {
+                btn.innerHTML = '<i class="fa-solid fa-save"></i> Save All Marks';
+                btn.disabled = false;
+                return;
+            }
+
+            if(marksData.length === 0) {
+                alert("Please enter marks for at least one student.");
+                btn.innerHTML = '<i class="fa-solid fa-save"></i> Save All Marks';
+                btn.disabled = false;
+                return;
+            }
+
+            try {
+                await db.from('exam_marks').delete()
+                    .eq('exam_id', examId)
+                    .eq('subject_id', subjectId);
+
+                const { error } = await db.from('exam_marks').insert(marksData);
+                if (error) throw error;
+
+                document.getElementById('saveStatus').classList.remove('hidden');
+            } catch (error) {
+                alert("Failed to save marks: " + error.message);
+            }
+
+            btn.innerHTML = '<i class="fa-solid fa-save"></i> Save All Marks';
+            btn.disabled = false;
+        });
+    </script>
+</body>
+</html>
