@@ -47,8 +47,12 @@
     </div>
 
     <script>
+        // 1. PROJECT URL
         const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
+        
+        // 2. Sirf 'ANON PUBLIC' Key dalegi yahan (Service Role ya Secret kabhi nahi dalte)
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
+        
         const db = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
@@ -61,7 +65,6 @@
             btn.disabled = true;
 
             try {
-                // FIXED: Used maybeSingle() instead of single() to prevent crash on wrong password
                 const { data, error } = await db.from('users')
                     .select('*')
                     .eq('username', uInput)
@@ -69,7 +72,7 @@
                     .maybeSingle();
 
                 if (error) {
-                    alert("Database Error: " + error.message);
+                    alert("Database Error (Shayad Supabase me RLS on hai): " + error.message);
                     btn.innerHTML = '<span>Secure Login</span> <i class="fa-solid fa-arrow-right-to-bracket"></i>';
                     btn.disabled = false;
                     return;
