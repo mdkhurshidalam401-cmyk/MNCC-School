@@ -19,7 +19,6 @@
             }
         }
     </script>
-    <!-- SECURITY GUARD END -->
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -30,17 +29,13 @@
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-        main::-webkit-scrollbar { width: 6px; }
-        main::-webkit-scrollbar-track { background: #f0f4f8; }
-        main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     </style>
 </head>
 <body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
 
-    <!-- TEACHER SPECIFIC SIDEBAR (Fully Updated Links) -->
+    <!-- TEACHER SPECIFIC SIDEBAR -->
     <aside class="w-64 bg-[#102a43] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
         
-        <!-- BRANDING -->
         <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#102a43] z-10">
             <div class="bg-white text-[#3b82f6] w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
                 <i class="fa-solid fa-chalkboard-user text-xl"></i>
@@ -51,7 +46,6 @@
             </div>
         </div>
 
-        <!-- PROFILE -->
         <div class="p-4 flex items-center border-b border-white/10">
             <div class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold mr-3 text-xs" id="sidebarInitial">T</div>
             <div>
@@ -61,26 +55,21 @@
         </div>
 
         <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
-            <!-- MAIN -->
             <div class="mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">MAIN</div>
             <a href="teacher_dashboard.html" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md mb-1 shadow-sm"><i class="fa-solid fa-house w-6 text-sm"></i> My Dashboard</a>
 
-            <!-- ACADEMICS (New Secure Links) -->
             <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">CLASS & ACADEMICS</div>
             <a href="class_roster.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-users w-6 text-sm"></i> My Students</a>
             <a href="daily_register.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> Mark Attendance</a>
             <a href="exam_grading.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-pen w-6 text-sm"></i> Upload Marks</a>
 
-            <!-- COMMUNICATION (New Secure Link) -->
             <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">COMMUNICATION</div>
             <a href="staff_bulletin.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-1 text-gray-300 transition-colors"><i class="fa-regular fa-bell w-6 text-sm"></i> Notice Board</a>
 
-            <!-- PERSONAL (New Secure Links) -->
             <div class="mt-4 mb-2 text-[10px] text-[#627d98] font-bold tracking-wider uppercase px-3">MY ACCOUNT</div>
             <a href="my_payslips.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-money-check-dollar w-6 text-sm"></i> My Salary Slips</a>
             <a href="leave_application.html" class="flex items-center px-4 py-2 hover:bg-white/5 rounded-md mb-0.5 text-gray-300 transition-colors"><i class="fa-solid fa-calendar-minus w-6 text-sm"></i> Leave Request</a>
             
-            <!-- SECURE LOGOUT -->
             <div class="mt-8 px-3 border-t border-white/10 pt-4">
                 <a href="#" onclick="logoutUser()" class="flex items-center justify-center px-4 py-2.5 bg-red-500/20 hover:bg-red-500 rounded-md text-red-400 hover:text-white transition-all text-sm font-bold border border-red-500/30 shadow-sm">
                     <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Secure Logout
@@ -110,7 +99,6 @@
 
             <!-- Stats Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <!-- Salary Card (Personalized) -->
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md border-l-4 border-l-purple-500 cursor-pointer" onclick="window.location.href='my_payslips.html'">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Salary Received</p>
@@ -133,7 +121,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md border-l-4 border-l-[#00c3a2]" onclick="window.location.href='daily_register.html'">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md border-l-4 border-l-[#00c3a2] cursor-pointer" onclick="window.location.href='daily_register.html'">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Today's Attendance</p>
                         <h4 class="text-3xl font-bold text-[#00c3a2]">Pending</h4>
@@ -144,7 +132,7 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Live Notice Board from Admin -->
+                <!-- Live Notice Board -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 col-span-2 overflow-hidden flex flex-col">
                     <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
                         <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-bullhorn mr-2 text-yellow-500"></i> School Notices & Circulars</h3>
@@ -159,7 +147,7 @@
                     </div>
                 </div>
                 
-                <!-- Quick Tasks (Updated with new links) -->
+                <!-- Quick Tasks -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 bg-gray-50/30">
                     <h3 class="text-[15px] font-bold text-gray-800 mb-5 border-b pb-2">Quick Tasks</h3>
                     <div class="space-y-4">
@@ -207,7 +195,6 @@
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
         const db = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // UI Update Based on Login
         const userData = JSON.parse(localStorage.getItem('school_user'));
         if(userData) {
             document.getElementById('sidebarName').innerText = userData.name;
@@ -215,7 +202,6 @@
             document.getElementById('welcomeName').innerText = userData.name;
         }
 
-        // Display current date
         const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
         document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-IN', options);
 
@@ -224,7 +210,6 @@
             return new Date(dateStr).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
         }
 
-        // LOGOUT FUNCTION
         function logoutUser() {
             if(confirm("Are you sure you want to logout?")) {
                 localStorage.removeItem('school_user');
@@ -235,7 +220,7 @@
         async function fetchTeacherData() {
             if(!userData) return;
 
-            // 1. Fetch ONLY this Teacher's Salary
+            // Fetch Teacher's Salary
             try {
                 const { data: mySalaryRecords, error: salError } = await db.from('salary_payments')
                     .select('amount_paid')
@@ -249,7 +234,7 @@
                 }
             } catch (e) { console.error(e); }
 
-            // 2. Fetch Notices relevant for Teachers
+            // Fetch Notices
             const container = document.getElementById('teacherNoticesContainer');
             try {
                 const { data, error } = await db.from('notices')
@@ -261,7 +246,7 @@
                 
                 container.innerHTML = '';
                 if (data.length === 0) {
-                    container.innerHTML = `<div class="text-center p-8 text-gray-500 bg-white rounded-lg border border-gray-200 border-dashed">No recent notices from administration.</div>`;
+                    container.innerHTML = `<div class="text-center p-8 text-gray-500 bg-white rounded-lg border border-gray-200 border-dashed">No recent notices.</div>`;
                     return;
                 }
 
