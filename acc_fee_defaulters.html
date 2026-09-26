@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Defaulters - Accounts Portal</title>
+
+    <script>
+        const sessionCheck = localStorage.getItem('school_user');
+        if (!sessionCheck) window.location.replace('login.html');
+        else {
+            const user = JSON.parse(sessionCheck);
+            if (user.role !== 'Accountant' && user.role !== 'Clerk' && user.role !== 'Admin' && user.role !== 'Principal') {
+                window.location.replace('login.html');
+            }
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-[#f4f7f6] text-[#334e68] flex h-screen overflow-hidden antialiased">
+    <aside class="w-64 bg-[#0f5132] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl">
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#0f5132]">
+            <div class="bg-white text-green-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3"><i class="fa-solid fa-calculator text-xl"></i></div>
+            <div><h1 class="text-[14px] font-extrabold text-white uppercase">HIKVENA PVT.LTD</h1><p class="text-[9px] text-green-300 font-bold uppercase">Accounts Portal</p></div>
+        </div>
+        <nav class="flex-1 px-2 py-4 text-[13px] font-medium">
+            <a href="accountant_dashboard.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-1 text-gray-200"><i class="fa-solid fa-house w-6"></i> Accounts Home</a>
+            <a href="acc_fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200"><i class="fa-solid fa-list-ul w-6"></i> Fee Structure</a>
+            <a href="acc_fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200"><i class="fa-solid fa-money-bill w-6"></i> Collect Fees</a>
+            <a href="acc_fee_defaulters.html" class="flex items-center px-4 py-2 bg-green-700 text-white rounded-md mb-0.5"><i class="fa-brands fa-whatsapp w-6"></i> Fee Defaulters</a>
+            <a href="acc_expenses.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200"><i class="fa-solid fa-receipt w-6"></i> Manage Expenses</a>
+            <a href="acc_salary_pay.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200"><i class="fa-solid fa-money-check-dollar w-6"></i> Pay Salary</a>
+            <a href="acc_salary_report.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200"><i class="fa-solid fa-chart-column w-6"></i> Salary Report</a>
+            <div class="mt-8 px-3 border-t border-white/10 pt-4"><a href="#" onclick="localStorage.removeItem('school_user'); window.location.replace('login.html');" class="flex items-center justify-center px-4 py-2 bg-red-500/20 text-red-100 rounded-md font-bold">Logout</a></div>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        <header class="bg-white px-8 py-5 flex justify-between items-center shadow-sm border-b">
+            <h2 class="text-2xl font-bold text-[#102a43]">Fee Defaulters</h2>
+        </header>
+        <div class="p-8">
+            <div class="bg-white rounded-xl shadow-sm border p-6 mb-6 flex gap-4 items-end">
+                <div class="flex-1"><label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Select Month</label><input type="month" id="defMonth" class="w-full border rounded-md p-2.5 text-sm"></div>
+                <button id="findBtn" class="bg-green-600 text-white px-6 py-2.5 rounded-md text-sm font-bold">Find Defaulters</button>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
+                <table class="w-full text-left">
+                    <thead class="bg-[#102a43] text-white text-xs uppercase">
+                        <tr><th class="p-4">Adm No</th><th class="p-4">Student Name</th><th class="p-4">Class</th><th class="p-4">Contact</th><th class="p-4 text-center">Action</th></tr>
+                    </thead>
+                    <tbody id="defTable" class="text-sm"><tr><td colspan="5" class="p-8 text-center text-gray-400">Select month to search.</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const db = window.supabase.createClient('https://kngxrrcegwkwsfhesoom.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE');
+        document.getElementById('defMonth').value = new Date().toISOString().slice(0, 7);
+
+        document.getElementById('findBtn').addEventListener('click', async () => {
+            const m = document.getElementById('defMonth').value;
+            const { data: students } = await db.from('students').select('*').eq('status', 'Active');
+            const { data: fees } = await db.from('fees_collection').select('adm_no').like('payment_date', `${m}%`);
+            const paid = fees.map(f => f.adm_no);
+            const defs = students.filter(s => !paid.includes(s.adm_no));
+
+            const tbody = document.getElementById('defTable');
+            tbody.innerHTML = '';
+            if(defs.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-green-600 font-bold">No defaulters found!</td></tr>`; return; }
+            defs.forEach(s => {
+                tbody.innerHTML += `<tr class="border-b"><td class="p-4 font-bold">${s.adm_no}</td><td class="p-4">${s.student_name}</td><td class="p-4">${s.class_name}</td><td class="p-4">${s.mobile_no}</td><td class="p-4 text-center"><a href="https://wa.me/91${s.mobile_no}?text=Dear%20Parent,%20kindly%20pay%20the%20pending%20school%20fee%20for%20${s.student_name}." target="_blank" class="bg-green-100 text-green-700 px-3 py-1.5 rounded text-xs font-bold"><i class="fa-brands fa-whatsapp"></i> Remind</a></td></tr>`;
+            });
+        });
+    </script>
+</body>
+</html>
