@@ -57,35 +57,32 @@
             const pInput = document.getElementById('password').value.trim();
             const btn = document.getElementById('loginBtn');
 
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying with Database...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
             btn.disabled = true;
 
             try {
-                // 🛑 ADVANCED DEBUGGING QUERY 🛑
+                // FIXED: Used maybeSingle() instead of single() to prevent crash on wrong password
                 const { data, error } = await db.from('users')
                     .select('*')
                     .eq('username', uInput)
                     .eq('password', pInput)
-                    .single();
+                    .maybeSingle();
 
-                // 1. Check for Database/Connection Errors
                 if (error) {
-                    console.error("Supabase Error Full Detail:", error);
-                    alert("ASLI ERROR:\nMessage: " + error.message + "\nDetails: " + (error.details || "N/A") + "\nHint: " + (error.hint || "N/A"));
+                    alert("Database Error: " + error.message);
                     btn.innerHTML = '<span>Secure Login</span> <i class="fa-solid fa-arrow-right-to-bracket"></i>';
                     btn.disabled = false;
                     return;
                 }
 
-                // 2. Check if user is actually found
                 if (!data) {
-                    alert("GALAT CREDENTIALS: Username ya Password database mein nahi mila.");
+                    alert("Invalid Username or Password! Database me nahi mila.");
                     btn.innerHTML = '<span>Secure Login</span> <i class="fa-solid fa-arrow-right-to-bracket"></i>';
                     btn.disabled = false;
                     return;
                 }
 
-                // 3. SUCCESS - Save Session
+                // SUCCESS: Save user session
                 localStorage.setItem('school_user', JSON.stringify({
                     id: data.id,
                     name: data.name,
@@ -93,7 +90,7 @@
                     username: data.username
                 }));
 
-                // 4. Redirect based on role
+                // Redirect based on role
                 const role = data.role;
                 if (role === 'Admin' || role === 'Principal') {
                     window.location.replace('index.html');
@@ -108,8 +105,7 @@
                 }
 
             } catch (err) {
-                alert("SYSTEM CODE ERROR: " + err.message);
-                console.error(err);
+                alert("SYSTEM ERROR: " + err.message);
                 btn.innerHTML = '<span>Secure Login</span> <i class="fa-solid fa-arrow-right-to-bracket"></i>';
                 btn.disabled = false;
             }
