@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Expenses - Accounts Portal</title>
+
+    <script>
+        const sessionCheck = localStorage.getItem('school_user');
+        if (!sessionCheck) window.location.replace('login.html');
+        else {
+            const user = JSON.parse(sessionCheck);
+            if (user.role !== 'Accountant' && user.role !== 'Clerk' && user.role !== 'Admin' && user.role !== 'Principal') {
+                window.location.replace('login.html');
+            }
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#f4f7f6] text-[#334e68] flex h-screen overflow-hidden antialiased">
+
+    <!-- ACCOUNTANT SIDEBAR -->
+    <aside class="w-64 bg-[#0f5132] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20">
+        <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#0f5132]">
+            <div class="bg-white text-green-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3">
+                <i class="fa-solid fa-calculator text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-[14px] font-extrabold text-white uppercase">HIKVENA PVT.LTD</h1>
+                <p class="text-[9px] text-green-300 font-bold uppercase">Accounts Portal</p>
+            </div>
+        </div>
+        <nav class="flex-1 px-2 py-4 text-[13px] font-medium">
+            <a href="accountant_dashboard.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-1 text-gray-200"><i class="fa-solid fa-house w-6"></i> Accounts Home</a>
+            <a href="acc_fee_structure.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200"><i class="fa-solid fa-list-ul w-6"></i> Fee Structure</a>
+            <a href="acc_fee_collection.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200"><i class="fa-solid fa-money-bill w-6"></i> Collect Fees</a>
+            <a href="acc_fee_defaulters.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200"><i class="fa-brands fa-whatsapp w-6"></i> Fee Defaulters</a>
+            <a href="acc_expenses.html" class="flex items-center px-4 py-2 bg-green-700 text-white rounded-md mb-0.5"><i class="fa-solid fa-receipt w-6"></i> Manage Expenses</a>
+            <a href="acc_salary_pay.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200"><i class="fa-solid fa-money-check-dollar w-6"></i> Pay Salary</a>
+            <a href="acc_salary_report.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200"><i class="fa-solid fa-chart-column w-6"></i> Salary Report</a>
+            <div class="mt-8 px-3 border-t border-white/10 pt-4">
+                <a href="#" onclick="localStorage.removeItem('school_user'); window.location.replace('login.html');" class="flex items-center justify-center px-4 py-2 bg-red-500/20 text-red-100 rounded-md font-bold">Logout</a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        <header class="bg-white px-8 py-5 shadow-sm border-b">
+            <h2 class="text-2xl font-bold text-[#102a43]">Manage Expenses</h2>
+        </header>
+
+        <div class="p-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Add Expense Form -->
+            <div class="bg-white rounded-xl shadow-sm border p-6 h-fit lg:col-span-1">
+                <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">Add New Expense</h3>
+                <form id="expenseForm" class="space-y-4">
+                    <div><label class="block text-xs font-bold text-gray-500 mb-1">Date</label><input type="date" id="expDate" required class="w-full border rounded-md p-2 text-sm"></div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 mb-1">Category</label>
+                        <select id="expCategory" required class="w-full border rounded-md p-2 text-sm">
+                            <option value="Utility Bills">Utility Bills</option>
+                            <option value="Maintenance">Maintenance</option>
+                            <option value="Supplies">Supplies</option>
+                            <option value="Events">Events</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div><label class="block text-xs font-bold text-gray-500 mb-1">Amount (₹)</label><input type="number" id="expAmount" required class="w-full border rounded-md p-2 text-sm"></div>
+                    <div><label class="block text-xs font-bold text-gray-500 mb-1">Description</label><input type="text" id="expDesc" class="w-full border rounded-md p-2 text-sm"></div>
+                    <button type="submit" id="addBtn" class="w-full bg-red-600 text-white py-2 rounded-md font-bold text-sm">Add Expense</button>
+                </form>
+            </div>
+
+            <!-- Expense List -->
+            <div class="bg-white rounded-xl shadow-sm border overflow-hidden lg:col-span-2">
+                <table class="w-full text-left">
+                    <thead class="bg-[#102a43] text-white text-xs uppercase">
+                        <tr><th class="p-4">Date</th><th class="p-4">Category</th><th class="p-4">Description</th><th class="p-4 text-right">Amount</th></tr>
+                    </thead>
+                    <tbody id="expTable" class="text-sm"><tr><td colspan="4" class="p-8 text-center">Loading...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const db = window.supabase.createClient('https://kngxrrcegwkwsfhesoom.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE');
+        document.getElementById('expDate').value = new Date().toISOString().split('T')[0];
+
+        async function fetchExps() {
+            const { data } = await db.from('school_expenses').select('*').order('id', { ascending: false }).limit(20);
+            const tbody = document.getElementById('expTable');
+            tbody.innerHTML = '';
+            if(!data || data.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-500">No expenses found.</td></tr>`; return; }
+            data.forEach(i => {
+                tbody.innerHTML += `<tr class="border-b"><td class="p-4 font-bold">${i.expense_date}</td><td class="p-4">${i.category}</td><td class="p-4">${i.description}</td><td class="p-4 text-right font-bold text-red-500">₹ ${i.amount}</td></tr>`;
+            });
+        }
+
+        document.getElementById('expenseForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('addBtn'); btn.innerText = "Saving..."; btn.disabled = true;
+            await db.from('school_expenses').insert([{
+                expense_date: document.getElementById('expDate').value,
+                category: document.getElementById('expCategory').value,
+                amount: document.getElementById('expAmount').value,
+                description: document.getElementById('expDesc').value,
+                recorded_by: JSON.parse(localStorage.getItem('school_user')).name
+            }]);
+            document.getElementById('expenseForm').reset();
+            document.getElementById('expDate').value = new Date().toISOString().split('T')[0];
+            btn.innerText = "Add Expense"; btn.disabled = false;
+            fetchExps();
+        });
+
+        fetchExps();
+    </script>
+</body>
+</html>
