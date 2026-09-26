@@ -12,7 +12,6 @@
             window.location.replace('login.html');
         } else {
             const user = JSON.parse(sessionCheck);
-            // Sirf Student is portal ko use kar sakta hai
             if (user.role !== 'Student') {
                 alert("Access Denied! Yeh portal sirf students ke liye hai.");
                 window.location.replace('login.html');
@@ -28,19 +27,13 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-        main::-webkit-scrollbar { width: 6px; }
-        main::-webkit-scrollbar-track { background: #f0f4f8; }
-        main::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     </style>
 </head>
 <body class="bg-[#f0f4f8] text-[#334e68] flex h-screen overflow-hidden antialiased">
 
     <!-- STUDENT SIDEBAR -->
     <aside class="w-64 bg-[#1e3a8a] text-white flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 shadow-xl z-20 custom-scrollbar">
-        
-        <!-- BRANDING -->
         <div class="p-4 flex items-center border-b border-white/10 sticky top-0 bg-[#1e3a8a] z-10">
             <div class="bg-white text-blue-800 w-10 h-10 rounded-lg flex items-center justify-center mr-3 shrink-0 shadow-inner">
                 <i class="fa-solid fa-user-graduate text-xl"></i>
@@ -51,34 +44,28 @@
             </div>
         </div>
 
-        <!-- PROFILE -->
         <div class="p-4 flex items-center border-b border-white/10">
             <div class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold mr-3 text-xs" id="sidebarInitial">S</div>
             <div>
                 <h2 id="sidebarName" class="text-[12px] font-semibold text-white">Student Name</h2>
-                <p class="text-[10px] text-blue-300 mt-0.5"><i class="fa-solid fa-id-badge text-[9px]"></i> <span id="sidebarAdmNo">Adm No</span></p>
+                <p class="text-[10px] text-blue-300 mt-0.5"><i class="fa-solid fa-id-badge text-[9px]"></i> <span id="sidebarAdmNo">Loading...</span></p>
             </div>
         </div>
 
         <nav class="flex-1 px-2 py-4 text-[13px] font-medium pb-10">
-            <!-- MAIN -->
             <div class="mb-2 text-[10px] text-blue-300 font-bold tracking-wider uppercase px-3">DASHBOARD</div>
             <a href="student_dashboard.html" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md mb-1 shadow-sm"><i class="fa-solid fa-house w-6 text-sm"></i> My Home</a>
 
-            <!-- ACADEMICS -->
             <div class="mt-4 mb-2 text-[10px] text-blue-300 font-bold tracking-wider uppercase px-3">ACADEMICS</div>
             <a href="stu_attendance.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-regular fa-calendar-check w-6 text-sm"></i> My Attendance</a>
             <a href="stu_marks.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-ranking-star w-6 text-sm"></i> Exam Results</a>
 
-            <!-- FINANCE -->
             <div class="mt-4 mb-2 text-[10px] text-blue-300 font-bold tracking-wider uppercase px-3">FINANCE</div>
             <a href="stu_fees.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-0.5 text-gray-200 transition-colors"><i class="fa-solid fa-file-invoice-dollar w-6 text-sm"></i> Fee Records</a>
 
-            <!-- COMMUNICATION -->
             <div class="mt-4 mb-2 text-[10px] text-blue-300 font-bold tracking-wider uppercase px-3">SCHOOL UPDATES</div>
             <a href="stu_notices.html" class="flex items-center px-4 py-2 hover:bg-white/10 rounded-md mb-1 text-gray-200 transition-colors"><i class="fa-regular fa-bell w-6 text-sm"></i> Notice Board</a>
 
-            <!-- SECURE LOGOUT -->
             <div class="mt-8 px-3 border-t border-white/10 pt-4">
                 <a href="#" onclick="logoutUser()" class="flex items-center justify-center px-4 py-2.5 bg-red-500/20 hover:bg-red-500 rounded-md text-red-200 hover:text-white transition-all text-sm font-bold border border-red-500/30 shadow-sm">
                     <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Secure Logout
@@ -94,7 +81,7 @@
                 <h2 class="text-2xl font-bold text-[#102a43]">Student Workspace</h2>
             </div>
             <div class="flex items-center gap-4">
-                <div class="text-sm font-bold text-blue-800 bg-blue-50 px-4 py-1.5 rounded-full border border-blue-200"><i class="fa-solid fa-graduation-cap"></i> Class: <span id="headerClass">-</span></div>
+                <div class="text-sm font-bold text-blue-800 bg-blue-50 px-4 py-1.5 rounded-full border border-blue-200"><i class="fa-solid fa-graduation-cap"></i> Class: <span id="headerClass">Loading...</span></div>
             </div>
         </header>
 
@@ -108,7 +95,6 @@
 
             <!-- Stats Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <!-- Attendance Card -->
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md border-l-4 border-l-blue-500 cursor-pointer" onclick="window.location.href='stu_attendance.html'">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Attendance</p>
@@ -120,7 +106,6 @@
                     </div>
                 </div>
 
-                <!-- Fees Paid -->
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md border-l-4 border-l-green-500 cursor-pointer" onclick="window.location.href='stu_fees.html'">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Total Fees Paid</p>
@@ -132,7 +117,6 @@
                     </div>
                 </div>
 
-                <!-- Exam Status -->
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition hover:shadow-md border-l-4 border-l-purple-500 cursor-pointer" onclick="window.location.href='stu_marks.html'">
                     <div>
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Exam Results</p>
@@ -146,7 +130,7 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Live Notice Board from Admin -->
+                <!-- Live Notice Board -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 col-span-2 overflow-hidden flex flex-col">
                     <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
                         <h3 class="text-[15px] font-bold text-gray-800"><i class="fa-solid fa-bullhorn mr-2 text-yellow-500"></i> School Notices & Circulars</h3>
@@ -161,7 +145,7 @@
                     </div>
                 </div>
                 
-                <!-- Quick Tasks Links -->
+                <!-- Quick Tasks -->
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 bg-gray-50/30">
                     <h3 class="text-[15px] font-bold text-gray-800 mb-5 border-b pb-2">Quick Access</h3>
                     <div class="space-y-4">
@@ -188,7 +172,6 @@
                         </a>
                     </div>
                 </div>
-
             </div>
         </div>
     </main>
@@ -198,16 +181,12 @@
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
         const db = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Populate User Info
         const userData = JSON.parse(localStorage.getItem('school_user'));
-        if(userData) {
-            document.getElementById('sidebarName').innerText = userData.name;
-            document.getElementById('welcomeName').innerText = userData.name;
-            document.getElementById('sidebarInitial').innerText = userData.name.charAt(0).toUpperCase();
-            
-            // Extract Student specific info (if saved in localStorage)
-            if(userData.username) {
-                document.getElementById('sidebarAdmNo').innerText = userData.username;
+        
+        function logoutUser() {
+            if(confirm("Are you sure you want to logout?")) {
+                localStorage.removeItem('school_user');
+                window.location.replace('login.html');
             }
         }
 
@@ -216,51 +195,72 @@
             return new Date(dateStr).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
         }
 
-        function logoutUser() {
-            if(confirm("Are you sure you want to logout?")) {
-                localStorage.removeItem('school_user');
-                window.location.replace('login.html');
-            }
-        }
-
         async function fetchStudentData() {
-            if(!userData || !userData.username) return;
-            const admNo = userData.username;
+            if(!userData) return;
 
+            // Display basic info from session
+            document.getElementById('sidebarName').innerText = userData.name;
+            document.getElementById('welcomeName').innerText = userData.name;
+            document.getElementById('sidebarInitial').innerText = userData.name.charAt(0).toUpperCase();
+
+            // Find student's exact admission number (adm_no) from students table using their name or username
+            let admNo = userData.username;
+            
             try {
-                // 1. Get Class Name from Students Table
-                const { data: stuData } = await db.from('students').select('class_name').eq('adm_no', admNo).single();
-                if(stuData) {
-                    document.getElementById('headerClass').innerText = stuData.class_name;
+                // Query students table by name or admission number to get correct identifier
+                const { data: stuRecord } = await db.from('students')
+                    .select('*')
+                    .or(`adm_no.eq.${userData.username},student_name.ilike.%${userData.name}%`)
+                    .limit(1)
+                    .maybeSingle();
+
+                if (stuRecord) {
+                    admNo = stuRecord.adm_no;
+                    document.getElementById('sidebarAdmNo').innerText = admNo;
+                    document.getElementById('headerClass').innerText = stuRecord.class_name || 'N/A';
+                } else {
+                    document.getElementById('sidebarAdmNo').innerText = userData.username || 'STUDENT';
+                    document.getElementById('headerClass').innerText = 'General';
                 }
 
-                // 2. Calculate Total Present Days
-                const { data: attData } = await db.from('attendance')
-                    .select('id')
+                // 1. Fetch Total Attendance
+                const { count: attCount } = await db.from('attendance')
+                    .select('*', { count: 'exact', head: true })
                     .eq('adm_no', admNo)
                     .eq('status', 'Present');
-                document.getElementById('myAttendance').innerText = attData ? attData.length : 0;
+                
+                document.getElementById('myAttendance').innerText = attCount !== null ? attCount : 0;
 
-                // 3. Calculate Total Fees Paid
+                // 2. Fetch Total Fees Paid
                 const { data: feeData } = await db.from('fees_collection')
                     .select('amount_paid')
                     .eq('adm_no', admNo);
-                if(feeData) {
+                
+                if(feeData && feeData.length > 0) {
                     const totalFees = feeData.reduce((sum, f) => sum + Number(f.amount_paid || 0), 0);
                     document.getElementById('myFees').innerText = '₹ ' + totalFees.toLocaleString('en-IN');
                 } else {
                     document.getElementById('myFees').innerText = '₹ 0';
                 }
 
-                // 4. Fetch Notices (For 'Everyone' and 'Students')
-                const container = document.getElementById('stuNoticesContainer');
+            } catch (err) {
+                console.error("Error fetching student profile stats:", err);
+                document.getElementById('sidebarAdmNo').innerText = userData.username || 'STUDENT';
+                document.getElementById('headerClass').innerText = 'N/A';
+                document.getElementById('myAttendance').innerText = '0';
+                document.getElementById('myFees').innerText = '₹ 0';
+            }
+
+            // 3. Fetch Notices (Always works)
+            const container = document.getElementById('stuNoticesContainer');
+            try {
                 const { data: notices, error: noticeErr } = await db.from('notices')
                     .select('*')
                     .in('audience', ['Everyone', 'Students'])
                     .order('id', { ascending: false });
 
                 container.innerHTML = '';
-                if (noticeErr || notices.length === 0) {
+                if (noticeErr || !notices || notices.length === 0) {
                     container.innerHTML = `<div class="text-center p-8 text-gray-500 bg-white rounded-lg border border-gray-200 border-dashed">No recent notices.</div>`;
                 } else {
                     notices.forEach(item => {
@@ -276,7 +276,9 @@
                         container.appendChild(card);
                     });
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) {
+                container.innerHTML = `<div class="text-center p-4 text-red-500">Unable to load notices.</div>`;
+            }
         }
 
         window.addEventListener('DOMContentLoaded', fetchStudentData);
