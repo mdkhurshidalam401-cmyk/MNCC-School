@@ -9,147 +9,94 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; }
-        input:focus { outline: none; border-color: #00c3a2; box-shadow: 0 0 0 3px rgba(0, 195, 162, 0.1); }
+        body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="h-screen flex items-center justify-center p-4">
+<body class="bg-[#f0f4f8] flex items-center justify-center h-screen antialiased">
 
-    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 flex flex-col md:flex-row w-full max-w-4xl overflow-hidden">
-        
-        <!-- Left Side: Branding -->
-        <div class="w-full md:w-5/12 bg-[#003126] p-10 flex flex-col justify-between text-white relative overflow-hidden">
-            <div class="relative z-10">
-                <div class="bg-white text-[#00c3a2] w-14 h-14 rounded-xl flex items-center justify-center mb-6 shadow-inner">
-                    <i class="fa-solid fa-graduation-cap text-3xl"></i>
-                </div>
-                <h1 class="text-3xl font-extrabold tracking-wider uppercase mb-2">HIKVENA PVT.LTD</h1>
-                <p class="text-sm text-[#8aa8a3] font-medium tracking-widest uppercase mb-8">School Management System</p>
-                
-                <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                    Welcome to the secure portal. All logins (Admin, Staff, and Students) are protected and verified directly through the encrypted database.
-                </p>
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-100">
+        <div class="text-center mb-8">
+            <div class="bg-[#102a43] text-white w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-md">
+                <i class="fa-solid fa-graduation-cap text-2xl"></i>
             </div>
-            
-            <div class="text-xs text-[#6b8f89] font-medium relative z-10">
-                &copy; 2026 Hikvena Pvt.Ltd. All rights reserved.
-            </div>
-
-            <!-- Background Decoration -->
-            <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"></div>
-            <div class="absolute -top-10 -left-10 w-40 h-40 bg-[#00c3a2] opacity-20 rounded-full blur-2xl"></div>
+            <h1 class="text-xl font-extrabold text-[#102a43] uppercase tracking-wider">HIKVENA PVT.LTD</h1>
+            <p class="text-xs text-gray-500 mt-1">School Management System - Secure Login</p>
         </div>
 
-        <!-- Right Side: Login Form -->
-        <div class="w-full md:w-7/12 p-10 md:p-14">
-            <h2 class="text-2xl font-bold text-[#102a43] mb-2">Database Login</h2>
-            <p class="text-sm text-gray-500 mb-8">Enter your registered Email ID and Password to authenticate.</p>
-
-            <form id="loginForm">
-                <!-- Error Message Box -->
-                <div id="errorBox" class="hidden bg-red-50 text-red-600 p-3 rounded-lg text-sm font-semibold mb-6 flex items-center gap-2 border border-red-100">
-                    <i class="fa-solid fa-circle-exclamation"></i> <span id="errorText">Database Match Failed.</span>
+        <form id="loginForm" class="space-y-5">
+            <div>
+                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Username / Admission No</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-gray-400"><i class="fa-solid fa-user"></i></span>
+                    <input type="text" id="username" required placeholder="Enter username..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:border-blue-600 focus:outline-none transition">
                 </div>
+            </div>
 
-                <div class="mb-5">
-                    <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">Registered Email</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-                            <i class="fa-regular fa-envelope"></i>
-                        </div>
-                        <input type="email" id="email" required placeholder="name@hikvena.com" class="w-full border border-gray-300 rounded-lg pl-10 p-3 text-sm transition-all bg-gray-50 focus:bg-white text-gray-800 font-medium">
-                    </div>
+            <div>
+                <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Password</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-gray-400"><i class="fa-solid fa-lock"></i></span>
+                    <input type="password" id="password" required placeholder="••••••••" class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:border-blue-600 focus:outline-none transition">
                 </div>
+            </div>
 
-                <div class="mb-8">
-                    <label class="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">Secure Password</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-                            <i class="fa-solid fa-lock"></i>
-                        </div>
-                        <input type="password" id="password" required placeholder="••••••••" class="w-full border border-gray-300 rounded-lg pl-10 p-3 text-sm transition-all bg-gray-50 focus:bg-white text-gray-800 font-medium">
-                    </div>
-                </div>
-
-                <button type="submit" id="loginBtn" class="w-full bg-[#00c3a2] hover:bg-[#00a68d] text-white py-3.5 rounded-lg text-sm font-bold shadow-md shadow-[#00c3a2]/30 transition-all flex justify-center items-center gap-2">
-                    <span>Authenticate</span> <i class="fa-solid fa-server"></i>
-                </button>
-            </form>
-        </div>
-
+            <button type="submit" id="loginBtn" class="w-full bg-[#102a43] hover:bg-[#081b2d] text-white py-3 rounded-lg text-sm font-bold shadow-lg transition flex items-center justify-center gap-2">
+                <span>Secure Login</span> <i class="fa-solid fa-arrow-right-to-bracket"></i>
+            </button>
+        </form>
     </div>
 
-    <!-- SUPABASE & 100% DATABASE LOGIN LOGIC -->
     <script>
         const supabaseUrl = 'https://kngxrrcegwkwsfhesoom.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZ3hycmNlZ3drd3NmaGVzb29tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNTgyMDcsImV4cCI6MjEwNTczNDIwN30.igoDWIfnRGTPhSA_RhU_gUOZEzK3TuVmttH_B4m7rIE';
         const db = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
+            const uInput = document.getElementById('username').value.trim();
+            const pInput = document.getElementById('password').value.trim();
             const btn = document.getElementById('loginBtn');
-            const errorBox = document.getElementById('errorBox');
-            
-            errorBox.classList.add('hidden');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying with Database...';
             btn.disabled = true;
 
             try {
-                // 1. PEHLE STAFF TABLE MEIN CHECK KAREIN (Admin/Teacher/Accountant)
-                const { data: staffData, error: staffError } = await db.from('staff')
-                                        .select('*')
-                                        .eq('email', email)
-                                        .eq('password', password);
+                // 🔒 DIRECT DATABASE MATCH QUERY 🔒
+                const { data, error } = await db.from('users')
+                    .select('*')
+                    .eq('username', uInput)
+                    .eq('password', pInput)
+                    .single();
 
-                if (staffData && staffData.length > 0) {
-                    const user = staffData[0];
-                    localStorage.setItem('school_user', JSON.stringify({
-                        id: user.id,
-                        name: user.name,
-                        role: user.role,
-                        email: user.email
-                    }));
-
-                    if (user.role === 'Admin' || user.role === 'Principal') window.location.href = 'index.html';
-                    else if (user.role === 'Teacher') window.location.href = 'teacher_dashboard.html';
-                    else if (user.role === 'Accountant' || user.role === 'Clerk') window.location.href = 'accountant_dashboard.html';
-                    else window.location.href = 'teacher_dashboard.html';
-                    
-                    return; // Stop execution here if staff is found
+                if (error || !data) {
+                    throw new Error("Invalid Username or Password!");
                 }
 
-                // 2. AGAR STAFF MEIN NAHI MILA, TOH STUDENTS TABLE MEIN CHECK KAREIN
-                const { data: studentData, error: studentError } = await db.from('students')
-                                        .select('*')
-                                        .eq('email', email)
-                                        .eq('password', password);
+                // Save minimal required verification state in session
+                localStorage.setItem('school_user', JSON.stringify({
+                    id: data.id,
+                    name: data.name,
+                    role: data.role,
+                    username: data.username
+                }));
 
-                if (studentData && studentData.length > 0) {
-                    const student = studentData[0];
-                    localStorage.setItem('school_user', JSON.stringify({
-                        id: student.id,
-                        name: student.student_name,
-                        role: 'Student', // Force role as Student
-                        email: student.email
-                    }));
-
-                    window.location.href = 'student_dashboard.html'; // Direct to student portal
-                    return;
+                // Role-based dynamic routing
+                const role = data.role;
+                if (role === 'Admin' || role === 'Principal') {
+                    window.location.replace('index.html');
+                } else if (role === 'Teacher') {
+                    window.location.replace('teacher_dashboard.html');
+                } else if (role === 'Accountant' || role === 'Clerk') {
+                    window.location.replace('accountant_dashboard.html');
+                } else if (role === 'Student') {
+                    window.location.replace('student_dashboard.html');
+                } else {
+                    window.location.replace('index.html');
                 }
-
-                // 3. AGAR DONO MEIN NAHI MILA, TOH ERROR DIKHAYEIN
-                errorBox.classList.remove('hidden');
-                document.getElementById('errorText').innerText = 'Incorrect Email or Password.';
-                btn.innerHTML = '<span>Authenticate</span> <i class="fa-solid fa-server"></i>';
-                btn.disabled = false;
 
             } catch (err) {
-                errorBox.classList.remove('hidden');
-                document.getElementById('errorText').innerText = 'Server error. Please try again.';
-                btn.innerHTML = '<span>Authenticate</span> <i class="fa-solid fa-server"></i>';
+                alert("Login Failed: " + err.message);
+                btn.innerHTML = '<span>Secure Login</span> <i class="fa-solid fa-arrow-right-to-bracket"></i>';
                 btn.disabled = false;
             }
         });
